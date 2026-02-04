@@ -82,7 +82,7 @@ Ubah konten di setiap file halaman di folder `src/pages/` sesuai dengan informas
 **Fernanda Yoga**
 - GitHub: [@fernandayoga](https://github.com/fernandayoga)
 - Email: fernandayoga34@gmail.com
-- Location: Jambi, Indonesia
+- Location: Surabaya, Indonesia
 
 ---
 
