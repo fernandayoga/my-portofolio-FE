@@ -11,15 +11,7 @@ const Sidebar = () => {
   const { t, i18n } = useTranslation();
   const currentLang = i18n.language === "id" ? "ID" : "EN";
 
-  // const menuItems = [
-  //   { path: "/", icon: "fa-home", label: "Home" },
-  //   { path: "/about", icon: "fa-user", label: "About" },
-  //   { path: "/achievements", icon: "fa-trophy", label: "Achievements" },
-  //   { path: "/projects", icon: "fa-briefcase", label: "Projects" },
-  //   { path: "/dashboard", icon: "fa-chart-line", label: "Dashboard" },
-  //   { path: "/chat-room", icon: "fa-comments", label: "Chat Room" },
-  //   { path: "/contact", icon: "fa-envelope", label: "Contact" },
-  // ];
+
 
   const menuItems = [
     { path: "/", icon: "fa-home", label: t("home") },
@@ -43,6 +35,18 @@ const Sidebar = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden"; // ✅ Disable scroll di body
+    } else {
+      document.body.style.overflow = "unset"; // ✅ Enable scroll kembali
+    }
+
+    return () => {
+      document.body.style.overflow = "unset"; // ✅ Cleanup saat unmount
+    };
+  }, [isOpen]);
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
@@ -288,23 +292,22 @@ const Sidebar = () => {
           ))}
 
           <div
-          className={`p-4 mb-10  ${
-            isDarkMode ? "border-gray-800" : "border-gray-200"
-          } `}
-        >
-          <Link
-            to="/smart-talk"
-            onClick={closeSidebar}
-            className="w-full bg-gradient-to-r from-purple-400 to-violet-500 hover:from-purple-600 hover:to-violet-700 text-white px-2 py-2 rounded-lg font-medium transition-all flex items-center justify-center gap-2"
+            className={`p-4 mb-10  ${
+              isDarkMode ? "border-gray-800" : "border-gray-200"
+            } `}
           >
-            <i className="fas fa-robot"></i>
-            {t("AskBot")}
-          </Link>
-        </div>
+            <Link
+              to="/smart-talk"
+              onClick={closeSidebar}
+              className="w-full bg-gradient-to-r from-purple-400 to-violet-500 hover:from-purple-600 hover:to-violet-700 text-white px-2 py-2 rounded-lg font-medium transition-all flex items-center justify-center gap-2"
+            >
+              <i className="fas fa-robot"></i>
+              {t("AskBot")}
+            </Link>
+          </div>
         </nav>
 
         {/* Smart Talk Button */}
-        
       </div>
     </>
   );

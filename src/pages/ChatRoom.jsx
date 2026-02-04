@@ -46,7 +46,6 @@ const ChatRoom = () => {
     return () => unsubscribe();
   }, []);
 
-  
   // Listen to messages
   useEffect(() => {
     if (!user) return;
@@ -192,8 +191,6 @@ const ChatRoom = () => {
       minute: "2-digit",
     });
   };
-
-  
 
   // Get avatar URL
   const getAvatarUrl = (photoURL, displayName) => {
@@ -486,16 +483,6 @@ const ChatRoom = () => {
             </button>
           </div>
         </form>
-      </div>
-
-      {/* Online Users Count (Optional) */}
-      <div
-        className={`mt-4 text-center text-sm ${
-          isDarkMode ? "text-gray-500" : "text-gray-400"
-        }`}
-      >
-        <i className="fas fa-circle text-green-500 text-xs mr-2"></i>
-        {t("youAreOnline")}
       </div>
     </div>
   );
