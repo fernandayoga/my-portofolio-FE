@@ -31,20 +31,7 @@ const About = () => {
         t("aboutExpDesc1_6"),
       ],
     },
-    {
-      company: "Core Initiative x Rakamin Academy",
-      image: coreInitiative,
-      role: t("aboutExpRole1"),
-      period: t("aboutExpPeriod1"),
-      description: [
-        t("aboutExpDesc1_1"),
-        t("aboutExpDesc1_2"),
-        t("aboutExpDesc1_3"),
-        t("aboutExpDesc1_4"),
-        t("aboutExpDesc1_5"),
-        t("aboutExpDesc1_6"),
-      ],
-    },
+    
   ];
 
   return (

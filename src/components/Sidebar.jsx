@@ -286,11 +286,9 @@ const Sidebar = () => {
               <i className="fas fa-chevron-right ml-auto text-xs"></i>
             </Link>
           ))}
-        </nav>
 
-        {/* Smart Talk Button */}
-        <div
-          className={`p-4 mb-2  ${
+          <div
+          className={`p-4 mb-10  ${
             isDarkMode ? "border-gray-800" : "border-gray-200"
           } `}
         >
@@ -303,6 +301,10 @@ const Sidebar = () => {
             {t("AskBot")}
           </Link>
         </div>
+        </nav>
+
+        {/* Smart Talk Button */}
+        
       </div>
     </>
   );

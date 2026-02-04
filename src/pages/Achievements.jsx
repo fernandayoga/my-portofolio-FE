@@ -128,6 +128,7 @@ const Achievements = () => {
               <img
                 src={achievement.image}
                 alt={achievement.title}
+                loading="lazy"
                 className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
               />
             </div>

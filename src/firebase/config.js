@@ -3,16 +3,18 @@ import { initializeApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider, GithubAuthProvider } from 'firebase/auth';
 import { getDatabase } from 'firebase/database';
 
-const firebaseConfig = {
-  apiKey: "AIzaSyBruGnlyvRMgpkZ8oxgYyHjJsbmWaDCHdk",
-  authDomain: "portofolio-web-7225f.firebaseapp.com",
-  databaseURL: "https://portofolio-web-7225f-default-rtdb.firebaseio.com",
-  projectId: "portofolio-web-7225f",
-  storageBucket: "portofolio-web-7225f.firebasestorage.app",
-  messagingSenderId: "27697188364",
-  appId: "1:27697188364:web:895863e65d6501f5e72829",
-  measurementId: "G-65Y40B3892"
+
+const firebaseConfig = { 
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  databaseURL: import.meta.env.VITE_DATABASE_URL,   
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
 };
+ 
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
