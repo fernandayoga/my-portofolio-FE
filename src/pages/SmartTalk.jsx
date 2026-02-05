@@ -185,7 +185,7 @@ const SmartTalk = () => {
 
       {/* Suggested Questions */}
       {messages.length === 0 && (
-        <div className="w-full max-w-4xl pb-3 sm:pb-4 px-2">
+        <div className="w-full max-w-4xl pb-4 sm:pb-4 px-2">
           <div className="flex flex-wrap gap-1.5 sm:gap-2 justify-center">
             {suggestedQuestions.map((question, index) => (
               <button
@@ -206,7 +206,7 @@ const SmartTalk = () => {
       )}
 
       {/* Input Area - Fixed Bottom */}
-      <div className="w-full max-w-4xl pb-4 sm:pb-8 pt-3 sm:pt-4 px-2 sm:px-0">
+      <div className="w-full max-w-4xl pb-20 sm:pb-8 pt-3 sm:pt-4 px-2 sm:px-0">
         <form onSubmit={handleSubmit} className="relative">
           <div
             className={`flex items-center gap-2 sm:gap-3 px-3 sm:px-6 py-2.5 sm:py-4 rounded-full border ${
