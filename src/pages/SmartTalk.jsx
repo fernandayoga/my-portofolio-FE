@@ -209,7 +209,7 @@ const SmartTalk = () => {
       <div className="w-full max-w-4xl pb-20 sm:pb-8 pt-3 sm:pt-4 px-2 sm:px-0">
         <form onSubmit={handleSubmit} className="relative">
           <div
-            className={`flex items-center gap-1.5 sm:gap-3 px-2.5 sm:px-6 py-2.5 sm:py-4 rounded-full border ${
+            className={`flex items-center  px-2.5 sm:px-6 py-2.5 sm:py-4 rounded-full border overflow-hidden ${
               isDarkMode
                 ? "bg-gray-900 border-gray-700"
                 : "bg-white border-gray-300 shadow-lg"
