@@ -60,13 +60,13 @@ const SmartTalk = () => {
 
   return (
     <div
-      className={`min-h-screen flex flex-col items-center justify-center px-4 ${
+      className={`min-h-screen min-h-[100dvh] flex flex-col items-center justify-center px-3 sm:px-4 ${
         isDarkMode ? "bg-black" : "bg-gray-50"
       }`}
     >
       {/* Messages Area */}
       {messages.length > 0 ? (
-        <div className="w-full max-w-4xl flex-1 overflow-y-auto py-8 space-y-6">
+        <div className="w-full max-w-4xl flex-1 overflow-y-auto py-4 sm:py-8 space-y-3 sm:space-y-6 pb-24 sm:pb-32">
           {messages.map((message) => (
             <div
               key={message.id}
@@ -75,7 +75,7 @@ const SmartTalk = () => {
               }`}
             >
               <div
-                className={`max-w-3xl px-6 py-4 rounded-2xl break-words whitespace-pre-wrap overflow-hidden ${
+                className={`max-w-[85%] sm:max-w-3xl px-3 sm:px-6 py-3 sm:py-4 rounded-2xl break-words whitespace-pre-wrap overflow-hidden text-sm sm:text-base ${
                   message.type === "user"
                     ? isDarkMode
                       ? "bg-purple-600 text-white"
@@ -91,14 +91,32 @@ const SmartTalk = () => {
                       pre: ({ node, ...props }) => (
                         <pre
                           {...props}
-                          className="whitespace-pre-wrap break-words overflow-hidden max-w-full"
+                          className="whitespace-pre-wrap break-words overflow-hidden max-w-full text-xs sm:text-sm bg-gray-900 p-2 sm:p-3 rounded-lg my-2"
                         />
                       ),
-                      code: ({ node, ...props }) => (
-                        <code
-                          {...props}
-                          className="break-words whitespace-pre-wrap"
-                        />
+                      code: ({ node, inline, ...props }) =>
+                        inline ? (
+                          <code
+                            {...props}
+                            className="break-words whitespace-pre-wrap bg-gray-700 px-1 py-0.5 rounded text-xs sm:text-sm"
+                          />
+                        ) : (
+                          <code
+                            {...props}
+                            className="break-words whitespace-pre-wrap text-xs sm:text-sm"
+                          />
+                        ),
+                      p: ({ node, ...props }) => (
+                        <p {...props} className="mb-2 last:mb-0" />
+                      ),
+                      ul: ({ node, ...props }) => (
+                        <ul {...props} className="list-disc ml-4 mb-2" />
+                      ),
+                      ol: ({ node, ...props }) => (
+                        <ol {...props} className="list-decimal ml-4 mb-2" />
+                      ),
+                      li: ({ node, ...props }) => (
+                        <li {...props} className="mb-1" />
                       ),
                     }}
                   >
@@ -115,18 +133,18 @@ const SmartTalk = () => {
           {isLoading && (
             <div className="flex justify-start">
               <div
-                className={`max-w-2xl px-6 py-4 rounded-2xl ${
+                className={`max-w-[85%] sm:max-w-2xl px-4 sm:px-6 py-3 sm:py-4 rounded-2xl ${
                   isDarkMode ? "bg-gray-800" : "bg-white border border-gray-200"
                 }`}
               >
-                <div className="flex gap-2">
-                  <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></span>
+                <div className="flex gap-1.5 sm:gap-2">
+                  <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-gray-400 rounded-full animate-bounce"></span>
                   <span
-                    className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+                    className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-gray-400 rounded-full animate-bounce"
                     style={{ animationDelay: "0.2s" }}
                   ></span>
                   <span
-                    className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+                    className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-gray-400 rounded-full animate-bounce"
                     style={{ animationDelay: "0.4s" }}
                   ></span>
                 </div>
@@ -136,18 +154,18 @@ const SmartTalk = () => {
         </div>
       ) : (
         // Empty State - Center Screen
-        <div className="flex-1 flex flex-col items-center justify-center">
-          <div className="flex flex-col items-center gap-6 min-[660px]:flex-row">
+        <div className="flex-1 flex flex-col items-center justify-center w-full px-2 sm:px-4">
+          <div className="flex flex-col items-center gap-4 sm:gap-6 md:flex-row max-w-2xl">
             {/* Icon */}
             <div
-              className={`w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center shadow-lg ${
+              className={`w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center shadow-lg flex-shrink-0 ${
                 isDarkMode
                   ? "bg-purple-600/20 border border-purple-500"
                   : "bg-purple-100 border border-purple-300"
               }`}
             >
               <i
-                className={`fas fa-robot text-3xl md:text-4xl ${
+                className={`fas fa-robot text-2xl sm:text-3xl md:text-4xl ${
                   isDarkMode ? "text-purple-400" : "text-purple-600"
                 }`}
               ></i>
@@ -155,7 +173,7 @@ const SmartTalk = () => {
 
             {/* Text */}
             <h1
-              className={`text-3xl md:text-5xl font-normal text-center ${
+              className={`text-2xl sm:text-3xl md:text-5xl font-normal text-center ${
                 isDarkMode ? "text-white" : "text-gray-900"
               }`}
             >
@@ -167,20 +185,18 @@ const SmartTalk = () => {
 
       {/* Suggested Questions */}
       {messages.length === 0 && (
-        <div className="w-full max-w-4xl pb-4">
-          <div className="flex flex-wrap gap-2 justify-center">
+        <div className="w-full max-w-4xl pb-3 sm:pb-4 px-2">
+          <div className="flex flex-wrap gap-1.5 sm:gap-2 justify-center">
             {suggestedQuestions.map((question, index) => (
               <button
                 key={index}
                 type="button"
                 onClick={() => setInput(question)}
-                className={`px-4 py-2 rounded-full text-sm transition-all
-          ${
-            isDarkMode
-              ? "bg-gray-800 text-gray-300 hover:bg-gray-700"
-              : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-          }
-        `}
+                className={`px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm transition-all whitespace-nowrap ${
+                  isDarkMode
+                    ? "bg-gray-800 text-gray-300 hover:bg-gray-700"
+                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                }`}
               >
                 {question}
               </button>
@@ -190,10 +206,10 @@ const SmartTalk = () => {
       )}
 
       {/* Input Area - Fixed Bottom */}
-      <div className="w-full max-w-4xl pb-8 pt-4">
+      <div className="w-full max-w-4xl pb-4 sm:pb-8 pt-3 sm:pt-4 px-2 sm:px-0">
         <form onSubmit={handleSubmit} className="relative">
           <div
-            className={`flex items-center gap-3 px-6 py-4 rounded-full border ${
+            className={`flex items-center gap-2 sm:gap-3 px-3 sm:px-6 py-2.5 sm:py-4 rounded-full border ${
               isDarkMode
                 ? "bg-gray-900 border-gray-700"
                 : "bg-white border-gray-300 shadow-lg"
@@ -205,7 +221,7 @@ const SmartTalk = () => {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder={t("askAnything")}
-              className={`flex-1 bg-transparent outline-none text-base ${
+              className={`flex-1 bg-transparent outline-none text-sm sm:text-base ${
                 isDarkMode
                   ? "text-white placeholder-gray-500"
                   : "text-gray-900 placeholder-gray-400"
@@ -216,7 +232,7 @@ const SmartTalk = () => {
             <button
               type="submit"
               disabled={!input.trim()}
-              className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center ${
+              className={`flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center ${
                 input.trim()
                   ? "bg-purple-600 hover:bg-purple-700 text-white"
                   : isDarkMode
@@ -224,7 +240,7 @@ const SmartTalk = () => {
                   : "bg-gray-200 text-gray-400"
               } transition-all`}
             >
-              <i className="fas fa-arrow-up text-lg"></i>
+              <i className="fas fa-arrow-up text-sm sm:text-lg"></i>
             </button>
           </div>
         </form>
