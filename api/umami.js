@@ -7,32 +7,23 @@ export default async function handler(req, res) {
       return res.status(500).json({ error: "Missing env vars" });
     }
 
-    const response = await fetch(
-      `https://api.umami.is/v1/websites/${websiteId}/stats`,
-      {
-        headers: {
-          "x-umami-api-key": apiKey,
-          Accept: "application/json",
-        },
-      }
-    );
+    // 🔥 WAKTU (7 hari terakhir)
+    const endAt = Date.now();
+    const startAt = endAt - 7 * 24 * 60 * 60 * 1000;
 
-    const text = await response.text();
+    const url = `https://api.umami.is/v1/websites/${websiteId}/stats?startAt=${startAt}&endAt=${endAt}`;
 
-    // ⛑️ proteksi kalau response bukan JSON
-    let data;
-    try {
-      data = JSON.parse(text);
-    } catch {
-      return res.status(500).json({
-        error: "Invalid response from Umami",
-        raw: text,
-      });
-    }
+    const response = await fetch(url, {
+      headers: {
+        "x-umami-api-key": apiKey,
+        Accept: "application/json",
+      },
+    });
 
+    const data = await response.json();
     return res.status(response.status).json(data);
   } catch (err) {
-    console.error("UMAMI API CRASH:", err);
+    console.error("UMAMI API ERROR:", err);
     return res.status(500).json({
       error: "Serverless crashed",
       message: err.message,
