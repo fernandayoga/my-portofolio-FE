@@ -48,7 +48,6 @@ const Dashboard = () => {
     }
   };
 
-  
   // Fetch Umami Analytics
   const fetchUmamiData = async () => {
     try {
@@ -61,10 +60,13 @@ const Dashboard = () => {
       const data = await response.json();
 
       setUmamiData({
-        pageviews: data.pageviews?.value ?? 0,
-        visitors: data.uniques?.value ?? 0,
-        bounceRate: data.bouncerate ?? 0,
-        avgTime: data.totaltime?.value ?? 0,
+        pageviews: data.pageviews,
+        visitors: data.visitors,
+        visits: data.visits,
+        bounceRate: data.visits
+          ? Math.round((data.bounces / data.visits) * 100)
+          : 0,
+        avgTime: data.visits ? Math.round(data.totaltime / data.visits) : 0,
       });
     } catch (error) {
       console.error("❌ Umami fetch error:", error);
@@ -76,6 +78,13 @@ const Dashboard = () => {
         avgTime: 0,
       });
     }
+  };
+
+  //helper format waktu umami
+  const formatTime = (seconds) => {
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    return m > 0 ? `${m}m ${s}s` : `${s}s`;
   };
 
   // Helper function untuk fetch top languages
@@ -702,7 +711,7 @@ const Dashboard = () => {
               }`}
             >
               <p className="text-2xl font-bold text-green-500">
-                {umamiData?.avgTime || 0}s
+                {formatTime(umamiData?.avgTime || 0)}
               </p>
               <p
                 className={`text-sm ${
