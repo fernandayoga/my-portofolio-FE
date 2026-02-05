@@ -209,7 +209,7 @@ const SmartTalk = () => {
       <div className="w-full max-w-4xl pb-20 sm:pb-8 pt-3 sm:pt-4 px-2 sm:px-0">
         <form onSubmit={handleSubmit} className="relative">
           <div
-            className={`flex items-center gap-2 sm:gap-3 px-3 sm:px-6 py-2.5 sm:py-4 rounded-full border ${
+            className={`flex items-center gap-1.5 sm:gap-3 px-2.5 sm:px-6 py-2.5 sm:py-4 rounded-full border ${
               isDarkMode
                 ? "bg-gray-900 border-gray-700"
                 : "bg-white border-gray-300 shadow-lg"
@@ -221,7 +221,7 @@ const SmartTalk = () => {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder={t("askAnything")}
-              className={`flex-1 bg-transparent outline-none text-sm sm:text-base ${
+              className={`flex-1 bg-transparent outline-none text-sm sm:text-base min-w-0${
                 isDarkMode
                   ? "text-white placeholder-gray-500"
                   : "text-gray-900 placeholder-gray-400"
@@ -232,7 +232,7 @@ const SmartTalk = () => {
             <button
               type="submit"
               disabled={!input.trim()}
-              className={`flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center ${
+              className={`flex-shrink-0 w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center ${
                 input.trim()
                   ? "bg-purple-600 hover:bg-purple-700 text-white"
                   : isDarkMode
@@ -240,7 +240,7 @@ const SmartTalk = () => {
                   : "bg-gray-200 text-gray-400"
               } transition-all`}
             >
-              <i className="fas fa-arrow-up text-sm sm:text-lg"></i>
+              <i className="fas fa-arrow-up text-sm sm:text-base"></i>
             </button>
           </div>
         </form>
