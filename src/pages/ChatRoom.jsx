@@ -460,7 +460,7 @@ const ChatRoom = () => {
               onChange={(e) => setNewMessage(e.target.value)}
               placeholder={t("typeMessage")}
               disabled={sending}
-              className={`flex-1 max-w-[200px] sm:max-w-none px-4 py-3  rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 ${
+              className={`flex-1 max-w-[250px] sm:max-w-none px-4 py-3  rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 ${
                 isDarkMode
                   ? "bg-gray-800 text-white placeholder-gray-500"
                   : "bg-gray-50 text-gray-900 placeholder-gray-400 border border-gray-200"
