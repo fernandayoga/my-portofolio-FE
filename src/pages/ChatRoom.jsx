@@ -23,6 +23,7 @@ import Swal from "sweetalert2";
 const ChatRoom = () => {
   const { isDarkMode } = useTheme();
   const { t } = useTranslation();
+  const OWNER_UID = import.meta.env.VITE_OWNER_UID;
 
   // Auth State
   const [user, setUser] = useState(null);
@@ -90,6 +91,8 @@ const ChatRoom = () => {
       });
     }
   };
+
+  console.log(user);
 
   // Login with GitHub
   const handleGithubLogin = async () => {
@@ -365,6 +368,7 @@ const ChatRoom = () => {
           ) : (
             messages.map((message) => {
               const isOwnMessage = message.userId === user.uid;
+              const isOwner = message.userId === OWNER_UID;
 
               return (
                 <div
@@ -392,7 +396,23 @@ const ChatRoom = () => {
                           isDarkMode ? "text-gray-400" : "text-gray-600"
                         }`}
                       >
-                        {isOwnMessage ? t("you") : message.userName}
+                        {isOwnMessage ? ( 
+                          <>
+                            {/* Mahkota cuma kalau user = owner */}
+                            {isOwner && (
+                              <i className="fas fa-crown text-yellow-500 text-xs"></i>
+                            )}
+                            {t("you")}
+                          </>
+                        ) : (
+                          <>
+                            {/* Mahkota di message owner */}
+                            {isOwner && (
+                              <i className="fas fa-crown text-yellow-500 text-xs mr-1"></i>
+                            )}
+                            {message.userName}
+                          </>
+                        )}
                       </span>
                       <span
                         className={`text-xs ${
@@ -460,7 +480,7 @@ const ChatRoom = () => {
               onChange={(e) => setNewMessage(e.target.value)}
               placeholder={t("typeMessage")}
               disabled={sending}
-              className={`flex-1 max-w-[250px] sm:max-w-none px-4 py-3  rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 ${
+              className={`flex-1 max-w-[200px] sm:max-w-none px-4 py-3  rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 ${
                 isDarkMode
                   ? "bg-gray-800 text-white placeholder-gray-500"
                   : "bg-gray-50 text-gray-900 placeholder-gray-400 border border-gray-200"

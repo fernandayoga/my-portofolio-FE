@@ -48,63 +48,23 @@ const Dashboard = () => {
     }
   };
 
+  
   // Fetch Umami Analytics
   const fetchUmamiData = async () => {
     try {
-      const websiteId = import.meta.env.VITE_UMAMI_WEBSITE_ID;
-      const token = import.meta.env.VITE_UMAMI_API_TOKEN;
-
-      if (!websiteId || !token) {
-        throw new Error("Umami credentials not found");
-      }
-
-      // Try multiple endpoints (Umami API bisa beda versi)
-
-      // ENDPOINT 1: Stats endpoint
-      let response = await fetch(
-        `https://cloud.umami.is/api/websites/${websiteId}/stats`,
-        {
-          method: "GET",
-          headers: {
-            "x-umami-api-key": token, // ← Coba header ini
-            Accept: "application/json",
-          },
-        },
-      );
-
-      // Kalau 401, coba dengan Authorization header
-      if (response.status === 401) {
-        response = await fetch(
-          `https://cloud.umami.is/api/websites/${websiteId}/stats`,
-          {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${token}`, // ← Atau header ini
-              Accept: "application/json",
-            },
-          },
-        );
-      }
+      const response = await fetch("/api/umami");
 
       if (!response.ok) {
-        const errorText = await response.text();
-        console.error("Umami API Error:", {
-          status: response.status,
-          statusText: response.statusText,
-          body: errorText,
-        });
-        throw new Error(`Umami API failed: ${response.status}`);
+        throw new Error("Failed to fetch Umami data");
       }
 
       const data = await response.json();
-      console.log("✅ Umami Response:", data);
 
-      // Parse data sesuai struktur response
       setUmamiData({
-        pageviews: data.pageviews?.value || data.pageviews || 0,
-        visitors: data.uniques?.value || data.visitors || 0,
-        bounceRate: data.bounceRate || 0,
-        avgTime: data.totaltime?.value || data.avgTime || 0,
+        pageviews: data.pageviews?.value ?? 0,
+        visitors: data.uniques?.value ?? 0,
+        bounceRate: data.bouncerate ?? 0,
+        avgTime: data.totaltime?.value ?? 0,
       });
     } catch (error) {
       console.error("❌ Umami fetch error:", error);
@@ -205,6 +165,7 @@ const Dashboard = () => {
       const events = await response.json();
 
       // Parse events dan filter yang valid
+
       const activities = events
         .map((event) => {
           const repo = event.repo.name;
@@ -218,8 +179,8 @@ const Dashboard = () => {
           switch (type) {
             case "PushEvent":
               const commits = event.payload.commits?.length || 0;
-              if (commits === 0) return null; // ✅ Skip kalau 0 commits
-              action = `Pushed ${commits} commit${commits > 1 ? "s" : ""} to`;
+              // if (commits === 0) return null; // ✅ Skip kalau 0 commits
+              action = `Pushed commits to repository : `;
               icon = "fa-code-branch";
               color = "text-green-500";
               break;
@@ -486,9 +447,7 @@ const Dashboard = () => {
                 }`}
               >
                 <GitHubCalendar
-                  username={
-                    import.meta.env.VITE_GITHUB_USERNAME 
-                  }
+                  username={import.meta.env.VITE_GITHUB_USERNAME}
                   blockSize={12}
                   blockMargin={4}
                   fontSize={14}
