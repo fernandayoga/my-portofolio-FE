@@ -647,9 +647,9 @@ const Dashboard = () => {
                   isDarkMode ? "text-white" : "text-gray-900"
                 }`}
               >
-                Umami Analytics
+                {t("umamiTitle")}
               </h2>
-              <p className="text-sm text-gray-400">Last 7 days</p>
+              <p className="text-sm text-gray-400">{t('umamiSub')}</p>
             </div>
           </div>
 
@@ -667,7 +667,7 @@ const Dashboard = () => {
                   isDarkMode ? "text-gray-400" : "text-gray-600"
                 }`}
               >
-                Page Views
+                {t("pageViews")}
               </p>
             </div>
 
@@ -684,7 +684,7 @@ const Dashboard = () => {
                   isDarkMode ? "text-gray-400" : "text-gray-600"
                 }`}
               >
-                Unique Visitors
+                {t("totalVisitors")}
               </p>
             </div>
 
@@ -701,7 +701,7 @@ const Dashboard = () => {
                   isDarkMode ? "text-gray-400" : "text-gray-600"
                 }`}
               >
-                Bounce Rate
+                {t("bounceRate")}
               </p>
             </div>
 
@@ -718,7 +718,7 @@ const Dashboard = () => {
                   isDarkMode ? "text-gray-400" : "text-gray-600"
                 }`}
               >
-                Avg. Time
+                {t("avgTimeOnSite")}
               </p>
             </div>
           </div>

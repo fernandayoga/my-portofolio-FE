@@ -8,6 +8,12 @@ export const dashboardTranslations = {
     githubContributions: "Contributions & Stats",
     githubActivityLatest: "Latest Activity",
     RecentActivity: "Latest GitHub Events",
+    umamiTitle: "Umami Analytics",
+    umamiSub : "Website analytics · Last 7 days",
+    totalVisitors: "Total Visitors",
+    pageViews: "Page Views",
+    avgTimeOnSite: "Avg. Time on Site",
+    bounceRate: "Bounce Rate",
 },
   id: {
     loadingDashboard : "Memuat analitik...",
@@ -17,5 +23,12 @@ export const dashboardTranslations = {
     
     githubActivityLatest: "Aktivitas Terbaru",
     RecentActivity: "Event GitHub Terbaru",
+    umamiTitle: "Umami Analytics",
+    umamiSub : "Analitik situs web · 7 hari terakhir",
+    totalVisitors: "Total Pengunjung",  
+    pageViews: "Tampilan Halaman",
+    avgTimeOnSite: "Rata-rata Waktu di Situs",
+    bounceRate: "Tingkat Pentalan",
+    
 }   
 };  
