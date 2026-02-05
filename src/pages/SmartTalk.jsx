@@ -60,7 +60,7 @@ const SmartTalk = () => {
 
   return (
     <div
-      className={`min-h-screen min-h-[100dvh] flex flex-col items-center justify-center px-3 sm:px-4 ${
+      className={`min-h-[100dvh] flex flex-col items-center justify-center px-3 sm:px-4 ${
         isDarkMode ? "bg-black" : "bg-gray-50"
       }`}
     >
