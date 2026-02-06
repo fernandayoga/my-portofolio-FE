@@ -1,81 +1,93 @@
-import React, { useState, useEffect } from 'react';
-import { useTheme } from '../context/ThemeContext';
-import { cardClass, textClass } from '../utils/themeUtils';
-import { projects } from '../data/dataProject';
+import React, { useState, useEffect } from "react";
+import { useTheme } from "../context/ThemeContext";
+import { cardClass, textClass } from "../utils/themeUtils";
+import { projects } from "../data/dataProject";
 import { useTranslation } from "react-i18next";
+import { Link, useNavigate } from "react-router-dom";
+
 
 const Projects = () => {
   const { isDarkMode } = useTheme();
-  const [filter, setFilter] = useState('all');
-  const { t} = useTranslation();
-  const[filteredProjects, setFilteredProjects] = useState(projects);
-
+  const [filter, setFilter] = useState("all");
+  const { t } = useTranslation();
+  const [filteredProjects, setFilteredProjects] = useState(projects);
+  const navigate = useNavigate()
 
   useEffect(() => {
-    if (filter === 'all') {
+    if (filter === "all") {
       setFilteredProjects(projects);
     } else {
-      const filtered = projects.filter(p => p.category === filter);
+      const filtered = projects.filter((p) => p.category === filter);
       setFilteredProjects(filtered);
     }
-
   }, [filter]);
 
-  console.log(filter)
-  
-
-  // const filteredProjects = filter === 'all' 
-  //   ? projects 
-  //   : projects.filter(p => p.category === filter);
+  console.log(filter);
 
   return (
-    <div className="min-h-screen py-8 pt-20 lg:pt-8"
-    data-aos="fade-down"
+    <div
+      className="min-h-screen py-8 pt-20 lg:pt-8"
+      data-aos="fade-down"
       data-aos-delay="100"
-      data-aos-duration="600">
-      <h1 className={`text-3xl md:text-4xl font-bold mb-2 ${textClass(isDarkMode)}`}>{t('projectsTitle')}</h1>
-      <p className="text-gray-400 mb-8">{t('projectsSubtitle')}</p>
+      data-aos-duration="600"
+    >
+      <h1
+        className={`text-3xl md:text-4xl font-bold mb-2 ${textClass(
+          isDarkMode,
+        )}`}
+      >
+        {t("projectsTitle")}
+      </h1>
+      <p className="text-gray-400 mb-8">{t("projectsSubtitle")}</p>
 
       <div className="flex flex-wrap gap-3 mb-8">
         <button
-          onClick={() => setFilter('all')}
+          onClick={() => setFilter("all")}
           className={`px-4 md:px-6 py-2 rounded-lg transition-all text-sm md:text-base ${
-            filter === 'all'
-              ? 'bg-purple-600 text-white'
-              : isDarkMode ? 'bg-gray-800 text-gray-300 hover:bg-gray-700' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+            filter === "all"
+              ? "bg-purple-600 text-white"
+              : isDarkMode
+              ? "bg-gray-800 text-gray-300 hover:bg-gray-700"
+              : "bg-gray-100 text-gray-600 hover:bg-gray-200"
           }`}
         >
-          {t('allProjects')}
+          {t("allProjects")}
         </button>
         <button
-          onClick={() => setFilter('web')}
+          onClick={() => setFilter("web")}
           className={`px-4 md:px-6 py-2 rounded-lg transition-all text-sm md:text-base ${
-            filter === 'web'
-              ? 'bg-purple-600 text-white'
-              : isDarkMode ? 'bg-gray-800 text-gray-300 hover:bg-gray-700' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+            filter === "web"
+              ? "bg-purple-600 text-white"
+              : isDarkMode
+              ? "bg-gray-800 text-gray-300 hover:bg-gray-700"
+              : "bg-gray-100 text-gray-600 hover:bg-gray-200"
           }`}
         >
-          {t('webApps')}
+          {t("webApps")}
         </button>
         <button
-          onClick={() => setFilter('mobile')}
+          onClick={() => setFilter("mobile")}
           className={`px-4 md:px-6 py-2 rounded-lg transition-all text-sm md:text-base ${
-            filter === 'mobile'
-              ? 'bg-purple-600 text-white'
-              : isDarkMode ? 'bg-gray-800 text-gray-300 hover:bg-gray-700' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+            filter === "mobile"
+              ? "bg-purple-600 text-white"
+              : isDarkMode
+              ? "bg-gray-800 text-gray-300 hover:bg-gray-700"
+              : "bg-gray-100 text-gray-600 hover:bg-gray-200"
           }`}
         >
-          {t('mobileApps')}
+          {t("mobileApps")}
         </button>
         <button
-          onClick={() => setFilter('backend')}
+          onClick={() => setFilter("backend")}
           className={`px-4 md:px-6 py-2 rounded-lg transition-all text-sm md:text-base ${
-            filter === 'backend'
-              ? 'bg-purple-600 text-white'
-              : isDarkMode ? 'bg-gray-800 text-gray-300 hover:bg-gray-700' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+            filter === "backend"
+              ? "bg-purple-600 text-white"
+              : isDarkMode
+              ? "bg-gray-800 text-gray-300 hover:bg-gray-700"
+              : "bg-gray-100 text-gray-600 hover:bg-gray-200"
           }`}
         >
-          {t('backend')}
+          {t("backend")}
         </button>
       </div>
 
@@ -83,44 +95,49 @@ const Projects = () => {
         {filteredProjects.map((project) => (
           <div
             key={project.id}
-            className={`${cardClass(isDarkMode)} overflow-hidden hover:border-primary transition-all hover:scale-105 cursor-pointer`}
+            onClick={() => navigate(`/projects/${project.id}`)}
+            className={`${cardClass(
+              isDarkMode,
+            )} overflow-hidden hover:border-primary transition-all hover:scale-105 cursor-pointer`}
           >
-            <div className={`h-48 ${isDarkMode ? 'bg-gray-800' : 'bg-gray-200'} overflow-hidden`}>
+            <div
+              className={`h-48 ${
+                isDarkMode ? "bg-gray-800" : "bg-gray-200"
+              } overflow-hidden`}
+            >
               <img
                 src={project.image}
                 alt={project.title}
                 className="w-full h-full object-cover hover:scale-110 transition-transform"
               />
             </div>
+
             <div className="p-6">
-              <h3 className={`text-xl font-semibold mb-2 ${textClass(isDarkMode)}`}>{project.title}</h3>
-              <p className="text-gray-400 text-sm mb-4">{project.description}</p>
-              
-              <div className="flex flex-wrap gap-2 mb-4">
-                {project.tags.map((tag, index) => (
-                  <span
-                    key={index}
-                    className={`px-3 py-1 ${isDarkMode ? 'bg-gray-800' : 'bg-purple-50'} text-primary text-xs rounded-full`}
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
+              <h3
+                className={`text-xl font-semibold mb-2 ${textClass(
+                  isDarkMode,
+                )}`}
+              >
+                {project.title}
+              </h3>
+              <p className="text-gray-400 text-sm mb-4">
+                {project.shortDescription}
+              </p>
 
               <div className="flex gap-3">
-                <a
-                  href={project.github}
-                  className={`flex-1 ${isDarkMode ? 'bg-gray-800 hover:bg-gray-700' : 'bg-gray-100 hover:bg-gray-200'} text-center py-2 rounded-lg transition-all`}
-                >
-                  <i className="fab fa-github mr-2"></i>
-                  {t('code')}
-                </a>
+                
+
                 <a
                   href={project.demo}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => (
+                    e.stopPropagation(),
+                    navigate(`/projects/${project.id}`)
+                  )}
                   className="flex-1 bg-purple-600 hover:bg-purple-700 text-white text-center py-2 rounded-lg transition-all"
                 >
-                  <i className="fas fa-external-link-alt mr-2"></i>
-                  {t('demo')}
+                  {t("detail")}
                 </a>
               </div>
             </div>

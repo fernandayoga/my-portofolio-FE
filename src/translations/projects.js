@@ -1,3 +1,7 @@
+import { useTranslation } from "react-i18next"; 
+
+
+
 export const projectsTranslations = {
   en: {
     projectsTitle: "Projects",
@@ -6,8 +10,7 @@ export const projectsTranslations = {
     webApps: "Web Apps",
     mobileApps: "Mobile Apps",
     backend: "Backend",
-    code: "Code",
-    demo: "Demo",
+    detail: "View Detail"
   },
   id: {
     projectsTitle: "Proyek",
@@ -16,7 +19,6 @@ export const projectsTranslations = {
     webApps: "Aplikasi Web",
     mobileApps: "Aplikasi Mobile",
     backend: "Backend",
-    code: "Kode",
-    demo: "Demo",
+    detail: "Lihat Detail"
   },
 };

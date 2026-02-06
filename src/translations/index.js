@@ -7,6 +7,7 @@ import { contactTranslations } from './contact';
 import { smartTalkTranslations } from './smartTalk';
 import { chatRoomTranslations } from './chatRoom';
 import { dashboardTranslations } from './dashboard';
+import { projectDetailsTranslations } from './projectDetails';
 
 // Merge all translations
 export const translations = {
@@ -20,6 +21,7 @@ export const translations = {
     ...smartTalkTranslations.en,
     ...chatRoomTranslations.en,
     ...dashboardTranslations.en,
+    ...projectDetailsTranslations.en
   },
   id: {
     ...navigationTranslations.id,
@@ -31,5 +33,6 @@ export const translations = {
     ...smartTalkTranslations.id,
     ...chatRoomTranslations.id,
     ...dashboardTranslations.id,  
+    ...projectDetailsTranslations.id
   },
 };
