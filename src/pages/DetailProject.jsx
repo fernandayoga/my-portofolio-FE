@@ -12,7 +12,7 @@ const DetailProject = () => {
   const { t } = useTranslation();
 
   const [project, setProject] = useState(null);
-  const [activeImage, setActiveImage] = useState(0);
+  const [activeImage, setActiveImage] = useState(null);
 
   useEffect(() => {
     // Scroll to top
