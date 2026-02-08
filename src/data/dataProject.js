@@ -10,6 +10,7 @@ export const projects = [
   {
     id: "personal-portfolio",
     title: "Personal Portfolio Website",
+    pre: "(This Website)",
     shortDescription:
       "A modern personal portfolio showcasing projects, real-time GitHub analytics, and interactive features with a clean, responsive design.",
     category: "web",
@@ -28,7 +29,7 @@ export const projects = [
       { name: "Node.js", icon: "fa-brands fa-node", color: "text-green-600" },
     ],
 
-    sourceCode: "https://github.com/username/personal-portfolio",
+    sourceCode: "https://github.com/fernandayoga/my-portofolio-FE.git",
     liveDemo: "https://fernandayoga-portofolioweb.vercel.app",
 
     introduction:

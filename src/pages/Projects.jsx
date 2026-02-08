@@ -120,6 +120,9 @@ const Projects = () => {
               >
                 {project.title}
               </h3>
+              {project.pre && (
+                <p className="text-gray-400 text-sm mb-2">{project.pre}</p>
+              )}
               <p className="text-gray-400 text-sm mb-4">
                 {project.shortDescription}
               </p>
