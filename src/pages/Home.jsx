@@ -53,7 +53,7 @@ const Home = () => {
     { icon: "fa-brands fa-git-alt", color: "bg-orange-600", name: "Git" },
     { icon: "nginx", color: "bg-green-600", name: "Nginx", isCustom: true },
     { icon: "flutter", color: "bg-blue-400", name: "Flutter", isCustom: true },
-    { icon: "firebase", color: "bg-blue-400", name: "Firebase", isCustom: true },
+    { icon: "fa-solid fa-fire", color: "bg-orange-500", name: "Firebase" },
     { icon: "fa-brands fa-github", color: "bg-gray-700", name: "GitHub" },
   ];
 

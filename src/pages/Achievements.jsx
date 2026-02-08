@@ -118,7 +118,7 @@ const Achievements = () => {
           <div
             key={achievement.id}
             onClick={() => setSelectedImage(achievement.image)}
-            className={`rounded-xl overflow-hidden border transition-all duration-300 hover:scale-105 cursor-pointer ${
+            className={`group rounded-xl overflow-hidden border transition-all duration-300 hover:scale-105 cursor-pointer ${
               isDarkMode
                 ? "bg-gray-900 border-gray-800 hover:border-purple-500"
                 : "bg-white border-gray-200 hover:border-purple-500"
@@ -131,6 +131,18 @@ const Achievements = () => {
                 loading="lazy"
                 className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
               />
+
+              {/* Hover Overlay */}
+              <div
+                className="absolute inset-0 flex items-center justify-center
+    bg-black/50 opacity-0 group-hover:opacity-100
+    transition-opacity duration-300"
+              >
+                <span className="text-black text-sm font-medium flex items-center gap-2">
+                  <i className="fas fa-search-plus text-xs"></i>
+                  Click to preview
+                </span>
+              </div>
             </div>
 
             <div className="p-5 ">

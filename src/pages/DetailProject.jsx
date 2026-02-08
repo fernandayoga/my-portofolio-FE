@@ -81,7 +81,6 @@ const DetailProject = () => {
           className={`text-3xl md:text-4xl lg:text-5xl font-bold mb-4 ${
             isDarkMode ? "text-white" : "text-gray-900"
           }`}
-          
         >
           {project.title}
         </h1>
@@ -90,16 +89,12 @@ const DetailProject = () => {
           className={`text-lg mb-6 ${
             isDarkMode ? "text-gray-400" : "text-gray-600"
           }`}
-          
         >
           {project.shortDescription}
         </p>
 
         {/* Technologies */}
-        <div
-          className="flex flex-wrap gap-3 mb-6"
-          
-        >
+        <div className="flex flex-wrap gap-3 mb-6">
           {project.technologies.map((tech, index) => (
             <div
               key={index}
@@ -122,10 +117,7 @@ const DetailProject = () => {
         </div>
 
         {/* Action Buttons */}
-        <div
-          className="flex flex-wrap gap-4"
-          
-        >
+        <div className="flex flex-wrap gap-4">
           {project.sourceCode && (
             <a
               href={project.sourceCode}
@@ -169,21 +161,16 @@ const DetailProject = () => {
             ? "bg-gray-900 border border-gray-800"
             : "bg-white border border-gray-200"
         }`}
-        
       >
-        {/* <img
+        <img
           src={project.mainImage}
           alt={project.title}
           className="w-full h-auto"
-          onError={(e) => {
-            e.target.src =
-              "https://via.placeholder.com/1200x600/9333ea/ffffff?text=Project+Image";
-          }}
-        /> */}
+        />
       </div>
 
       {/* Introduction Section */}
-      <div className="mb-12" >
+      <div className="mb-12">
         <h2
           className={`text-2xl md:text-3xl font-bold mb-4 flex items-center gap-3 ${
             isDarkMode ? "text-white" : "text-gray-900"
@@ -202,7 +189,7 @@ const DetailProject = () => {
       </div>
 
       {/* Tech Stack Section */}
-      <div className="mb-12" >
+      <div className="mb-12">
         <h2
           className={`text-2xl md:text-3xl font-bold mb-6 flex items-center gap-3 ${
             isDarkMode ? "text-white" : "text-gray-900"
@@ -221,7 +208,6 @@ const DetailProject = () => {
                   ? "bg-gray-900 border border-gray-800"
                   : "bg-white border border-gray-200"
               }`}
-              
             >
               <h3
                 className={`text-lg font-bold mb-4 pb-2 border-b ${
@@ -259,7 +245,7 @@ const DetailProject = () => {
       </div>
 
       {/* Features Section */}
-      <div className="mb-12" >
+      <div className="mb-12">
         <h2
           className={`text-2xl md:text-3xl font-bold mb-6 flex items-center gap-3 ${
             isDarkMode ? "text-white" : "text-gray-900"
@@ -278,7 +264,6 @@ const DetailProject = () => {
                   ? "bg-gray-900 border border-gray-800 hover:border-purple-500"
                   : "bg-white border border-gray-200 hover:border-purple-500 shadow-lg"
               }`}
-              
             >
               <div className="flex items-start gap-4">
                 <div
@@ -311,7 +296,7 @@ const DetailProject = () => {
 
       {/* Gallery Section (Optional) */}
       {project.gallery && project.gallery.length > 0 && (
-        <div className="mb-12" >
+        <div className="mb-12">
           <h2
             className={`text-2xl md:text-3xl font-bold mb-6 flex items-center gap-3 ${
               isDarkMode ? "text-white" : "text-gray-900"
@@ -321,27 +306,90 @@ const DetailProject = () => {
             Gallery
           </h2>
 
-          {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {project.gallery.map((image, index) => (
               <div
                 key={index}
-                className={`rounded-xl overflow-hidden cursor-pointer transition-transform hover:scale-105 ${
-                  isDarkMode ? "bg-gray-900" : "bg-white border border-gray-200"
-                }`}
                 onClick={() => setActiveImage(index)}
+                className={`group rounded-xl overflow-hidden cursor-pointer transition-all duration-300
+        hover:-translate-y-1 hover:shadow-xl
+        ${isDarkMode ? "bg-gray-900" : "bg-white border border-gray-200"}
+      `}
               >
-                <img
-                  src={image}
-                  alt={`Screenshot ${index + 1}`}
-                  className="w-full h-auto"
-                  onError={(e) => {
-                    e.target.src =
-                      "https://via.placeholder.com/400x300/9333ea/ffffff?text=Screenshot";
-                  }}
-                />
+                {/* Image */}
+                <div className="relative overflow-hidden">
+                  <img
+                    src={image.src}
+                    alt={image.alt}
+                    className="w-full h-52 object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+
+                  {/* Hover Overlay */}
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all duration-300 flex items-center justify-center">
+                    <span className="text-white text-sm opacity-0 group-hover:opacity-100 transition-opacity">
+                      Click to preview
+                    </span>
+                  </div>
+                </div>
+
+                {/* Caption */}
+                <div className="p-4">
+                  <p
+                    className={`text-sm font-medium leading-snug ${
+                      isDarkMode ? "text-gray-200" : "text-gray-800"
+                    }`}
+                  >
+                    {image.caption}
+                  </p>
+                </div>
               </div>
             ))}
-          </div> */}
+          </div>
+        </div>
+      )}
+
+      {activeImage !== null && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm px-4"
+          onClick={() => setActiveImage(null)}
+        >
+          {/* Stop propagation biar klik gambar ga nutup */}
+          <div
+            className={`relative max-w-5xl w-full rounded-2xl overflow-hidden shadow-2xl
+        ${isDarkMode ? "bg-gray-900" : "bg-white"}
+      `}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close Button */}
+            <button
+              onClick={() => setActiveImage(null)}
+              className="absolute top-4 right-4 z-10 w-10 h-10 rounded-full
+          flex items-center justify-center
+          bg-black/60 hover:bg-black/80 text-white hover:text-purple-600 transition"
+            >
+              <i className="fas fa-times"></i>
+            </button>
+
+            {/* Image */}
+            <div className="w-full bg-black flex items-center justify-center">
+              <img
+                src={project.gallery[activeImage].src}
+                alt={project.gallery[activeImage].alt}
+                className="max-h-[80vh] w-auto object-contain"
+              />
+            </div>
+
+            {/* Caption */}
+            <div className="p-5 border-t">
+              <p
+                className={`text-sm md:text-base leading-relaxed
+            ${isDarkMode ? "text-gray-300" : "text-gray-700"}
+          `}
+              >
+                {project.gallery[activeImage].caption}
+              </p>
+            </div>
+          </div>
         </div>
       )}
 

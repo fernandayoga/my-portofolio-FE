@@ -22,7 +22,7 @@ const Projects = () => {
     }
   }, [filter]);
 
-  console.log(filter);
+  console.log(filteredProjects);
 
   return (
     <div
@@ -106,7 +106,7 @@ const Projects = () => {
               } overflow-hidden`}
             >
               <img
-                src={project.image}
+                src={project.mainImage}
                 alt={project.title}
                 className="w-full h-full object-cover hover:scale-110 transition-transform"
               />
