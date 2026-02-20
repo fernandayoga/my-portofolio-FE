@@ -287,6 +287,7 @@ const Dashboard = () => {
             color,
             createdAt,
             timeAgo: getTimeAgo(createdAt),
+            
           };
         })
         .filter(Boolean) // ✅ Remove null values
@@ -298,6 +299,8 @@ const Dashboard = () => {
       setGithubActivity([]);
     }
   };
+
+  
 
   // Helper function untuk "time ago"
   const getTimeAgo = (date) => {

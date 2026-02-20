@@ -5,13 +5,12 @@ import { projects } from "../data/dataProject";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
 
-
 const Projects = () => {
   const { isDarkMode } = useTheme();
   const [filter, setFilter] = useState("all");
   const { t } = useTranslation();
   const [filteredProjects, setFilteredProjects] = useState(projects);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (filter === "all") {
@@ -98,7 +97,8 @@ const Projects = () => {
             onClick={() => navigate(`/projects/${project.id}`)}
             className={`${cardClass(
               isDarkMode,
-            )} overflow-hidden hover:border-primary transition-all hover:scale-105 cursor-pointer`}
+            )} overflow-hidden hover:border-primary transition-all hover:scale-105 cursor-pointer flex flex-col`}
+            // ↑ Tambahkan: flex flex-col
           >
             <div
               className={`h-48 ${
@@ -108,11 +108,13 @@ const Projects = () => {
               <img
                 src={project.mainImage}
                 alt={project.title}
-                className="w-full h-full object-cover hover:scale-110 transition-transform"
+                className="w-full h-full object-cover "
               />
             </div>
 
-            <div className="p-6">
+            <div className="p-6 flex flex-col flex-1">
+              {/* ↑ Tambahkan: flex flex-col flex-1 */}
+
               <h3
                 className={`text-xl font-semibold mb-2 ${textClass(
                   isDarkMode,
@@ -120,23 +122,26 @@ const Projects = () => {
               >
                 {project.title}
               </h3>
+
               {project.pre && (
                 <p className="text-gray-400 text-sm mb-2">{project.pre}</p>
               )}
-              <p className="text-gray-400 text-sm mb-4">
+
+              <p className="text-gray-400 text-sm mb-4 flex-1">
+                {/* ↑ Tambahkan: flex-1 */}
                 {project.shortDescription}
               </p>
 
-              <div className="flex gap-3">
-                
+              {/* Button di paling bawah */}
+              <div className="flex gap-3 mt-auto">
+                {/* ↑ Tambahkan: mt-auto */}
 
                 <a
                   href={project.demo}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={(e) => (
-                    e.stopPropagation(),
-                    navigate(`/projects/${project.id}`)
+                    e.stopPropagation(), navigate(`/projects/${project.id}`)
                   )}
                   className="flex-1 bg-purple-600 hover:bg-purple-700 text-white text-center py-2 rounded-lg transition-all"
                 >
