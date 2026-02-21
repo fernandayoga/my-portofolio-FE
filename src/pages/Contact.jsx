@@ -65,30 +65,50 @@ const Contact = () => {
 
   const socialLinks = [
     {
-      icon: "fa-brands fa-github",
-      label: "GitHub",
-      link: "https://github.com/fernandayoga",
-      color: "hover:text-gray-400",
-    },
-    {
-      icon: "fa-brands fa-linkedin",
-      label: "LinkedIn",
-      link: "https://www.linkedin.com/in/fernanda-yoga-kurniawan-186b20295/",
-      color: "hover:text-blue-500",
-    },
-    {
-      icon: "fa-brands fa-instagram",
-      label: "Instagram",
+      icon: "fab fa-instagram",
       link: "https://www.instagram.com/fernanddyoga_/",
-      color: "hover:text-pink-500",
+      label: t("titleIg"),
+      title: t('titleIg'),
+      description: t('deskIg'),
+      buttonText: t('buttonIg'),
+      bgGradient: "bg-gradient-to-r from-purple-600 via-pink-500 to-orange-500",
+    },
+    {
+      icon: "fab fa-linkedin",
+      link: "https://www.linkedin.com/in/fernanda-yoga-kurniawan-186b20295/",
+      label: "LinkedIn",
+      title: t('titleLinkedin'),
+      description: t('deskLinkedin'),
+      buttonText: t('buttonLinkedin'),
+      bgGradient: "bg-gradient-to-r from-blue-500 to-blue-700",
+    },
+    {
+      icon: "fab fa-tiktok",
+      link: "https://tiktok.com/@yourhandle",
+      label: "TikTok",
+      title: t('titleTt'),
+      description: t('deskTt'),
+      buttonText: t('buttonTt'),
+      bgGradient: "bg-gradient-to-r from-gray-700 to-gray-900",
+    },
+    {
+      icon: "fab fa-github",
+      link: "https://github.com/fernandayoga",
+      label: "GitHub",
+      title: t('titleGithub'),
+      description: t('deskGithub'),
+      buttonText:  t('buttonGithub'),
+      bgGradient: "bg-gradient-to-r from-gray-800 via-gray-900 to-black",
     },
   ];
 
   return (
-    <div className="min-h-screen p-4 md:p-8 pt-20 lg:pt-8"
-    data-aos="fade-down"
+    <div
+      className="min-h-screen p-4 md:p-8 pt-20 lg:pt-8"
+      data-aos="fade-down"
       data-aos-delay="100"
-      data-aos-duration="600">
+      data-aos-duration="600"
+    >
       <h1
         className={`text-3xl md:text-4xl font-bold mb-2 ${
           isDarkMode ? "text-white" : "text-gray-900"
@@ -100,14 +120,14 @@ const Contact = () => {
         {t("contactSubtitle")}
       </p>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 ">
         {/* Contact Form */}
         <div
           className={`rounded-xl p-8 border ${
             isDarkMode
               ? "bg-gray-900 border-gray-800"
               : "bg-white border-gray-200 shadow-lg"
-          }`}
+          } `}
         >
           <h2
             className={`text-2xl font-semibold mb-6 flex items-center gap-3 ${
@@ -177,7 +197,7 @@ const Contact = () => {
                 onChange={handleChange}
                 required
                 rows="5"
-                className={`w-full px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none ${
+                className={`w-full   px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none ${
                   isDarkMode
                     ? "bg-gray-800 text-white border-gray-700"
                     : "bg-gray-50 text-gray-900 border border-gray-300"
@@ -214,50 +234,54 @@ const Contact = () => {
 
         {/* Social Links & Info */}
         <div className="space-y-6">
-          {/* Social Media */}
-          <div
-            className={`rounded-xl p-8 border ${
-              isDarkMode
-                ? "bg-gray-900 border-gray-800"
-                : "bg-white border-gray-200 shadow-lg"
-            }`}
-          >
+          {/* Social Media Cards */}
+          <div className="mb-12">
             <h2
-              className={`text-lg sm:text-2xl font-semibold mb-6 flex items-center gap-3 ${
+              className={`text-2xl font-bold mb-6 ${
                 isDarkMode ? "text-white" : "text-gray-900"
               }`}
             >
-              <i className="fas fa-share-alt text-primary"></i>
               {t("connectWithMe")}
             </h2>
-            <div className="grid grid-cols-3 gap-4">
+
+            <div className="grid grid-cols-1 gap-4">
               {socialLinks.map((social, index) => (
                 <a
                   key={index}
                   href={social.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`p-6 rounded-lg flex flex-col items-center justify-center transition-all 
-                  group ${social.color} ${
-                    isDarkMode
-                      ? "bg-gray-800 hover:bg-gray-700"
-                      : "bg-gray-50 hover:bg-gray-100"
-                  }`}
-                  title={social.label}
+                  className={`relative p-4 rounded-2xl overflow-hidden transition-all hover:scale-[1.02] group ${social.bgGradient}`}
                 >
-                  <i
-                    className={`${
-                      social.icon
-                    } text-4xl group-hover:scale-110 transition-transform ${
-                      isDarkMode ? "text-gray-400" : "text-gray-600"
-                    }`}
-                  ></i>
+                  {/* Content */}
+                  <div className="relative z-10 flex items-center justify-between">
+                    {/* Left Content */}
+                    <div className="flex-1">
+                      <h3 className="text-1xl font-bold text-white mb-2">
+                        {social.title}
+                      </h3>
+                      <p className="text-white/80 text-xs mb-4 max-w-md">
+                        {social.description}
+                      </p>
+
+                      {/* Button */}
+                      <button className="px-6 py-2.5 text-xs bg-white/90 hover:bg-white text-gray-900 rounded-lg font-medium transition-all flex items-center gap-2 shadow-lg">
+                        {social.buttonText}
+                        <i className="fas fa-arrow-right text-sm group-hover:translate-x-1 transition-transform"></i>
+                      </button>
+                    </div>
+
+                    {/* Right Icon */}
+                    <div className="flex mr-5  items-center justify-center ml-6 flex-shrink-0">
+                      <i className={`${social.icon} text-4xl lg:text-5xl text-white`}></i>
+                    </div>
+                  </div>
                 </a>
               ))}
             </div>
           </div>
 
-          {/* Availability Info */}
+          {/* Availability Info
           <div
             className={`rounded-xl p-8 border ${
               isDarkMode
@@ -299,7 +323,7 @@ const Contact = () => {
                 </span>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

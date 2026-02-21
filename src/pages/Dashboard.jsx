@@ -3,6 +3,7 @@ import { useTheme } from "../context/ThemeContext";
 import { useTranslation } from "react-i18next";
 import { GitHubCalendar } from "react-github-calendar";
 
+
 const Dashboard = () => {
   const { isDarkMode } = useTheme();
   const { t } = useTranslation();
@@ -287,7 +288,6 @@ const Dashboard = () => {
             color,
             createdAt,
             timeAgo: getTimeAgo(createdAt),
-            
           };
         })
         .filter(Boolean) // ✅ Remove null values
@@ -299,8 +299,6 @@ const Dashboard = () => {
       setGithubActivity([]);
     }
   };
-
-  
 
   // Helper function untuk "time ago"
   const getTimeAgo = (date) => {
@@ -632,100 +630,133 @@ const Dashboard = () => {
           )}
         </div>
 
-        {/* 4. Umami Web Analytics */}
-        <div
-          className={`rounded-2xl p-6 border ${
-            isDarkMode
-              ? "bg-gray-900 border-gray-800"
-              : "bg-white border-gray-200 shadow-lg"
-          }`}
-        >
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center">
-              <i className="fas fa-chart-line text-white text-xl"></i>
-            </div>
-            <div>
-              <h2
-                className={`text-xl font-bold ${
-                  isDarkMode ? "text-white" : "text-gray-900"
-                }`}
-              >
-                {t("umamiTitle")}
-              </h2>
-              <p className="text-sm text-gray-400">{t('umamiSub')}</p>
-            </div>
-          </div>
+       {/* 4. Umami Web Analytics */}
+<div
+  className={`rounded-2xl p-6 border ${
+    isDarkMode
+      ? "bg-gray-900 border-gray-800"
+      : "bg-white border-gray-200 shadow-lg"
+  }`}
+>
+  <div className="flex items-center gap-3 mb-6">
+    <div className="w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center">
+      <i className="fas fa-chart-line text-white text-xl"></i>
+    </div>
+    <div>
+      <h2
+        className={`text-xl font-bold ${
+          isDarkMode ? "text-white" : "text-gray-900"
+        }`}
+      >
+        {t("umamiTitle")}
+      </h2>
+      <p className="text-sm text-gray-400">{t("umamiSub")}</p>
+    </div>
+  </div>
 
-          <div className="grid grid-cols-2 gap-4">
-            <div
-              className={`p-4 rounded-lg ${
-                isDarkMode ? "bg-gray-800" : "bg-gray-50"
-              }`}
-            >
-              <p className="text-2xl font-bold text-orange-500">
-                {umamiData?.pageviews?.toLocaleString() || 0}
-              </p>
-              <p
-                className={`text-sm ${
-                  isDarkMode ? "text-gray-400" : "text-gray-600"
-                }`}
-              >
-                {t("pageViews")}
-              </p>
-            </div>
-
-            <div
-              className={`p-4 rounded-lg ${
-                isDarkMode ? "bg-gray-800" : "bg-gray-50"
-              }`}
-            >
-              <p className="text-2xl font-bold text-blue-500">
-                {umamiData?.visitors?.toLocaleString() || 0}
-              </p>
-              <p
-                className={`text-sm ${
-                  isDarkMode ? "text-gray-400" : "text-gray-600"
-                }`}
-              >
-                {t("totalVisitors")}
-              </p>
-            </div>
-
-            <div
-              className={`p-4 rounded-lg ${
-                isDarkMode ? "bg-gray-800" : "bg-gray-50"
-              }`}
-            >
-              <p className="text-2xl font-bold text-red-500">
-                {umamiData?.bounceRate || 0}%
-              </p>
-              <p
-                className={`text-sm ${
-                  isDarkMode ? "text-gray-400" : "text-gray-600"
-                }`}
-              >
-                {t("bounceRate")}
-              </p>
-            </div>
-
-            <div
-              className={`p-4 rounded-lg ${
-                isDarkMode ? "bg-gray-800" : "bg-gray-50"
-              }`}
-            >
-              <p className="text-2xl font-bold text-green-500">
-                {formatTime(umamiData?.avgTime || 0)}
-              </p>
-              <p
-                className={`text-sm ${
-                  isDarkMode ? "text-gray-400" : "text-gray-600"
-                }`}
-              >
-                {t("avgTimeOnSite")}
-              </p>
-            </div>
-          </div>
+  {/* Progress Bar Stats */}
+  <div className="space-y-6">
+    {/* Page Views */}
+    <div>
+      <div className="flex items-center justify-between mb-2">
+        <div className="flex items-center gap-2">
+          <i className="fas fa-eye text-orange-500"></i>
+          <span className={`text-sm font-medium ${
+            isDarkMode ? "text-gray-300" : "text-gray-700"
+          }`}>
+            {t("pageViews")}
+          </span>
         </div>
+        <span className="text-2xl font-bold text-orange-500">
+          {umamiData?.pageviews?.toLocaleString() || 0}
+        </span>
+      </div>
+      <div className={`w-full h-3 rounded-full ${
+        isDarkMode ? "bg-gray-800" : "bg-gray-200"
+      }`}>
+        <div
+          className="h-full bg-gradient-to-r from-orange-500 to-orange-600 rounded-full transition-all duration-1000"
+          style={{ width: `${Math.min((umamiData?.pageviews || 0) / 2000 * 100, 100)}%` }}
+        ></div>
+      </div>
+    </div>
+
+    {/* Visitors */}
+    <div>
+      <div className="flex items-center justify-between mb-2">
+        <div className="flex items-center gap-2">
+          <i className="fas fa-users text-blue-500"></i>
+          <span className={`text-sm font-medium ${
+            isDarkMode ? "text-gray-300" : "text-gray-700"
+          }`}>
+            {t("totalVisitors")}
+          </span>
+        </div>
+        <span className="text-2xl font-bold text-blue-500">
+          {umamiData?.visitors?.toLocaleString() || 0}
+        </span>
+      </div>
+      <div className={`w-full h-3 rounded-full ${
+        isDarkMode ? "bg-gray-800" : "bg-gray-200"
+      }`}>
+        <div
+          className="h-full bg-gradient-to-r from-blue-500 to-blue-600 rounded-full transition-all duration-1000"
+          style={{ width: `${Math.min((umamiData?.visitors || 0) / 1000 * 100, 100)}%` }}
+        ></div>
+      </div>
+    </div>
+
+    {/* Bounce Rate */}
+    <div>
+      <div className="flex items-center justify-between mb-2">
+        <div className="flex items-center gap-2">
+          <i className="fas fa-arrow-right-from-bracket text-red-500"></i>
+          <span className={`text-sm font-medium ${
+            isDarkMode ? "text-gray-300" : "text-gray-700"
+          }`}>
+            {t("bounceRate")}
+          </span>
+        </div>
+        <span className="text-2xl font-bold text-red-500">
+          {umamiData?.bounceRate || 0}%
+        </span>
+      </div>
+      <div className={`w-full h-3 rounded-full ${
+        isDarkMode ? "bg-gray-800" : "bg-gray-200"
+      }`}>
+        <div
+          className="h-full bg-gradient-to-r from-red-500 to-red-600 rounded-full transition-all duration-1000"
+          style={{ width: `${umamiData?.bounceRate || 0}%` }}
+        ></div>
+      </div>
+    </div>
+
+    {/* Avg Time */}
+    <div>
+      <div className="flex items-center justify-between mb-2">
+        <div className="flex items-center gap-2">
+          <i className="fas fa-clock text-green-500"></i>
+          <span className={`text-sm font-medium ${
+            isDarkMode ? "text-gray-300" : "text-gray-700"
+          }`}>
+            {t("avgTimeOnSite")}
+          </span>
+        </div>
+        <span className="text-2xl font-bold text-green-500">
+          {formatTime(umamiData?.avgTime || 0)}
+        </span>
+      </div>
+      <div className={`w-full h-3 rounded-full ${
+        isDarkMode ? "bg-gray-800" : "bg-gray-200"
+      }`}>
+        <div
+          className="h-full bg-gradient-to-r from-green-500 to-green-600 rounded-full transition-all duration-1000"
+          style={{ width: `${Math.min((umamiData?.avgTime || 0) / 300 * 100, 100)}%` }}
+        ></div>
+      </div>
+    </div>
+  </div>
+</div>
       </div>
 
       {/* Refresh Button */}

@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { cardClass, textClass, textSecondaryClass } from "../utils/themeUtils";
 import untag from "../assets/about/untag.png";
 import coreInitiative from "../assets/about/experience/coreInitiatif.jpeg";
+import wmk from "../assets/about/experience/wmk.jpg"; 
 import { useState, useEffect } from "react";
 
 const About = () => {
@@ -29,6 +30,21 @@ const About = () => {
         t("aboutExpDesc1_4"),
         t("aboutExpDesc1_5"),
         t("aboutExpDesc1_6"),
+      ],
+    },
+    {
+      company: "Wirausaha Merdedeka (WMK)",
+      image: wmk,
+      role: t("aboutExpWmk"),
+      period: t("aboutWmkPeriod"),
+      description: [
+        t("aboutWmkDesc1"),
+        t("aboutWmkDesc2"),
+        t("aboutWmkDesc3"),
+        t("aboutWmkDesc4"),
+        t("aboutWmkDesc5"),
+        t("aboutWmkDesc6"),
+        
       ],
     },
     
@@ -130,7 +146,7 @@ const About = () => {
                 key={index}
                 className={`rounded-xl border p-6 transition-all   ${
                   isDarkMode
-                    ? "bg-slate-800 border-gray-800 text-white"
+                    ? "bg-slate-900 border-gray-800 text-white"
                     : "bg-white border-gray-200 text-gray-900"
                 }`}
               >
@@ -174,7 +190,7 @@ const About = () => {
                         flex items-center gap-2 transition-all duration-300
                         ${
                           isDarkMode
-                            ? "bg-gray-900 text-gray-200 hover:bg-gray-700"
+                            ? "bg-gray-800 text-gray-200 hover:bg-gray-700"
                             : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                         }`}
                     >

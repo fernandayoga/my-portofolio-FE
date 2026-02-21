@@ -12,6 +12,8 @@ export const aboutTranslations = {
     aboutEduMajor: "Information System and Technology",
     aboutEduUniversity: "University 17 August Surabaya 1945",
     aboutExperience: "Experience",
+
+    //core initiatif
     aboutExpRole1: "Project-Based Virtual Intern : Frontend Developer",
     aboutExpPeriod1: "May 2025 - June 2025",
     aboutExpDesc1_1:
@@ -28,6 +30,22 @@ export const aboutTranslations = {
       "Gained real-world exposure to the end-to-end software development lifecycle with a professional, industry-oriented approach.",
     aboutShowResponsibilities: "Show Responsibilities",
     aboutClose: "Close",
+
+    //wmk
+    aboutExpWmk: "Participant of Wirausaha Merdedeka (WMK) Program",
+    aboutWmkPeriod: "September 2024 - December 2024",
+    aboutWmkDesc1:
+      "Collaborated in cross-disciplinary teams to create digital solutions based on community needs.",
+    aboutWmkDesc2:
+      "Attended training in business management, digital marketing, and product pitching.",
+    aboutWmkDesc3:
+      "Directly applied entrepreneurial knowledge through technology-based startup projects.",
+    aboutWmkDesc4:
+      "Developed Emotionera, a web-based educational platform focused on improving emotional intelligence, complete with learning modules, discussion forums, and a membership system.",
+    aboutWmkDesc5:
+      "Improved my creative thinking, team communication, and practical problem-solving skills.",
+    aboutWmkDesc6:
+      "Utilized technologies such as Laravel, Bootstrap, and Moodle to build responsive and functional digital solutions.",
   },
   id: {
     aboutTitle: "Tentang",
@@ -58,5 +76,21 @@ export const aboutTranslations = {
       "Mendapatkan eksposur nyata terhadap siklus pengembangan perangkat lunak end-to-end dengan pendekatan profesional yang berorientasi industri.",
     aboutShowResponsibilities: "Lihat Tanggung Jawab",
     aboutClose: "Tutup",
+
+    //wmk
+    aboutExpWmk: "Partisipasi dalam Program Wirausaha Merdedeka (WMK)",
+    aboutWmkPeriod: "September 2024 - Desember 2024",
+    aboutWmkDesc1:
+      "Berkolaborasi dalam tim lintas disiplin untuk menciptakan solusi digital berdasarkan kebutuhan masyarakat.",
+    aboutWmkDesc2:
+      "Mengikuti pelatihan manajemen bisnis, digital marketing, dan teknik pitching produk.",
+    aboutWmkDesc3:
+      "Menerapkan secara langsung pengetahuan kewirausahaan melalui proyek startup berbasis teknologi.",
+    aboutWmkDesc4:
+      "Mengembangkan Emotionera, platform edukasi berbasis web yang berfokus pada peningkatan kecerdasan emosional, dilengkapi modul pembelajaran, forum diskusi, dan sistem keanggotaan.",
+    aboutWmkDesc5:
+      "Meningkatkan kemampuan berpikir kreatif, komunikasi tim, dan pemecahan masalah secara praktis.",
+    aboutWmkDesc6:
+      "Menggunakan teknologi seperti Laravel, Bootstrap, dan Moodle untuk membangun solusi digital yang responsif dan fungsional.",
   },
 };

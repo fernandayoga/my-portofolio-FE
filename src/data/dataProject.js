@@ -218,7 +218,7 @@ export const projects = [
   {
     id: "ramadhan-app",
     title: "Ramadhan App",
-    pre: "",
+    pre: "(Ramadhan edition)",
     shortDescription:
       "Aplikasi web Ramadhan berbasis React dengan pendekatan offline-first — waktu sholat, Al-Qur'an, arah kiblat, tracker ibadah, dan catatan puasa dalam satu aplikasi.",
     category: "web",
