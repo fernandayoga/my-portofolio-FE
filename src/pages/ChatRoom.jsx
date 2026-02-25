@@ -186,14 +186,20 @@ const ChatRoom = () => {
   };
 
   // Format timestamp
-  const formatTime = (timestamp) => {
-    if (!timestamp) return "";
-    const date = new Date(timestamp);
-    return date.toLocaleTimeString("en-US", {
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-  };
+const formatTime = (timestamp) => {
+  if (!timestamp) return '';
+  const date = new Date(timestamp);
+  
+  // Format: "21 Feb 2026, 10:30"
+  return date.toLocaleString('en-GB', {
+    day: '2-digit',
+    month: 'short',
+    // year: 'numeric',   // ✅ tambah tahun
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false
+  });
+};
 
   // Get avatar URL
   const getAvatarUrl = (photoURL, displayName) => {
