@@ -58,6 +58,8 @@ const SmartTalk = () => {
     t("suggestedQuestions5"),
   ];
 
+  console.log(messages);
+
   return (
     <div
       className={`min-h-[100dvh] flex flex-col items-center justify-center px-3 sm:px-4 ${
