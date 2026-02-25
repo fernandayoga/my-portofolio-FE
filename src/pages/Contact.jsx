@@ -84,7 +84,7 @@ const Contact = () => {
     },
     {
       icon: "fab fa-tiktok",
-      link: "https://tiktok.com/@yourhandle",
+      link: "https://www.tiktok.com/@cancerrboyyy__",
       label: "TikTok",
       title: t('titleTt'),
       description: t('deskTt'),
@@ -281,49 +281,7 @@ const Contact = () => {
             </div>
           </div>
 
-          {/* Availability Info
-          <div
-            className={`rounded-xl p-8 border ${
-              isDarkMode
-                ? "bg-gray-900 border-gray-800"
-                : "bg-white border-gray-200 shadow-lg"
-            }`}
-          >
-            <h2
-              className={`text-2xl font-semibold mb-6 flex items-center gap-3 ${
-                isDarkMode ? "text-white" : "text-gray-900"
-              }`}
-            >
-              <i className="fas fa-clock text-primary"></i>
-              {t("availability")}
-            </h2>
-            <div className="space-y-3">
-              <div className="flex items-center gap-3">
-                <i className="fas fa-check-circle text-green-500"></i>
-                <span
-                  className={isDarkMode ? "text-gray-300" : "text-gray-700"}
-                >
-                  {t("availableFreelance")}
-                </span>
-              </div>
-              <div className="flex items-center gap-3">
-                <i className="fas fa-check-circle text-green-500"></i>
-                <span
-                  className={isDarkMode ? "text-gray-300" : "text-gray-700"}
-                >
-                  {t("openFulltime")}
-                </span>
-              </div>
-              <div className="flex items-center gap-3">
-                <i className="fas fa-check-circle text-green-500"></i>
-                <span
-                  className={isDarkMode ? "text-gray-300" : "text-gray-700"}
-                >
-                  {t("responseTime")}
-                </span>
-              </div>
-            </div>
-          </div> */}
+         
         </div>
       </div>
     </div>
