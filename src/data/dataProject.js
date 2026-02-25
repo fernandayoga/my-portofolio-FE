@@ -5,7 +5,6 @@ import askBot from "../assets/project/porto/askBot.png";
 import githubAnalytics from "../assets/project/porto/githubAnalitic.png";
 import mobileView from "../assets/project/porto/mobileDevice.png";
 
-
 //ramadhan app
 import mainImageRamadhan from "../assets/project/ramadhanApp/mainImageRmdhn.png";
 import prayerImage from "../assets/project/ramadhanApp/prayerImage.png";
@@ -218,11 +217,11 @@ export const projects = [
   {
     id: "ramadhan-app",
     title: "Ramadhan App",
-    pre: "(Ramadhan edition)",
+    pre: "(Ramadhan Edition)",
     shortDescription:
-      "Aplikasi web Ramadhan berbasis React dengan pendekatan offline-first — waktu sholat, Al-Qur'an, arah kiblat, tracker ibadah, dan catatan puasa dalam satu aplikasi.",
+      "A Ramadhan web application built with React using an offline-first approach — prayer times, Al-Qur'an, Qibla direction, worship tracker, and fasting journal in one app.",
     category: "web",
-    mainImage: mainImageRamadhan, // ganti dengan screenshot app
+    mainImage: mainImageRamadhan,
 
     technologies: [
       { name: "React", icon: "fa-brands fa-react", color: "text-blue-400" },
@@ -233,7 +232,6 @@ export const projects = [
         color: "text-cyan-500",
         isCustom: true,
       },
-      
       {
         name: "IndexedDB",
         icon: "fa-solid fa-database",
@@ -245,7 +243,7 @@ export const projects = [
     liveDemo: "https://ramadhan-app-yogz.vercel.app/",
 
     introduction:
-      "Ramadhan App adalah aplikasi web Ramadhan yang dibangun dengan pendekatan offline-first menggunakan React dan Vite. Aplikasi ini dirancang untuk membantu umat Muslim menjalankan ibadah selama bulan Ramadhan dengan fitur yang lengkap, ringan, dan akurat. Mulai dari jadwal sholat otomatis berbasis GPS, countdown sahur & berbuka, kompas arah kiblat, baca Al-Qur'an 30 Juz offline, catatan puasa harian, hingga tracker ibadah — semua tersedia dalam satu aplikasi yang bisa diakses tanpa internet setelah pertama kali digunakan.",
+      "Ramadhan App is a Ramadhan web application built with an offline-first approach using React and Vite. It is designed to help Muslims perform their worship during the holy month of Ramadhan with complete, lightweight, and accurate features. From automatic GPS-based prayer times, suhoor & iftar countdown, digital Qibla compass, full 30 Juz Al-Qur'an offline reading, daily fasting journal, to worship tracker — everything is available in one application that can be accessed without an internet connection after the first use.",
 
     techStack: [
       {
@@ -254,26 +252,26 @@ export const projects = [
           {
             name: "React 18",
             description:
-              "Component-based UI library dengan hooks untuk state management",
+              "Component-based UI library using hooks for state management",
           },
           {
             name: "Vite 5",
             description:
-              "Build tool modern yang cepat untuk development dan production",
+              "Modern and fast build tool for development and production",
           },
           {
             name: "Tailwind CSS 4",
             description:
-              "Utility-first CSS framework untuk UI yang responsif dan konsisten",
+              "Utility-first CSS framework for responsive and consistent UI",
           },
           {
             name: "Font Awesome 6",
-            description: "Icon library untuk tampilan UI yang informatif",
+            description: "Icon library for informative and clean UI design",
           },
           {
             name: "Google Fonts (Poppins + Amiri)",
             description:
-              "Poppins untuk teks umum, Amiri untuk teks Arab Al-Qur'an",
+              "Poppins for general text and Amiri for Arabic Qur'an text",
           },
         ],
       },
@@ -283,57 +281,55 @@ export const projects = [
           {
             name: "IndexedDB (idb)",
             description:
-              "Database browser berkapasitas besar untuk menyimpan data Al-Qur'an 114 surah secara permanen — fetch API hanya terjadi sekali per surah, setelah itu tersedia offline.",
+              "Large-capacity browser database to permanently store all 114 Surahs of the Qur'an — the API is fetched only once per Surah, then available offline.",
           },
           {
             name: "localStorage",
             description:
-              "Penyimpanan ringan untuk data kecil seperti jadwal sholat (cache harian), lokasi user, catatan puasa, tracker ibadah, bookmark Qur'an, dan preferensi notifikasi.",
+              "Lightweight storage for small data such as daily prayer times cache, user location, fasting journal, worship tracker, Qur'an bookmarks, and notification preferences.",
           },
         ],
       },
       {
-        category: "APIs & Integrasi",
+        category: "APIs & Integration",
         items: [
           {
             name: "Aladhan API",
             description:
-              "API gratis tanpa API key untuk mengambil jadwal sholat 5 waktu berdasarkan koordinat GPS dan metode perhitungan yang dipilih.",
+              "Free API without API key to fetch five daily prayer times based on GPS coordinates and selected calculation method.",
           },
           {
             name: "alquran.cloud API",
             description:
-              "API gratis untuk mengambil teks Arab Al-Qur'an beserta terjemahan Bahasa Indonesia per surah.",
+              "Free API to fetch Arabic Qur'an text along with Indonesian translation per Surah.",
           },
           {
             name: "Nominatim OpenStreetMap",
             description:
-              "Reverse geocoding gratis tanpa API key untuk mengubah koordinat GPS menjadi nama kota yang mudah dibaca.",
+              "Free reverse geocoding service without API key to convert GPS coordinates into readable city names.",
           },
           {
             name: "Web Geolocation API",
             description:
-              "API bawaan browser untuk mendeteksi lokasi user secara otomatis untuk keperluan waktu sholat dan arah kiblat.",
+              "Built-in browser API to automatically detect user location for prayer times and Qibla direction.",
           },
           {
             name: "DeviceOrientation API",
             description:
-              "API bawaan browser untuk membaca sensor gyroscope perangkat sebagai kompas digital penunjuk arah kiblat.",
+              "Built-in browser API to read device gyroscope sensor as a digital compass for Qibla direction.",
           },
         ],
       },
-      
       {
         category: "Deployment",
         items: [
           {
             name: "Vercel",
-            description:
-              "Platform hosting untuk deployment frontend production",
+            description: "Frontend hosting platform for production deployment",
           },
           {
             name: "GitHub",
-            description: "Version control dan project management",
+            description: "Version control and project management platform",
           },
         ],
       },
@@ -341,52 +337,51 @@ export const projects = [
 
     features: [
       {
-        title: "Waktu Sholat Otomatis",
+        title: "Automatic Prayer Times",
         description:
-          "Jadwal sholat 5 waktu berdasarkan GPS dengan cache harian — API hanya dipanggil sekali per hari. Support berbagai metode perhitungan termasuk Kemenag Indonesia.",
+          "Five daily prayer times based on GPS with daily caching — the API is called only once per day. Supports multiple calculation methods including Indonesia's Ministry of Religious Affairs.",
         icon: "fa-clock",
         color: "bg-blue-500",
       },
       {
-        title: "Countdown Sahur & Berbuka",
+        title: "Suhoor & Iftar Countdown",
         description:
-          "Countdown real-time menuju waktu sahur dan berbuka dengan status otomatis — Waktu Sahur, Imsak, Sedang Berpuasa, atau Waktu Berbuka.",
+          "Real-time countdown to suhoor and iftar with automatic status updates — Suhoor Time, Imsak, Fasting Time, or Iftar Time.",
         icon: "fa-moon",
         color: "bg-indigo-500",
       },
       {
-        title: "Arah Kiblat Digital",
+        title: "Digital Qibla Direction",
         description:
-          "Kompas digital berbasis sensor gyroscope perangkat untuk menunjukkan arah Ka'bah secara real-time, dilengkapi kalkulasi jarak ke Ka'bah menggunakan Haversine formula.",
+          "Digital compass using device gyroscope sensor to show the direction of the Kaaba in real-time, including distance calculation to the Kaaba using the Haversine formula.",
         icon: "fa-compass",
         color: "bg-emerald-500",
       },
       {
-        title: "Al-Qur'an Offline",
+        title: "Offline Al-Qur'an",
         description:
-          "Baca 114 Surah Al-Qur'an lengkap dengan terjemahan Bahasa Indonesia. Data di-cache di IndexedDB — setelah surah dibuka pertama kali, tersedia offline selamanya.",
+          "Read all 114 Surahs of the Qur'an with Indonesian translation. Data is cached in IndexedDB — once a Surah is opened for the first time, it is permanently available offline.",
         icon: "fa-book-open",
         color: "bg-amber-500",
       },
       {
-        title: "Catatan Puasa",
+        title: "Fasting Journal",
         description:
-          "Tandai status puasa harian dengan kalender visual 30 hari Ramadhan, catat alasan jika tidak puasa, dan lihat statistik progress puasa secara keseluruhan.",
+          "Mark daily fasting status with a 30-day Ramadhan visual calendar, add reasons if not fasting, and track overall fasting progress statistics.",
         icon: "fa-calendar-day",
         color: "bg-red-500",
       },
       {
-        title: "Tracker Ibadah",
+        title: "Worship Tracker",
         description:
-          "Checklist 8 ibadah harian — Sholat 5 waktu, Tarawih, Tadarus, dan Sedekah — dilengkapi streak tracker, heatmap 30 hari, dan statistik per ibadah.",
+          "Checklist of 8 daily worship activities — five daily prayers, Tarawih, Qur'an recitation, and charity — including streak tracker, 30-day heatmap, and per-activity statistics.",
         icon: "fa-list-check",
         color: "bg-cyan-500",
       },
-      
       {
-        title: "Offline-First",
+        title: "Offline-First Architecture",
         description:
-          "Sebagian besar fitur berjalan tanpa internet — lokasi tersimpan lokal, jadwal sholat di-cache harian, dan Al-Qur'an tersimpan permanen di IndexedDB browser.",
+          "Most features work without an internet connection — location stored locally, prayer times cached daily, and Qur'an data permanently stored in IndexedDB.",
         icon: "fa-wifi",
         color: "bg-green-500",
       },
@@ -397,42 +392,42 @@ export const projects = [
         src: mainImageRamadhan,
         alt: "Ramadhan App homepage",
         caption:
-          "Beranda — Hero section dengan countdown dan info waktu sholat",
+          "Homepage — Hero section with countdown and prayer time information",
       },
       {
         src: prayerImage,
-        alt: "Halaman waktu sholat",
-        caption: "Waktu Sholat — Jadwal harian dengan highlight waktu aktif",
+        alt: "Prayer times page",
+        caption: "Prayer Times — Daily schedule with active time highlight",
       },
       {
         src: iftarImage,
-        alt: "Halaman waktu berbuka dan sahur",
-        caption: "Sahur & Berbuka — Countdown real-time menuju waktu sahur dan berbuka",
+        alt: "Suhoor and iftar page",
+        caption: "Suhoor & Iftar — Real-time countdown to suhoor and iftar",
       },
       {
         src: quranImage,
-        alt: "Halaman Al-Qur'an",
-        caption: "Al-Qur'an — Baca 114 surah dengan terjemahan offline",
+        alt: "Qur'an page",
+        caption: "Al-Qur'an — Read all 114 Surahs with offline translation",
       },
       {
         src: qiblaImage,
-        alt: "Halaman arah kiblat",
-        caption: "Arah Kiblat — Kompas digital berbasis sensor perangkat",
+        alt: "Qibla direction page",
+        caption: "Qibla Direction — Digital compass using device sensors",
       },
       {
         src: fastingImage,
-        alt: "Halaman puasa harian",
-        caption: "Catatan Puasa — Tandai status puasa harian",
+        alt: "Daily fasting page",
+        caption: "Fasting Journal — Mark daily fasting status",
       },
       {
         src: trackerImage,
-        alt: "Tracker ibadah ",
-        caption: "Tracker Ibadah dan Checklist 8 ibadah harian ",
+        alt: "Worship tracker page",
+        caption: "Worship Tracker — Checklist of 8 daily worship activities",
       },
       {
         src: mobileViewRmdhn,
-        alt: "Tampilan mobile",
-        caption: "Responsive — Tampilan mobile dengan bottom navigation",
+        alt: "Mobile view",
+        caption: "Responsive Design — Mobile view with bottom navigation",
       },
     ],
   },
