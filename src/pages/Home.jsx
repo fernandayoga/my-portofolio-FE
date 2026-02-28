@@ -348,7 +348,7 @@ const Home = () => {
                 isDarkMode
                   ? "bg-gray-900 border-gray-800 hover:border-purple-500"
                   : "bg-white border-gray-200 hover:border-purple-500"
-              } border rounded-xl p-6 transition-all duration-300 hover:scale-105 cursor-pointer group`}
+              } border rounded-xl p-6 transition-all duration-300 hover:scale-105  group`}
             >
               <div className="flex items-start gap-4">
                 <div
