@@ -61,6 +61,19 @@ const Sidebar = () => {
     i18n.changeLanguage(newLang);
   };
 
+   const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
+  // ✅ Array page yang tidak perlu button
+const hideBackToTopPages = ['/chat-room', '/contact', '/smart-talk'];
+
+// ✅ Cek apakah current page ada di list
+const shouldShowBackToTop = !hideBackToTopPages.includes(location.pathname);
+
   return (
     <>
       {/* Burger Menu Button - Only visible on mobile, hidden when scrolled */}
@@ -82,6 +95,25 @@ const Sidebar = () => {
           } text-xl`}
         ></i>
       </button>
+
+      {/* Back to Top Button - Muncul saat burger menu hilang */}
+     {shouldShowBackToTop && (
+      <button
+        onClick={scrollToTop}
+        className={`lg:hidden fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full shadow-lg flex items-center justify-center transition-all duration-300 ${
+          isDarkMode
+            ? "bg-purple-500 hover:bg-purple-600"
+            : "bg-purple-500 hover:bg-purple-600"
+        } ${
+          isScrolled && !isOpen
+            ? "opacity-100 translate-y-0 pointer-events-auto"
+            : "opacity-0 translate-y-10 pointer-events-none"
+        }`}
+        title="Back to Top"
+      >
+        <i className="fas fa-arrow-up text-white text-xl"></i>
+      </button>
+      )}
 
       {/* Overlay - Only visible on mobile when sidebar is open */}
       {isOpen && (
