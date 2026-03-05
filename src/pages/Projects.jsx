@@ -39,7 +39,9 @@ const Projects = () => {
       </h1>
       <p className="text-gray-400 mb-8">{t("projectsSubtitle")}</p>
 
-      <div className="flex flex-wrap gap-3 mb-8">
+
+      {/* filter buttons */}
+      {/* <div className="flex flex-wrap gap-3 mb-8">
         <button
           onClick={() => setFilter("all")}
           className={`px-4 md:px-6 py-2 rounded-lg transition-all text-sm md:text-base ${
@@ -88,9 +90,9 @@ const Projects = () => {
         >
           {t("backend")}
         </button>
-      </div>
+      </div> */}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
         {filteredProjects.map((project) => (
           <div
             key={project.id}
@@ -101,7 +103,7 @@ const Projects = () => {
             // ↑ Tambahkan: flex flex-col
           >
             <div
-              className={`h-48 ${
+              className={`h-47 ${
                 isDarkMode ? "bg-gray-800" : "bg-gray-200"
               } overflow-hidden`}
             >

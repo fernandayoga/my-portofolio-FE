@@ -6,6 +6,7 @@ import githubAnalytics from "../assets/project/porto/githubAnalitic.png";
 import mobileView from "../assets/project/porto/mobileDevice.png";
 
 //ramadhan app
+import EtalaseRmdhn from "../assets/project/ramadhanApp/Etalase-RmdhnApp.png";
 import mainImageRamadhan from "../assets/project/ramadhanApp/mainImageRmdhn.png";
 import prayerImage from "../assets/project/ramadhanApp/prayerImage.png";
 import quranImage from "../assets/project/ramadhanApp/quranImage.png";
@@ -221,7 +222,7 @@ export const projects = [
     shortDescription:
       "A Ramadhan web application built with React using an offline-first approach — prayer times, Al-Qur'an, Qibla direction, worship tracker, and fasting journal in one app.",
     category: "web",
-    mainImage: mainImageRamadhan,
+    mainImage: EtalaseRmdhn,
 
     technologies: [
       { name: "React", icon: "fa-brands fa-react", color: "text-blue-400" },

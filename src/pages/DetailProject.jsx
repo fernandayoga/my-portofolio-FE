@@ -154,20 +154,7 @@ const DetailProject = () => {
         }`}
       ></div>
 
-      {/* Main Image */}
-      <div
-        className={`rounded-2xl overflow-hidden mb-12 ${
-          isDarkMode
-            ? "bg-gray-900 border border-gray-800"
-            : "bg-white border border-gray-200"
-        }`}
-      >
-        <img
-          src={project.mainImage}
-          alt={project.title}
-          className="w-full h-auto"
-        />
-      </div>
+      
 
       {/* Introduction Section */}
       <div className="mb-12">
