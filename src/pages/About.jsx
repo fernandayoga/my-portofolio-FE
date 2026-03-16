@@ -5,6 +5,7 @@ import { cardClass, textClass, textSecondaryClass } from "../utils/themeUtils";
 import untag from "../assets/about/untag.png";
 import coreInitiative from "../assets/about/experience/coreInitiatif.jpeg";
 import wmk from "../assets/about/experience/wmk.jpg"; 
+import infranexia from "../assets/about/experience/infranexia.png";
 import { useState, useEffect } from "react";
 
 const About = () => {
@@ -18,6 +19,20 @@ const About = () => {
   };
 
   const experienceData = [
+    {
+      company: "PT Telkom Infrastruktur Indonesia (Infranexia)",
+      image: infranexia,
+      role: t("aboutExpInfranexia"),
+      period: t("aboutInfranexiaPeriod"),
+      description: [
+        t("aboutInfranexiaDesc1"),
+        t("aboutInfranexiaDesc2"),
+        t("aboutInfranexiaDesc3"),
+        t("aboutInfranexiaDesc4"),
+        t("aboutInfranexiaDesc5"),
+        t("aboutInfranexiaDesc6"),
+      ],
+    },
     {
       company: "Core Initiative x Rakamin Academy",
       image: coreInitiative,

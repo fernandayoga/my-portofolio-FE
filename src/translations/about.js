@@ -46,7 +46,24 @@ export const aboutTranslations = {
       "Improved my creative thinking, team communication, and practical problem-solving skills.",
     aboutWmkDesc6:
       "Utilized technologies such as Laravel, Bootstrap, and Moodle to build responsive and functional digital solutions.",
+
+    //infranexia
+    aboutExpInfranexia: "Full-Stack Mobile Developer Intern",
+    aboutInfranexiaPeriod: "March 2026 - July 2026",
+    aboutInfranexiaDesc1:
+      "Contributed to the development of a mobile-based employee attendance system aimed at improving the efficiency and accuracy of attendance management within the company.",
+    aboutInfranexiaDesc2:
+      "Helped transform the manual attendance recording process into a more structured digital system, enabling easier monitoring and management of employee attendance.",
+    aboutInfranexiaDesc3:
+      "Designed and implemented key application features including user authentication, attendance recording, and attendance data management to support daily operational needs.",
+    aboutInfranexiaDesc4:
+      "Integrated identity verification and location validation mechanisms to improve the reliability of attendance data and reduce the possibility of attendance fraud.",
+    aboutInfranexiaDesc5:
+      "Conducted system testing and evaluation to ensure the application performs reliably and provides a more practical and efficient experience for users.",
+    aboutInfranexiaDesc6:
+      "The system was developed using Flutter to build the mobile application interface, Express.js to handle backend services and API communication, and MySQL as the database for managing employee and attendance data.",
   },
+
   id: {
     aboutTitle: "Tentang",
     aboutSubtitle: "Pengenalan singkat tentang Siapa Saya",
@@ -92,5 +109,21 @@ export const aboutTranslations = {
       "Meningkatkan kemampuan berpikir kreatif, komunikasi tim, dan pemecahan masalah secara praktis.",
     aboutWmkDesc6:
       "Menggunakan teknologi seperti Laravel, Bootstrap, dan Moodle untuk membangun solusi digital yang responsif dan fungsional.",
+
+    //infranexia
+    aboutExpIfranexia: "Full-Stack Mobile Developer Intern",
+    aboutInfranexiaPeriod: "Maret 2026 - Juli 2026",
+    aboutInfranexiaDesc1:
+      "Berkontribusi dalam pengembangan sistem absensi karyawan berbasis mobile yang dirancang untuk membantu perusahaan meningkatkan efisiensi serta akurasi dalam proses pencatatan kehadiran karyawan.",
+    aboutInfranexiaDesc2:
+      "Mengembangkan solusi digital yang menggantikan proses pencatatan absensi manual menjadi sistem yang lebih terintegrasi, sehingga mempermudah pemantauan kehadiran karyawan secara lebih terstruktur dan transparan.",
+    aboutInfranexiaDesc3:
+      "Merancang dan mengimplementasikan berbagai fitur utama aplikasi seperti autentikasi pengguna, proses absensi, serta pencatatan dan pengelolaan data kehadiran yang dapat diakses secara lebih praktis oleh pengguna.",
+    aboutInfranexiaDesc4:
+      "Mengintegrasikan mekanisme verifikasi identitas dan validasi lokasi untuk meningkatkan keakuratan data absensi serta membantu meminimalkan potensi penyalahgunaan sistem.",
+    aboutInfranexiaDesc5:
+      "Melakukan proses pengujian dan evaluasi sistem secara berkala untuk memastikan aplikasi dapat berjalan dengan baik serta memberikan pengalaman penggunaan yang lebih efektif bagi pengguna.",
+    aboutInfranexiaDesc6:
+      "Sistem ini dikembangkan menggunakan Flutter untuk membangun aplikasi mobile, Express.js sebagai backend untuk pengelolaan API dan logika sistem, serta MySQL sebagai basis data untuk menyimpan dan mengelola data karyawan dan absensi secara terstruktur.",
   },
 };

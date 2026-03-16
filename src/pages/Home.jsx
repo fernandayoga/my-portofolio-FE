@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useTheme } from "../context/ThemeContext";
 import { useTranslation } from "react-i18next";
-import profileImage from "../assets/about/experience/image.png";
+import profileImage from "../assets/about/experience/imageProfile.png";
 
 const Home = () => {
   const { isDarkMode } = useTheme();
