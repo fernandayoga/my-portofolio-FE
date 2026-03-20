@@ -97,16 +97,16 @@ const About = () => {
         {/* Who I Am */}
         <div className={`${cardClass(isDarkMode)} p-6`}>
           <p
-            className={`${textSecondaryClass(isDarkMode)} leading-relaxed mb-4`}
+            className={`${textSecondaryClass(isDarkMode)} leading-relaxed mb-4 text-justify`}
           >
             {t("aboutPara1")}
           </p>
           <p
-            className={`${textSecondaryClass(isDarkMode)} leading-relaxed mb-4`}
+            className={`${textSecondaryClass(isDarkMode)} leading-relaxed mb-4 text-justify`}
           >
             {t("aboutPara2")}
           </p>
-          <p className={`${textSecondaryClass(isDarkMode)} leading-relaxed`}>
+          <p className={`${textSecondaryClass(isDarkMode)} leading-relaxed text-justify`}>
             {t("aboutPara3")}
           </p>
         </div>
