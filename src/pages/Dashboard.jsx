@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useTheme } from "../context/ThemeContext";
 import { useTranslation } from "react-i18next";
 import { GitHubCalendar } from "react-github-calendar";
-import CodingStatistics from "../components/CodingStatistics";
+
 
 const Dashboard = () => {
   const { isDarkMode } = useTheme();
@@ -788,9 +788,6 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
-        
-        {/* Live Coding Statistics - Full Width */}
-        <CodingStatistics />
       </div>
 
       {/* Refresh Button */}

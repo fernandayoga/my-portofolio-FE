@@ -189,8 +189,6 @@ const Home = () => {
     switch (skill.icon) {
       case "nextjs":
         return <NextJsIcon />;
-      case "firebase":
-        return <FirebaseIcon />;
       case "tailwind":
         return <TailwindIcon />;
       case "express":
@@ -199,6 +197,8 @@ const Home = () => {
         return <MysqlIcon />;
       case "nginx":
         return <NginxIcon />;
+      case "flutter":
+        return <FlutterIcon />;
       default:
         return null;
     }
