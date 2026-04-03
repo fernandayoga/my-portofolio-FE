@@ -53,7 +53,6 @@ const Home = () => {
     { icon: "fa-brands fa-git-alt", color: "bg-orange-600", name: "Git" },
     { icon: "nginx", color: "bg-green-600", name: "Nginx", isCustom: true },
     { icon: "flutter", color: "bg-blue-400", name: "Flutter", isCustom: true },
-    { icon: "fa-solid fa-fire", color: "bg-orange-500", name: "Firebase" },
     { icon: "fa-brands fa-github", color: "bg-gray-700", name: "GitHub" },
   ];
 
@@ -103,33 +102,7 @@ const Home = () => {
     </svg>
   );
 
-  const FirebaseIcon = () => (
-  <svg viewBox="0 0 180 180" className="w-8 h-8 md:w-10 md:h-10">
-    {/* Yellow flame */}
-    <path
-      d="M 50 40 L 80 130 L 90 110 L 60 30 Z"
-      fill="#FFC107"
-    />
-    
-    {/* Orange overlap */}
-    <path
-      d="M 80 130 L 90 110 L 100 130 Z"
-      fill="#FF9800"
-    />
-    
-    {/* Red flame */}
-    <path
-      d="M 90 20 L 130 150 L 80 130 L 90 110 Z"
-      fill="#F44336"
-    />
-    
-    {/* Bottom base */}
-    <path
-      d="M 50 150 L 90 170 L 130 150 L 80 130 Z"
-      fill="#E65100"
-    />
-  </svg>
-);
+  
 
   const TailwindIcon = () => (
     <svg viewBox="0 0 24 24" fill="white" className="w-8 h-8 md:w-10 md:h-10">
@@ -226,8 +199,6 @@ const Home = () => {
         return <MysqlIcon />;
       case "nginx":
         return <NginxIcon />;
-      case "flutter":
-        return <FlutterIcon />;
       default:
         return null;
     }
