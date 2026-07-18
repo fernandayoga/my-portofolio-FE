@@ -62,6 +62,21 @@ export const aboutTranslations = {
       "Conducted system testing and evaluation to ensure the application performs reliably and provides a more practical and efficient experience for users.",
     aboutInfranexiaDesc6:
       "The system was developed using Flutter to build the mobile application interface, Express.js to handle backend services and API communication, and MySQL as the database for managing employee and attendance data.",
+
+
+    //wootix
+    aboutExpWootix: "Frontend Developer Intern",
+    aboutWootixPeriod: "May 2026 - July 2026",
+    aboutWootixDesc1:
+    " Contributed to the development of a Next.js-based web application by implementing new features based on product requirements and team requests, while ensuring responsive, user-friendly interfaces aligned with the established design specifications.",
+    aboutWootixDesc2:
+    " Analyzed, identified, and resolved bugs in existing features, including both user interface and application functionality issues, improving system stability, user experience, and overall application quality.",
+    aboutWootixDesc3:
+    "Integrated frontend components with backend services through REST APIs to efficiently retrieve, manage, and update dynamic data while ensuring reliable communication between the client and server.",
+    aboutWootixDesc4:
+    "Collaborated with the development team using Git and GitHub for source code management, version control, task completion, and maintaining an efficient collaborative development workflow.",
+    aboutWootixDesc5: 
+    "Performed feature testing and validation to ensure newly developed and updated functionalities met project requirements, minimized potential issues, and maintained application quality prior to deployment.",
   },
 
   id: {
@@ -125,5 +140,20 @@ export const aboutTranslations = {
       "Melakukan proses pengujian dan evaluasi sistem secara berkala untuk memastikan aplikasi dapat berjalan dengan baik serta memberikan pengalaman penggunaan yang lebih efektif bagi pengguna.",
     aboutInfranexiaDesc6:
       "Sistem ini dikembangkan menggunakan Flutter untuk membangun aplikasi mobile, Express.js sebagai backend untuk pengelolaan API dan logika sistem, serta MySQL sebagai basis data untuk menyimpan dan mengelola data karyawan dan absensi secara terstruktur.",
-  },
+    
+
+    //wootix
+    aboutExpWootix: "Frontend Developer Intern",
+    aboutWootixPeriod: "Mei 2026 - Juli 2026",
+    aboutWootixDesc1:
+    "Berkontribusi dalam pengembangan aplikasi web berbasis Next.js dengan mengimplementasikan fitur-fitur baru sesuai dengan kebutuhan produk dan permintaan tim, sambil memastikan antarmuka yang responsif, ramah pengguna, dan sesuai dengan spesifikasi desain yang telah ditetapkan.",
+    aboutWootixDesc2:
+    "Menganalisis, mengidentifikasi, dan memperbaiki bug pada fitur yang sudah ada, termasuk masalah pada antarmuka pengguna maupun fungsionalitas aplikasi, sehingga meningkatkan stabilitas sistem, pengalaman pengguna, dan kualitas keseluruhan aplikasi.",
+    aboutWootixDesc3:
+    "Mengintegrasikan komponen frontend dengan layanan backend melalui REST API untuk mengambil, mengelola, dan memperbarui data dinamis secara efisien, sambil memastikan komunikasi yang andal antara klien dan server.",
+    aboutWootixDesc4:
+    "Berkolaborasi dengan tim developer menggunakan Git dan GitHub dalam proses pengembangan perangkat lunak, termasuk melakukan pengelolaan source code, sinkronisasi perubahan, serta penyelesaian task melalui workflow kolaboratif.",
+    aboutWootixDesc5:
+    "Melakukan pengujian terhadap fitur yang telah dikembangkan maupun diperbaiki untuk memastikan seluruh fungsi berjalan sesuai kebutuhan, meminimalkan potensi bug, dan menjaga kualitas aplikasi sebelum proses deployment.",
+    },
 };

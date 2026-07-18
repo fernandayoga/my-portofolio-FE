@@ -6,6 +6,7 @@ import untag from "../assets/about/untag.png";
 import coreInitiative from "../assets/about/experience/coreInitiatif.jpeg";
 import wmk from "../assets/about/experience/wmk.jpg"; 
 import infranexia from "../assets/about/experience/infranexia.png";
+import wootix from "../assets/about/experience/wootix.png";
 import { useState, useEffect } from "react";
 
 const About = () => {
@@ -19,6 +20,19 @@ const About = () => {
   };
 
   const experienceData = [
+    {
+      company: "Wootix",
+      image: wootix,
+      role: t("aboutExpWootix"),
+      period: t("aboutWootixPeriod"),
+      description: [
+        t("aboutWootixDesc1"),
+        t("aboutWootixDesc2"),
+        t("aboutWootixDesc3"),
+        t("aboutWootixDesc4"),
+        t("aboutWootixDesc5"),
+      ],
+    },
     {
       company: "PT Telkom Infrastruktur Indonesia (Infranexia)",
       image: infranexia,
