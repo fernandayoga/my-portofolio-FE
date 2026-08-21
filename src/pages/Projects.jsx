@@ -11,6 +11,7 @@ const Projects = () => {
   const { t } = useTranslation();
   const [filteredProjects, setFilteredProjects] = useState(projects);
   const navigate = useNavigate();
+  const [zoomedImage, setZoomedImage] = useState(null);
 
   useEffect(() => {
     if (filter === "all") {
@@ -92,25 +93,24 @@ const Projects = () => {
         </button>
       </div> */}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
         {filteredProjects.map((project) => (
           <div
             key={project.id}
-            onClick={() => navigate(`/projects/${project.id}`)}
             className={`${cardClass(
               isDarkMode,
-            )} overflow-hidden hover:border-primary transition-all hover:scale-105 cursor-pointer flex flex-col`}
-            // ↑ Tambahkan: flex flex-col
+            )} overflow-hidden transition-all flex flex-col`}
           >
             <div
-              className={`h-47 ${
+              onClick={() => setZoomedImage(project.etalase)}
+              className={`aspect-video w-full ${
                 isDarkMode ? "bg-gray-800" : "bg-gray-200"
-              } overflow-hidden`}
+              } overflow-hidden cursor-pointer relative group`}
             >
               <img
-                src={project.mainImage}
+                src={project.etalase}
                 alt={project.title}
-                className="w-full h-full object-cover "
+                className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-110"
               />
             </div>
 
@@ -118,7 +118,7 @@ const Projects = () => {
               {/* ↑ Tambahkan: flex flex-col flex-1 */}
 
               <h3
-                className={`text-xl font-semibold mb-2 ${textClass(
+                className={`text-md font-semibold mb-2 ${textClass(
                   isDarkMode,
                 )}`}
               >
@@ -135,7 +135,7 @@ const Projects = () => {
               </p>
 
               {/* Button di paling bawah */}
-              <div className="flex gap-3 mt-auto">
+              <div className="flex justify-center gap-3 mt-auto">
                 {/* ↑ Tambahkan: mt-auto */}
 
                 <a
@@ -145,7 +145,7 @@ const Projects = () => {
                   onClick={(e) => (
                     e.stopPropagation(), navigate(`/projects/${project.id}`)
                   )}
-                  className="flex-1 bg-purple-600 hover:bg-purple-700 text-white text-center py-2 rounded-lg transition-all"
+                  className="cursor-pointer w-full md:w-auto md:mt-5 md:px-20 bg-purple-600 hover:bg-purple-700 text-white text-center py-2 rounded-lg transition-all"
                 >
                   {t("detail")}
                 </a>
@@ -154,6 +154,30 @@ const Projects = () => {
           </div>
         ))}
       </div>
+
+      {/* Image Zoom Modal */}
+      {zoomedImage && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-4 sm:p-8 backdrop-blur-sm transition-opacity"
+          onClick={() => setZoomedImage(null)}
+        >
+          <div className="relative max-w-6xl w-full flex justify-center animate-fade-in">
+            <button
+              onClick={() => setZoomedImage(null)}
+              className="absolute -top-12 right-0 text-white/80 hover:text-white text-4xl font-bold transition-colors"
+              title="Close"
+            >
+              &times;
+            </button>
+            <img
+              src={zoomedImage}
+              alt="Zoomed Project"
+              className="w-full h-auto max-h-[85vh] object-contain rounded-xl shadow-2xl cursor-default"
+              onClick={(e) => e.stopPropagation()}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

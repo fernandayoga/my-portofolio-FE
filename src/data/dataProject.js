@@ -1,12 +1,13 @@
 //portofolio
 import mainImagePort from "../assets/project/porto/mainImage.png";
+import etalasePorto from "../assets/project/porto/etalase portofolio.jpeg"
 import lightImagePort from "../assets/project/porto/lightMode.png";
 import askBot from "../assets/project/porto/askBot.png";
 import githubAnalytics from "../assets/project/porto/githubAnalitic.png";
 import mobileView from "../assets/project/porto/mobileDevice.png";
 
 //ramadhan app
-import EtalaseRmdhn from "../assets/project/ramadhanApp/Etalase-RmdhnApp.png";
+import EtalaseRmdhn from "../assets/project/ramadhanApp/etalase ramadhan app.jpeg";
 import mainImageRamadhan from "../assets/project/ramadhanApp/mainImageRmdhn.png";
 import prayerImage from "../assets/project/ramadhanApp/prayerImage.png";
 import quranImage from "../assets/project/ramadhanApp/quranImage.png";
@@ -17,6 +18,7 @@ import trackerImage from "../assets/project/ramadhanApp/trackerImage.png";
 import mobileViewRmdhn from "../assets/project/ramadhanApp/mobileViewRmdhn.png";
 
 //finance tracker app
+import etalaseFinance from "../assets/project/finance-tracker/etalase finance tracker.jpeg"
 import FinanceTrackerMain from "../assets/project/finance-tracker/FinanceTrackerMain.png";
 import FinanceTrackerTransactions from "../assets/project/finance-tracker/FinanceTrackerTransaction.png";
 import FinanceTrackerAnalytics from "../assets/project/finance-tracker/FinanceTrackerAnalytics.png";
@@ -27,6 +29,7 @@ import FinanceTrackerLogin from "../assets/project/finance-tracker/FinanceTracke
 
 
 //Ai Study Planner
+import etalaseAiStudyPlanner from "../assets/project/ai-study-planner/etalase ai study planner.jpeg"
 import AiStudyPlannerMain from "../assets/project/ai-study-planner/AiStudyPlannerMain.png";
 import AiStudyPlannerDashboard from "../assets/project/ai-study-planner/AiStudyPlannerDashboard.png";
 import AiStudyPlannerNewGoal from "../assets/project/ai-study-planner/AiStudyPlannerNewGoal.png";
@@ -45,6 +48,7 @@ export const projects = [
       "A modern personal portfolio showcasing projects, real-time GitHub analytics, and interactive features with a clean, responsive design.",
     category: "web",
     mainImage: mainImagePort,
+    etalase: etalasePorto,
 
     technologies: [
       { name: "React", icon: "fa-brands fa-react", color: "text-blue-400" },
@@ -239,9 +243,10 @@ export const projects = [
     title: "Ramadhan App",
     pre: "(Ramadhan Edition)",
     shortDescription:
-      "A Ramadhan web application built with React using an offline-first approach — prayer times, Al-Qur'an, Qibla direction, worship tracker, and fasting journal in one app.",
+      "A Ramadhan web application built with React using an offline-first approach, Prayer times, Al-Qur'an, Qibla direction, worship tracker, and fasting journal in one app.",
     category: "web",
-    mainImage: EtalaseRmdhn,
+    mainImage: mainImageRamadhan,
+    etalase: EtalaseRmdhn,
 
     technologies: [
       { name: "React", icon: "fa-brands fa-react", color: "text-blue-400" },
@@ -263,7 +268,7 @@ export const projects = [
     liveDemo: "https://ramadhan-app-yogz.vercel.app/",
 
     introduction:
-      "Ramadhan App is a Ramadhan web application built with an offline-first approach using React and Vite. It is designed to help Muslims perform their worship during the holy month of Ramadhan with complete, lightweight, and accurate features. From automatic GPS-based prayer times, suhoor & iftar countdown, digital Qibla compass, full 30 Juz Al-Qur'an offline reading, daily fasting journal, to worship tracker — everything is available in one application that can be accessed without an internet connection after the first use.",
+      "Ramadhan App is a Ramadhan web application built with an offline-first approach using React and Vite. It is designed to help Muslims perform their worship during the holy month of Ramadhan with complete, lightweight, and accurate features. From automatic GPS-based prayer times, suhoor & iftar countdown, digital Qibla compass, full 30 Juz Al-Qur'an offline reading, daily fasting journal, to worship tracker. everything is available in one application that can be accessed without an internet connection after the first use.",
 
     techStack: [
       {
@@ -301,7 +306,7 @@ export const projects = [
           {
             name: "IndexedDB (idb)",
             description:
-              "Large-capacity browser database to permanently store all 114 Surahs of the Qur'an — the API is fetched only once per Surah, then available offline.",
+              "Large-capacity browser database to permanently store all 114 Surahs of the Qur'an. the API is fetched only once per Surah, then available offline.",
           },
           {
             name: "localStorage",
@@ -461,6 +466,7 @@ export const projects = [
       "A personal finance web application built with React and Express — track income & expenses, visualize spending analytics, and get AI-powered financial insights in one app.",
     category: "web",
     mainImage: FinanceTrackerMain,
+    etalase: etalaseFinance,
 
     technologies: [
       { name: "React", icon: "fa-brands fa-react", color: "text-blue-400" },
@@ -716,7 +722,7 @@ export const projects = [
     "A full-stack Next.js web application that leverages AI to generate personalized, day-by-day study roadmaps and automatically curates YouTube video tutorials for each task.",
   category: "web",
   mainImage: AiStudyPlannerMain, // Pastikan kamu sudah meng-import variabel gambar ini
-
+  etalase: etalaseAiStudyPlanner,
   technologies: [
     { name: "Next.js", icon: "fa-brands fa-react", color: "text-white" },
     {
