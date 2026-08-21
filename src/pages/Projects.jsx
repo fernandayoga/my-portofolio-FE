@@ -22,6 +22,20 @@ const Projects = () => {
     }
   }, [filter]);
 
+  // Lock body scroll when zoom modal is open
+  useEffect(() => {
+    if (zoomedImage) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+    
+    // Cleanup to ensure scroll is restored if component unmounts
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [zoomedImage]);
+
   console.log(filteredProjects);
 
   return (

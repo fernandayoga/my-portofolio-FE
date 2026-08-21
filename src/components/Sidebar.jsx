@@ -77,24 +77,33 @@ const shouldShowBackToTop = !hideBackToTopPages.includes(location.pathname);
   return (
     <>
       {/* Burger Menu Button - Only visible on mobile, hidden when scrolled */}
-      <button
-        onClick={toggleSidebar}
-        className={`lg:hidden fixed top-4 left-4 z-50 w-12 h-12 ${
-          isOpen && "hidden"
+      {/* Mobile Navbar / Header Wrapper */}
+      <div
+        className={`lg:hidden fixed top-0 left-0 w-full z-40 transition-all duration-300 ${
+          isOpen ? "hidden" : "block"
         } ${
-          isDarkMode
-            ? "bg-gray-900 border-purple-500"
-            : "bg-white border-purple-500"
-        } border rounded-lg flex items-center justify-center transition-all duration-300 ${
-          isScrolled ? "opacity-0 pointer-events-none" : "opacity-100"
-        }`}
+          isScrolled
+            ? isDarkMode
+              ? "bg-black/90 backdrop-blur-md shadow-md"
+              : "bg-white/90 backdrop-blur-md shadow-md"
+            : "bg-transparent pointer-events-none"
+        } p-4`}
       >
-        <i
-          className={`fas ${isOpen ? "fa-times" : "fa-bars"} ${
-            isDarkMode ? "text-purple-400" : "text-purple-600"
-          } text-xl`}
-        ></i>
-      </button>
+        <button
+          onClick={toggleSidebar}
+          className={`w-12 h-12 ${
+            isDarkMode
+              ? "bg-gray-900 border-purple-500"
+              : "bg-white border-purple-500"
+          } border rounded-lg flex items-center justify-center transition-all duration-300 shadow-sm pointer-events-auto`}
+        >
+          <i
+            className={`fas fa-bars ${
+              isDarkMode ? "text-purple-400" : "text-purple-600"
+            } text-xl`}
+          ></i>
+        </button>
+      </div>
 
       {/* Back to Top Button - Muncul saat burger menu hilang */}
      {shouldShowBackToTop && (
