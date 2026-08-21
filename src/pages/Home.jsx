@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useTheme } from "../context/ThemeContext";
 import { useTranslation } from "react-i18next";
 import profileImage from "../assets/about/experience/imageProfile.png";
+import cvFile from "../assets/CV/CV Fernanda Yoga Kurniawan.pdf";
+import profileImage2 from "../assets/about/experience/profileImage2.png";
 
 const Home = () => {
   const { isDarkMode } = useTheme();
@@ -40,6 +42,7 @@ const Home = () => {
       isCustom: true,
     },
     { icon: "fa-brands fa-js", color: "bg-yellow-400", name: "JavaScript" },
+    { icon: "typescript", color: "bg-transparent", name: "TypeScript", isCustom: true },
     { icon: "fa-brands fa-react", color: "bg-blue-400", name: "React" },
     { icon: "nextjs", color: "bg-black", name: "Next.js", isCustom: true },
     { icon: "fa-brands fa-vuejs", color: "bg-green-500", name: "Vue.js" },
@@ -103,6 +106,25 @@ const Home = () => {
   );
 
   
+
+  const TypescriptIcon = () => (
+  <svg viewBox="0 0 24 24" className="w-12 h-12 md:w-16 md:h-16">
+    {/* Background biru bulat penuh (circle) */}
+    <circle cx="12" cy="12" r="12" fill="#3178C6" />
+    {/* Tulisan TS di pojok kanan bawah */}
+    <text
+      x="20"
+      y="19"
+      textAnchor="end"
+      fontFamily="Arial, Helvetica, sans-serif"
+      fontWeight="bold"
+      fontSize="10"
+      fill="white"
+    >
+      TS
+    </text>
+  </svg>
+);
 
   const TailwindIcon = () => (
     <svg viewBox="0 0 24 24" fill="white" className="w-8 h-8 md:w-10 md:h-10">
@@ -189,6 +211,8 @@ const Home = () => {
     switch (skill.icon) {
       case "nextjs":
         return <NextJsIcon />;
+      case "typescript":
+        return <TypescriptIcon />;
       case "tailwind":
         return <TailwindIcon />;
       case "express":
@@ -242,13 +266,25 @@ const Home = () => {
               </p>
 
               {/* Right Side - Image */}
-              <div className="w-[150px] h-[150px] md:w-[200px] md:h-[200px] rounded-full bg-gradient-to-br from-orange-400 to-pink-500 flex items-center justify-center overflow-hidden flex-shrink-0 mx-auto md:mx-0">
+              <div className="w-[170px] h-[170px] md:w-[265px] md:h-[265px] rounded-full bg-gradient-to-br from-orange-400 to-pink-500 flex items-center justify-center overflow-hidden flex-shrink-0 mx-auto md:mx-0">
                 <img
-                  src={profileImage}
+                  src={profileImage2}
                   alt="Fernanda Yoga Kurniawan"
                   className="w-full h-full object-cover"
                 />
               </div>
+            </div>
+
+            {/* Download CV Button */}
+            <div className="mt-8 flex justify-start">
+              <a
+                href={cvFile}
+                download="CV_Fernanda_Yoga_Kurniawan.pdf"
+                className="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-6 rounded-lg shadow-md transition-all duration-300 flex items-center gap-2 hover:scale-105"
+              >
+                <i className="fas fa-download"></i>
+                Download CV
+              </a>
             </div>
           </div>
         </div>
