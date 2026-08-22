@@ -28,7 +28,7 @@ const SmartTalk = () => {
 
     try {
       const ai = await requestToGroq(input);
-
+      console.log(ai.content)
       const aiResponse = {
         id: Date.now() + 1,
         type: "assistant",
@@ -58,7 +58,7 @@ const SmartTalk = () => {
     t("suggestedQuestions5"),
   ];
 
-  console.log(messages);
+
 
   return (
     <div

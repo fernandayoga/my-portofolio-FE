@@ -3,3 +3,8 @@ node_modules/
 
 # environment variables
 .env
+.vercel
+.env*
+
+# build output
+dist/

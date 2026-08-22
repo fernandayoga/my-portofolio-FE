@@ -463,7 +463,7 @@ export const projects = [
     title: "Finance Tracker",
 
     shortDescription:
-      "A personal finance web application built with React and Express — track income & expenses, visualize spending analytics, and get AI-powered financial insights in one app.",
+      "A personal finance web application built with React and Express. with fiture track income & expenses, visualize spending analytics, and get AI-powered financial insights in one app.",
     category: "web",
     mainImage: FinanceTrackerMain,
     etalase: etalaseFinance,
