@@ -33,7 +33,7 @@ const Achievements = () => {
 
   return (
     <div
-      className="min-h-screen py-8 pt-20 lg:pt-8 pl-4"
+      className="min-h-screen py-8 pt-20 xl:pt-8 pl-4"
       data-aos="fade-down"
       data-aos-delay="100"
       data-aos-duration="600"

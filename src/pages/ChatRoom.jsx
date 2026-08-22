@@ -303,7 +303,7 @@ const formatTime = (timestamp) => {
 
   // Chat Room (Logged In)
   return (
-    <div className="min-h-screen py-8 pt-20 lg:pt-8">
+    <div className="min-h-screen py-8 pt-20 xl:pt-8">
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div>

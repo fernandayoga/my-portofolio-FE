@@ -339,7 +339,7 @@ const Dashboard = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center py-8 pt-20 lg:pt-8">
+      <div className="min-h-screen flex items-center justify-center py-8 pt-20 xl:pt-8">
         <div className="text-center">
           <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-purple-600 mx-auto mb-4"></div>
           <p className={isDarkMode ? "text-gray-400" : "text-gray-600"}>
@@ -351,7 +351,7 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="min-h-screen  py-8 pt-20 lg:pt-8   gap-6">
+    <div className="min-h-screen  py-8 pt-20 xl:pt-8   gap-6">
       {/* Header */}
       <div className="mb-8">
         <h1

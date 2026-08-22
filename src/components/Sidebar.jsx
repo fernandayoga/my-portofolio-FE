@@ -79,7 +79,7 @@ const shouldShowBackToTop = !hideBackToTopPages.includes(location.pathname);
       {/* Burger Menu Button - Only visible on mobile, hidden when scrolled */}
       {/* Mobile Navbar / Header Wrapper */}
       <div
-        className={`lg:hidden fixed top-0 left-0 w-full z-40 transition-all duration-300 ${
+        className={`xl:hidden fixed top-0 left-0 w-full z-40 transition-all duration-300 ${
           isOpen ? "hidden" : "block"
         } ${
           isScrolled
@@ -109,7 +109,7 @@ const shouldShowBackToTop = !hideBackToTopPages.includes(location.pathname);
      {shouldShowBackToTop && (
       <button
         onClick={scrollToTop}
-        className={`lg:hidden fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full shadow-lg flex items-center justify-center transition-all duration-300 ${
+        className={`xl:hidden fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full shadow-lg flex items-center justify-center transition-all duration-300 ${
           isDarkMode
             ? "bg-purple-500 hover:bg-purple-600"
             : "bg-purple-500 hover:bg-purple-600"
@@ -128,7 +128,7 @@ const shouldShowBackToTop = !hideBackToTopPages.includes(location.pathname);
       {isOpen && (
         <div
           onClick={closeSidebar}
-          className="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-40"
+          className="xl:hidden fixed inset-0 bg-black bg-opacity-50 z-40"
         ></div>
       )}
 
@@ -137,7 +137,7 @@ const shouldShowBackToTop = !hideBackToTopPages.includes(location.pathname);
         className={`fixed  top-0 h-screen w-72 text-md  ${
           isDarkMode ? "bg-black border-gray-800" : "bg-white border-gray-200"
         } border-r flex flex-col z-40 transition-transform duration-300 ${
-          isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
+          isOpen ? "translate-x-0" : "-translate-x-full xl:translate-x-0"
         }`}
       >
         {/* toggle Section */}

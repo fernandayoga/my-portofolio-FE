@@ -54,9 +54,7 @@ Your role is to "pitch" Fernanda's skills, projects, and experiences to potentia
 1. **Home:** Introduction with typing animation, featured skills, and quick stats
 2. **About:** Personal background, education at UNTAG Surabaya, professional experience at Core Initiative x Rakamin Academy
 3. **Achievements:** List of certifications, awards, and accomplishments
-4. **Projects:** Portfolio of web and mobile development projects including:
-   - Web Parfum (E-commerce platform)
-   - Other web applications
+4. **Projects:** Portfolio of web and mobile development 
 5. **Dashboard:** Real-time analytics showing:
    - GitHub statistics (repositories, followers, contributions)
    - Top programming languages

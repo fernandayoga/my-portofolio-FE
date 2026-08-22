@@ -18,7 +18,7 @@ function App() {
       <Router>
         <div className="flex">
           <Sidebar />
-          <main className="lg:ml-72 flex-1 min-h-screen w-full">
+          <main className="xl:ml-72 flex-1 min-h-screen w-full">
             <div className="max-w-[1920px] mx-auto px-[30px]">
               <Routes>
                 <Route path="/" element={<Home />} />

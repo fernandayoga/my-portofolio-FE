@@ -104,7 +104,7 @@ const Contact = () => {
 
   return (
     <div
-      className="min-h-screen p-4 md:p-8 pt-20 lg:pt-8"
+      className="min-h-screen p-4 md:p-8 pt-20 xl:pt-8"
       data-aos="fade-down"
       data-aos-delay="100"
       data-aos-duration="600"

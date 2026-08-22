@@ -73,7 +73,7 @@ const DetailProject = () => {
   };
 
   return (
-    <div className="min-h-screen py-8 pt-20 lg:pt-8 pl-4">
+    <div className="min-h-screen py-8 pt-20 xl:pt-8 pl-4">
       {/* Back Button */}
       <Link
         to="/projects"
