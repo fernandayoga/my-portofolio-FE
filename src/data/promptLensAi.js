@@ -1,8 +1,8 @@
-import PromptLensMain from "../assets/projects/promptlens/main.webp";
-import etalasePromptLens from "../assets/projects/promptlens/etalase.webp";
-import PromptLensGenerate from "../assets/projects/promptlens/generate.webp";
-import PromptLensAnalysis from "../assets/projects/promptlens/analysis.webp";
-import PromptLensError from "../assets/projects/promptlens/error.webp";
+import PromptLensMain from "../assets/project/promplens/main.png";
+import etalasePromptLens from "../assets/project/promplens/etalase.jpeg";
+import PromptLensGenerate from "../assets/project/promplens/generate.png";
+import PromptLensAnalysis from "../assets/project/promplens/analysis.png";
+
 
 export const promptLensAi = {
   id: "promptlens",
@@ -90,9 +90,9 @@ export const promptLensAi = {
       category: "Deployment",
       items: [
         {
-          name: "Railway / Render / VPS",
+          name: "Vercel",
           description:
-            "Any Node host runs `npm run build && npm start`; Express serves dist/ and proxies /api",
+            "Full-stack deployment platform hosting both the frontend UI and serverless backend API functions",
         },
         {
           name: "GitHub",
@@ -164,10 +164,6 @@ export const promptLensAi = {
       alt: "Result & Analysis view",
       caption: "Result — generated prompt with completeness score and analysis panel",
     },
-    {
-      src: PromptLensError,
-      alt: "Error state",
-      caption: "Error handling — friendly messages for rate limits and auth failures",
-    },
+    
   ],
 };
