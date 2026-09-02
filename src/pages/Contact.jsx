@@ -120,7 +120,7 @@ const Contact = () => {
         {t("contactSubtitle")}
       </p>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 ">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
         {/* Contact Form */}
         <div
           className={`rounded-xl p-8 border ${
@@ -196,7 +196,7 @@ const Contact = () => {
                 value={formData.message}
                 onChange={handleChange}
                 required
-                rows="5"
+                rows="8"
                 className={`w-full   px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none ${
                   isDarkMode
                     ? "bg-gray-800 text-white border-gray-700"
