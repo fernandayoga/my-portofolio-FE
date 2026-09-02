@@ -573,7 +573,7 @@ const Dashboard = () => {
                     isDarkMode ? "text-gray-300" : "text-gray-700"
                   }`}
                 >
-                  Top Languages in GitHub
+                  Top Technology Used in GitHub
                 </p>
 
                 {topLanguages.length > 0 ? (
@@ -729,9 +729,9 @@ const Dashboard = () => {
                   isDarkMode ? "text-white" : "text-gray-900"
                 }`}
               >
-                WakaTime Stats
+                {t("wakatimeTitle")}
               </h2>
-              <p className="text-sm text-gray-400">Last 7 days of coding activity</p>
+              <p className="text-sm text-gray-400">{t("wakatimeSub")}</p>
             </div>
           </div>
 
@@ -754,7 +754,7 @@ const Dashboard = () => {
                       isDarkMode ? "text-gray-400" : "text-gray-600"
                     }`}
                   >
-                    Total Coding Time
+                    {t("totalCodingTime")}
                   </p>
                 </div>
 
@@ -771,7 +771,7 @@ const Dashboard = () => {
                       isDarkMode ? "text-gray-400" : "text-gray-600"
                     }`}
                   >
-                    Daily Average
+                    {t("dailyAverage")}
                   </p>
                 </div>
               </div>
@@ -783,7 +783,7 @@ const Dashboard = () => {
                     isDarkMode ? "text-gray-300" : "text-gray-700"
                   }`}
                 >
-                  Languages (Last 7 Days)
+                  {t("topTech")}
                 </p>
                 
                 {wakatimeData?.languages && wakatimeData.languages.length > 0 ? (
@@ -823,7 +823,7 @@ const Dashboard = () => {
                     ))}
                   </div>
                 ) : (
-                  <p className="text-sm text-gray-500">No language data available.</p>
+                  <p className="text-sm text-gray-500">{t("noTechData")}</p>
                 )}
               </div>
               
@@ -834,7 +834,7 @@ const Dashboard = () => {
                     isDarkMode ? "text-gray-300" : "text-gray-700"
                   }`}
                 >
-                  Weekdays
+                  {t("weekdays")}
                 </p>
                 <div className={`p-4 rounded-lg ${isDarkMode ? "bg-gray-800" : "bg-gray-50"}`}>
                   {wakatimeData?.summaries && wakatimeData.summaries.length > 0 ? (
@@ -842,7 +842,7 @@ const Dashboard = () => {
                       <Bar data={weekdaysData} options={barOptions} />
                     </div>
                   ) : (
-                    <p className="text-sm text-gray-500">No daily stats available.</p>
+                    <p className="text-sm text-gray-500">{t("noDailyStats")}</p>
                   )}
                 </div>
               </div>
@@ -856,7 +856,7 @@ const Dashboard = () => {
                       isDarkMode ? "text-gray-300" : "text-gray-700"
                     }`}
                   >
-                    Editors
+                    {t("editors")}
                   </p>
                   <div className={`p-4 rounded-lg flex items-center justify-center ${isDarkMode ? "bg-gray-800" : "bg-gray-50"}`}>
                     {wakatimeData?.editors && wakatimeData.editors.length > 0 ? (
@@ -864,7 +864,7 @@ const Dashboard = () => {
                         <Doughnut data={editorsData} options={doughnutOptions} />
                       </div>
                     ) : (
-                      <p className="text-sm text-gray-500">No editor stats available.</p>
+                      <p className="text-sm text-gray-500">{t("noEditorStats")}</p>
                     )}
                   </div>
                 </div>
@@ -876,7 +876,7 @@ const Dashboard = () => {
                       isDarkMode ? "text-gray-300" : "text-gray-700"
                     }`}
                   >
-                    Operating Systems
+                    {t("operatingSystems")}
                   </p>
                   <div className={`p-4 rounded-lg flex items-center justify-center ${isDarkMode ? "bg-gray-800" : "bg-gray-50"}`}>
                     {wakatimeData?.operatingSystems && wakatimeData.operatingSystems.length > 0 ? (
@@ -884,7 +884,7 @@ const Dashboard = () => {
                         <Doughnut data={osData} options={doughnutOptions} />
                       </div>
                     ) : (
-                      <p className="text-sm text-gray-500">No OS stats available.</p>
+                      <p className="text-sm text-gray-500">{t("noOsStats")}</p>
                     )}
                   </div>
                 </div>
