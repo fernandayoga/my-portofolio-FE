@@ -370,7 +370,7 @@ const Dashboard = () => {
 
   // WakaTime Chart Configs
   const weekdaysData = {
-    labels: wakatimeData?.summaries?.map(day => day.range.text) || [],
+    labels: wakatimeData?.summaries?.map(day => day.range.text ? day.range.text.split(" ")[0] : "") || [],
     datasets: [
       {
         label: 'Coding Hours',
@@ -396,7 +396,7 @@ const Dashboard = () => {
   ];
 
   const editorsData = {
-    labels: wakatimeData?.editors?.map(e => `${e.name} - ${e.text} (${e.percent}%)`) || [],
+    labels: wakatimeData?.editors?.map(e => e.name) || [],
     datasets: [
       {
         data: wakatimeData?.editors?.map(e => e.total_seconds) || [],
@@ -407,7 +407,7 @@ const Dashboard = () => {
   };
 
   const osData = {
-    labels: wakatimeData?.operatingSystems?.map(o => `${o.name} - ${o.text} (${o.percent}%)`) || [],
+    labels: wakatimeData?.operatingSystems?.map(o => o.name) || [],
     datasets: [
       {
         data: wakatimeData?.operatingSystems?.map(o => o.total_seconds) || [],
