@@ -10,7 +10,7 @@ const Dashboard = () => {
 
   // State untuk setiap analytics
   const [githubData, setGithubData] = useState(null);
-  const [umamiData, setUmamiData] = useState(null);
+  const [wakatimeData, setWakatimeData] = useState(null);
   const [loading, setLoading] = useState(true);
 
   // Fetch GitHub Contributions
@@ -49,34 +49,30 @@ const Dashboard = () => {
     }
   };
 
-  // Fetch Umami Analytics
-  const fetchUmamiData = async () => {
+  // Fetch WakaTime Stats
+  const fetchWakatimeData = async () => {
     try {
-      const response = await fetch("/api/umami");
+      const response = await fetch("/api/wakatime");
 
       if (!response.ok) {
-        throw new Error("Failed to fetch Umami data");
+        throw new Error("Failed to fetch WakaTime data");
       }
 
       const data = await response.json();
-
-      setUmamiData({
-        pageviews: data.pageviews,
-        visitors: data.visitors,
-        visits: data.visits,
-        bounceRate: data.visits
-          ? Math.round((data.bounces / data.visits) * 100)
-          : 0,
-        avgTime: data.visits ? Math.round(data.totaltime / data.visits) : 0,
-      });
+      
+      if (data.data) {
+        setWakatimeData({
+          totalTimeText: data.data.human_readable_total_including_other_language || data.data.human_readable_total || "0 hrs",
+          dailyAverageText: data.data.human_readable_daily_average || "0 hrs",
+          languages: data.data.languages || [],
+          operatingSystems: data.data.operating_systems || [],
+          editors: data.data.editors || [],
+        });
+      }
     } catch (error) {
-      console.error("❌ Umami fetch error:", error);
-      setUmamiData({
+      console.error("❌ WakaTime fetch error:", error);
+      setWakatimeData({
         error: error.message,
-        pageviews: 0,
-        visitors: 0,
-        bounceRate: 0,
-        avgTime: 0,
       });
     }
   };
@@ -327,7 +323,7 @@ const Dashboard = () => {
       setLoading(true);
       await Promise.all([
         fetchGitHubData(),
-        fetchUmamiData(),
+        fetchWakatimeData(),
         fetchTopLanguages(),
         fetchGithubActivity(),
       ]);
@@ -492,7 +488,7 @@ const Dashboard = () => {
                     isDarkMode ? "text-gray-300" : "text-gray-700"
                   }`}
                 >
-                  Top Languages
+                  Top Languages in GitHub
                 </p>
 
                 {topLanguages.length > 0 ? (
@@ -630,7 +626,7 @@ const Dashboard = () => {
           )}
         </div>
 
-        {/* 4. Umami Web Analytics */}
+        {/* 4. WakaTime Coding Stats */}
         <div
           className={`rounded-2xl p-6 border ${
             isDarkMode
@@ -639,8 +635,8 @@ const Dashboard = () => {
           }`}
         >
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center">
-              <i className="fas fa-chart-line text-white text-xl"></i>
+            <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center">
+              <i className="fas fa-code text-white text-xl"></i>
             </div>
             <div>
               <h2
@@ -648,145 +644,122 @@ const Dashboard = () => {
                   isDarkMode ? "text-white" : "text-gray-900"
                 }`}
               >
-                {t("umamiTitle")}
+                WakaTime Stats
               </h2>
-              <p className="text-sm text-gray-400">{t("umamiSub")}</p>
+              <p className="text-sm text-gray-400">Last 7 days of coding activity</p>
             </div>
           </div>
 
-          {/* Progress Bar Stats */}
-          <div className="space-y-6">
-            {/* Page Views */}
-            <div>
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center gap-2">
-                  <i className="fas fa-eye text-orange-500"></i>
-                  <span
-                    className={`text-sm font-medium ${
-                      isDarkMode ? "text-gray-300" : "text-gray-700"
+          {wakatimeData?.error ? (
+            <p className="text-red-500 text-sm">{wakatimeData.error}</p>
+          ) : (
+            <div className="space-y-6">
+              {/* Total Time & Daily Average */}
+              <div className="grid grid-cols-2 gap-4 text-center">
+                <div
+                  className={`p-4 rounded-lg ${
+                    isDarkMode ? "bg-gray-800" : "bg-gray-50"
+                  }`}
+                >
+                  <p className="text-2xl font-bold text-blue-500">
+                    {wakatimeData?.totalTimeText || "0 hrs"}
+                  </p>
+                  <p
+                    className={`text-xs sm:text-sm ${
+                      isDarkMode ? "text-gray-400" : "text-gray-600"
                     }`}
                   >
-                    {t("pageViews")}
-                  </span>
+                    Total Coding Time
+                  </p>
                 </div>
-                <span className="text-2xl font-bold text-orange-500">
-                  {umamiData?.pageviews?.toLocaleString() || 0}
-                </span>
-              </div>
-              <div
-                className={`w-full h-3 rounded-full ${
-                  isDarkMode ? "bg-gray-800" : "bg-gray-200"
-                }`}
-              >
-                <div
-                  className="h-full bg-gradient-to-r from-orange-500 to-orange-600 rounded-full transition-all duration-1000"
-                  style={{
-                    width: `${Math.min(
-                      ((umamiData?.pageviews || 0) / 2000) * 100,
-                      100,
-                    )}%`,
-                  }}
-                ></div>
-              </div>
-            </div>
 
-            {/* Visitors */}
-            <div>
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center gap-2">
-                  <i className="fas fa-users text-blue-500"></i>
-                  <span
-                    className={`text-sm font-medium ${
-                      isDarkMode ? "text-gray-300" : "text-gray-700"
+                <div
+                  className={`p-4 rounded-lg ${
+                    isDarkMode ? "bg-gray-800" : "bg-gray-50"
+                  }`}
+                >
+                  <p className="text-2xl font-bold text-purple-500">
+                    {wakatimeData?.dailyAverageText || "0 hrs"}
+                  </p>
+                  <p
+                    className={`text-xs sm:text-sm ${
+                      isDarkMode ? "text-gray-400" : "text-gray-600"
                     }`}
                   >
-                    {t("totalVisitors")}
-                  </span>
+                    Daily Average
+                  </p>
                 </div>
-                <span className="text-2xl font-bold text-blue-500">
-                  {umamiData?.visitors?.toLocaleString() || 0}
-                </span>
               </div>
-              <div
-                className={`w-full h-3 rounded-full ${
-                  isDarkMode ? "bg-gray-800" : "bg-gray-200"
-                }`}
-              >
-                <div
-                  className="h-full bg-gradient-to-r from-blue-500 to-blue-600 rounded-full transition-all duration-1000"
-                  style={{
-                    width: `${Math.min(
-                      ((umamiData?.visitors || 0) / 1000) * 100,
-                      100,
-                    )}%`,
-                  }}
-                ></div>
-              </div>
-            </div>
 
-            {/* Bounce Rate */}
-            <div>
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center gap-2">
-                  <i className="fas fa-arrow-right-from-bracket text-red-500"></i>
-                  <span
-                    className={`text-sm font-medium ${
-                      isDarkMode ? "text-gray-300" : "text-gray-700"
-                    }`}
-                  >
-                    {t("bounceRate")}
-                  </span>
-                </div>
-                <span className="text-2xl font-bold text-red-500">
-                  {umamiData?.bounceRate || 0}%
-                </span>
+              {/* WakaTime Top Languages */}
+              <div>
+                <p
+                  className={`text-sm font-medium mb-3 ${
+                    isDarkMode ? "text-gray-300" : "text-gray-700"
+                  }`}
+                >
+                  Languages (Last 7 Days)
+                </p>
+                
+                {wakatimeData?.languages && wakatimeData.languages.length > 0 ? (
+                  <div className="space-y-3">
+                    {wakatimeData.languages.slice(0, 5).map((lang) => (
+                      <div key={lang.name}>
+                        <div className="flex items-center justify-between mb-1">
+                          <span
+                            className={`text-sm ${
+                              isDarkMode ? "text-gray-400" : "text-gray-600"
+                            }`}
+                          >
+                            {lang.name}
+                          </span>
+                          <span
+                            className={`text-sm ${
+                              isDarkMode ? "text-gray-400" : "text-gray-600"
+                            }`}
+                          >
+                            {lang.text} ({Math.round(lang.percent)}%)
+                          </span>
+                        </div>
+                        <div
+                          className={`w-full h-2 rounded-full ${
+                            isDarkMode ? "bg-gray-800" : "bg-gray-200"
+                          }`}
+                        >
+                          <div
+                            className="h-full rounded-full transition-all duration-1000"
+                            style={{
+                              width: `${lang.percent}%`,
+                              backgroundColor: lang.color || getLanguageColor(lang.name),
+                            }}
+                          ></div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-sm text-gray-500">No language data available.</p>
+                )}
               </div>
-              <div
-                className={`w-full h-3 rounded-full ${
-                  isDarkMode ? "bg-gray-800" : "bg-gray-200"
-                }`}
-              >
-                <div
-                  className="h-full bg-gradient-to-r from-red-500 to-red-600 rounded-full transition-all duration-1000"
-                  style={{ width: `${umamiData?.bounceRate || 0}%` }}
-                ></div>
+              
+              {/* Editors / OS */}
+              <div className="grid grid-cols-2 gap-4">
+                {wakatimeData?.editors && wakatimeData.editors.length > 0 && (
+                   <div className={`p-4 rounded-lg ${isDarkMode ? "bg-gray-800" : "bg-gray-50"}`}>
+                      <p className={`text-sm mb-2 ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>Top Editor</p>
+                      <p className="font-bold text-blue-400">{wakatimeData.editors[0].name}</p>
+                   </div>
+                )}
+                {wakatimeData?.operatingSystems && wakatimeData.operatingSystems.length > 0 && (
+                   <div className={`p-4 rounded-lg ${isDarkMode ? "bg-gray-800" : "bg-gray-50"}`}>
+                      <p className={`text-sm mb-2 ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>Top OS</p>
+                      <p className="font-bold text-green-400">{wakatimeData.operatingSystems[0].name}</p>
+                   </div>
+                )}
               </div>
-            </div>
 
-            {/* Avg Time */}
-            <div>
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center gap-2">
-                  <i className="fas fa-clock text-green-500"></i>
-                  <span
-                    className={`text-sm font-medium ${
-                      isDarkMode ? "text-gray-300" : "text-gray-700"
-                    }`}
-                  >
-                    {t("avgTimeOnSite")}
-                  </span>
-                </div>
-                <span className="text-2xl font-bold text-green-500">
-                  {formatTime(umamiData?.avgTime || 0)}
-                </span>
-              </div>
-              <div
-                className={`w-full h-3 rounded-full ${
-                  isDarkMode ? "bg-gray-800" : "bg-gray-200"
-                }`}
-              >
-                <div
-                  className="h-full bg-gradient-to-r from-green-500 to-green-600 rounded-full transition-all duration-1000"
-                  style={{
-                    width: `${Math.min(
-                      ((umamiData?.avgTime || 0) / 300) * 100,
-                      100,
-                    )}%`,
-                  }}
-                ></div>
-              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
 
