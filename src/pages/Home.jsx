@@ -9,7 +9,18 @@ const Home = () => {
   const { isDarkMode } = useTheme();
   const { t } = useTranslation();
   const [typedText, setTypedText] = useState("");
-  const fullText = t("title"); // "Fullstack Developer"
+  const[indexText, setIndexText] = useState(0);
+
+
+
+
+  const daftarText = [
+    "Fullstack Developer",
+    "Web Developer",
+    "Mobile Developer",
+    
+  ]
+  const fullText = daftarText[indexText]; 
 
   useEffect(() => {
     let index = 0;
@@ -20,6 +31,11 @@ const Home = () => {
         setTypedText(fullText.substring(0, index));
         index++;
       } else {
+        setIndexText((prevIndex) => 
+          prevIndex === daftarText.length - 1
+            ? 0
+            : prevIndex + 1
+        );  
         index = 0; // Reset untuk looping
       }
     }, 100);
