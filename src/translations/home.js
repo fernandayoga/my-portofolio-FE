@@ -5,8 +5,8 @@ export const homeTranslations = {
     location: "Based in Surabaya, Indonesia",
     description:
       "I have a strong interest in programming and aspire to become a professional programmer capable of creating innovative and impactful solutions. Driven by a deep passion for learning, I continuously improve my skills by exploring new technologies, programming languages, and development tools while staying up-to-date with the latest trends in the tech industry. I believe that programming is not only about writing code, but also about problem-solving, critical thinking, and creativity, and through consistent practice and dedication, I aim to grow into a skilled programmer who can deliver high-quality solutions and contribute meaningful value through technology.",
-    skills: "Skills",
-    skillsSubtitle: "My professional skills.",
+    skills: "Technology",
+    skillsSubtitle: "Technologies I've been working with.",
     features: "Portfolio Features",
     featuresSubtitle:
       "Explore the interactive features of this portfolio website.",
@@ -38,8 +38,8 @@ export const homeTranslations = {
     location: "Berbasis di Surabaya, Indonesia",
     description:
       "Saya memiliki minat besar dalam pemrograman dan berambisi menjadi programmer profesional yang mampu menciptakan solusi inovatif dan berdampak. Didorong oleh semangat belajar yang tinggi, saya terus meningkatkan keterampilan dengan menjelajahi teknologi baru, bahasa pemrograman, dan alat pengembangan sambil mengikuti tren terkini dalam industri teknologi. Saya percaya bahwa pemrograman bukan hanya tentang menulis kode, tetapi juga tentang pemecahan masalah, berpikir kritis, dan kreativitas, dan melalui latihan dan dedikasi yang konsisten, saya bertujuan untuk tumbuh menjadi programmer terampil yang dapat memberikan solusi berkualitas tinggi dan memberikan nilai berarti melalui teknologi.",
-    skills: "Keterampilan",
-    skillsSubtitle: "Keterampilan profesional saya.",
+    skills: "Teknologi",
+    skillsSubtitle: "Teknologi yang saya gunakan dan pelajari.",
     features: "Fitur Portfolio",
     featuresSubtitle: "Jelajahi fitur interaktif dari website portfolio ini.",
     explore: "Jelajahi",

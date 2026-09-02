@@ -5,9 +5,8 @@ import {
   auth,
   database,
   googleProvider,
-  githubProvider,
 } from "../firebase/config";
-import { signInWithPopup, signOut, onAuthStateChanged } from "firebase/auth";
+import { signInWithPopup, signOut, onAuthStateChanged, signInAnonymously } from "firebase/auth";
 import {
   ref,
   push,
@@ -28,6 +27,7 @@ const ChatRoom = () => {
   // Auth State
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isAnonLoggingIn, setIsAnonLoggingIn] = useState(false);
 
   // Chat State
   const [messages, setMessages] = useState([]);
@@ -49,8 +49,6 @@ const ChatRoom = () => {
 
   // Listen to messages
   useEffect(() => {
-    if (!user) return;
-
     const messagesRef = ref(database, "messages");
     const messagesQuery = query(
       messagesRef,
@@ -69,6 +67,8 @@ const ChatRoom = () => {
       } else {
         setMessages([]);
       }
+    }, (error) => {
+      console.error("Gagal mengambil pesan dari Firebase:", error);
     });
 
     return () => unsubscribe();
@@ -92,20 +92,24 @@ const ChatRoom = () => {
     }
   };
 
-  console.log(user);
-
-  // Login with GitHub
-  const handleGithubLogin = async () => {
+  // Login Anonymously
+  const handleAnonymousLogin = async () => {
+    setIsAnonLoggingIn(true);
     try {
-      await signInWithPopup(auth, githubProvider);
+      await signInAnonymously(auth);
     } catch (error) {
+      console.error("Anonymous login error:", error);
       Swal.fire({
-        text: t("errorLoginGithub"),
+        text: "Failed to sign in anonymously",
         icon: "error",
         confirmButtonText: "OK",
       });
+    } finally {
+      setIsAnonLoggingIn(false);
     }
   };
+
+  console.log(user);
 
   // Logout
   const handleLogout = async () => {
@@ -194,7 +198,7 @@ const formatTime = (timestamp) => {
   return date.toLocaleString('en-GB', {
     day: '2-digit',
     month: 'short',
-    // year: 'numeric',   // ✅ tambah tahun
+    year: 'numeric',   // ✅ tambah tahun
     hour: '2-digit',
     minute: '2-digit',
     hour12: false
@@ -204,9 +208,17 @@ const formatTime = (timestamp) => {
   // Get avatar URL
   const getAvatarUrl = (photoURL, displayName) => {
     if (photoURL) return photoURL;
+    
+    const name = displayName || "Anonymous";
+    
+    // Jika user adalah Anonymous, gunakan icon default
+    if (name === "Anonymous") {
+      return "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png";
+    }
+
     // Generate avatar dengan inisial, background purple, text putih
     return `https://ui-avatars.com/api/?name=${encodeURIComponent(
-      displayName || "User",
+      name
     )}&background=9333ea&color=fff&bold=true&size=128`;
   };
 
@@ -219,89 +231,7 @@ const formatTime = (timestamp) => {
     );
   }
 
-  // Login Screen
-  if (!user) {
-    return (
-      <div
-        className={`min-h-screen flex items-center justify-center px-4 ${
-          isDarkMode ? "bg-black" : "bg-gray-50"
-        }`}
-      >
-        <div
-          className={`max-w-md w-full p-8 rounded-2xl ${
-            isDarkMode
-              ? "bg-gray-900 border border-gray-800"
-              : "bg-white border border-gray-200 shadow-xl"
-          }`}
-        >
-          {/* Header */}
-          <div className="text-center mb-8">
-            <div className="w-20 h-20 bg-gradient-to-br from-purple-600 to-violet-600 rounded-full flex items-center justify-center mx-auto mb-4">
-              <i className="fas fa-comments text-white text-3xl"></i>
-            </div>
-            <h1
-              className={`text-3xl font-bold mb-2 ${
-                isDarkMode ? "text-white" : "text-gray-900"
-              }`}
-            >
-              {t("chatRoom")}
-            </h1>
-            <p className={`${isDarkMode ? "text-gray-400" : "text-gray-600"}`}>
-              {t("signInToChat")}
-            </p>
-          </div>
-
-          {/* Login Buttons */}
-          <div className="space-y-3">
-            {/* Google Login */}
-            <button
-              onClick={handleGoogleLogin}
-              className={`w-full flex items-center justify-center gap-3 px-6 py-3 rounded-lg font-medium transition-all ${
-                isDarkMode
-                  ? "bg-white hover:bg-gray-100 text-gray-900"
-                  : "bg-white hover:bg-gray-50 text-gray-900 border-2 border-gray-200"
-              }`}
-            >
-              <svg className="w-5 h-5" viewBox="0 0 24 24">
-                <path
-                  fill="#4285F4"
-                  d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
-                />
-                <path
-                  fill="#34A853"
-                  d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
-                />
-                <path
-                  fill="#FBBC05"
-                  d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
-                />
-                <path
-                  fill="#EA4335"
-                  d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
-                />
-              </svg>
-              {t("continueWithGoogle")}
-            </button>
-
-            {/* GitHub Login */}
-            <button
-              onClick={handleGithubLogin}
-              className={`w-full flex items-center justify-center gap-3 px-6 py-3 rounded-lg font-medium transition-all ${
-                isDarkMode
-                  ? "bg-gray-800 hover:bg-gray-700 text-white"
-                  : "bg-gray-900 hover:bg-gray-800 text-white"
-              }`}
-            >
-              <i className="fab fa-github text-xl"></i>
-              {t("continueWithGithub")}
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  // Chat Room (Logged In)
+  // Chat Room
   return (
     <div className="min-h-screen py-8 pt-20 xl:pt-8">
       {/* Header */}
@@ -324,24 +254,39 @@ const formatTime = (timestamp) => {
         </div>
 
         {/* User Info & Logout */}
-        <div className="flex items-center gap-3">
-          <img
-            src={getAvatarUrl(user.photoURL, user.displayName)}
-            alt={user.displayName}
-            className="w-10 h-10 rounded-full border-2 border-purple-500 object-cover"
-          />
-          <button
-            onClick={handleLogout}
-            className={`px-4 py-2 rounded-lg text-xs sm:text-sm  font-medium transition-all ${
-              isDarkMode
-                ? "bg-gray-800 hover:bg-gray-700 text-gray-300"
-                : "bg-gray-100 hover:bg-gray-200 text-gray-700"
-            }`}
-          >
-            <i className="fas fa-sign-out-alt mr-2"></i>
-            {t("logout")}
-          </button>
-        </div>
+        {user && (
+          <div className="flex items-center gap-3">
+            <div className="hidden sm:block text-right mr-1">
+              <p className={`text-xs ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}>
+                {user.isAnonymous ? "Login sebagai" : "Login dengan"}
+              </p>
+              <p className={`text-sm font-medium ${isDarkMode ? "text-white" : "text-gray-900"}`}>
+                {user.isAnonymous ? "Anonymous" : "Google"}
+              </p>
+            </div>
+            <img
+              src={getAvatarUrl(user.photoURL, user.displayName || "Anonymous")}
+              alt={user.displayName || "Anonymous"}
+              className="w-10 h-10 rounded-full border-2 border-purple-500 object-cover"
+              referrerPolicy="no-referrer"
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = getAvatarUrl(null, user.displayName || "Anonymous");
+              }}
+            />
+            <button
+              onClick={handleLogout}
+              className={`px-4 py-2 rounded-lg text-xs sm:text-sm  font-medium transition-all ${
+                isDarkMode
+                  ? "bg-gray-800 hover:bg-gray-700 text-gray-300"
+                  : "bg-gray-100 hover:bg-gray-200 text-gray-700"
+              }`}
+            >
+              <i className="fas fa-sign-out-alt mr-2"></i>
+              {t("logout")}
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Chat Container */}
@@ -373,7 +318,7 @@ const formatTime = (timestamp) => {
             </div>
           ) : (
             messages.map((message) => {
-              const isOwnMessage = message.userId === user.uid;
+              const isOwnMessage = user && message.userId === user.uid;
               const isOwner = message.userId === OWNER_UID;
 
               return (
@@ -388,6 +333,11 @@ const formatTime = (timestamp) => {
                     src={getAvatarUrl(message.userPhoto, message.userName)}
                     alt={message.userName}
                     className="w-8 h-8 rounded-full flex-shrink-0 object-cover"
+                    referrerPolicy="no-referrer"
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = getAvatarUrl(null, message.userName);
+                    }}
                   />
 
                   {/* Message */}
@@ -471,44 +421,92 @@ const formatTime = (timestamp) => {
         </div>
 
         {/* Input Area */}
-        <form
-          onSubmit={handleSendMessage}
-          className={`p-4 border-t ${
-            isDarkMode
-              ? "bg-gray-900 border-gray-800"
-              : "bg-white border-gray-200"
-          }`}
-        >
-          <div className="flex gap-1 sm:gap-3">
-            <input
-              type="text"
-              value={newMessage}
-              onChange={(e) => setNewMessage(e.target.value)}
-              placeholder={t("typeMessage")}
-              disabled={sending}
-              className={`flex-1 max-w-[200px] sm:max-w-none px-4 py-3  rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 ${
-                isDarkMode
-                  ? "bg-gray-800 text-white placeholder-gray-500"
-                  : "bg-gray-50 text-gray-900 placeholder-gray-400 border border-gray-200"
-              }`}
-            />
-            <button
-              type="submit"
-              disabled={!newMessage.trim() || sending}
-              className={`px-6 py-3 rounded-lg   font-medium transition-all ${
-                !newMessage.trim() || sending
-                  ? "bg-gray-700 text-gray-500 cursor-not-allowed"
-                  : "bg-purple-600 hover:bg-purple-700 text-white"
-              }`}
-            >
-              {sending ? (
-                <i className="fas fa-spinner fa-spin "></i>
-              ) : (
-                <i className="fas fa-paper-plane"></i>
-              )}
-            </button>
+        {user ? (
+          <form
+            onSubmit={handleSendMessage}
+            className={`p-4 border-t ${
+              isDarkMode
+                ? "bg-gray-900 border-gray-800"
+                : "bg-white border-gray-200"
+            }`}
+          >
+            <div className="flex gap-1 sm:gap-3">
+              <input
+                type="text"
+                value={newMessage}
+                onChange={(e) => setNewMessage(e.target.value)}
+                placeholder={t("typeMessage")}
+                disabled={sending}
+                className={`flex-1 max-w-[200px] sm:max-w-none px-4 py-3  rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 ${
+                  isDarkMode
+                    ? "bg-gray-800 text-white placeholder-gray-500"
+                    : "bg-gray-50 text-gray-900 placeholder-gray-400 border border-gray-200"
+                }`}
+              />
+              <button
+                type="submit"
+                disabled={!newMessage.trim() || sending}
+                className={`px-6 py-3 rounded-lg   font-medium transition-all ${
+                  !newMessage.trim() || sending
+                    ? "bg-gray-700 text-gray-500 cursor-not-allowed"
+                    : "bg-purple-600 hover:bg-purple-700 text-white"
+                }`}
+              >
+                {sending ? (
+                  <i className="fas fa-spinner fa-spin "></i>
+                ) : (
+                  <i className="fas fa-paper-plane"></i>
+                )}
+              </button>
+            </div>
+          </form>
+        ) : (
+          <div
+            className={`p-4 border-t text-center ${
+              isDarkMode
+                ? "bg-gray-900 border-gray-800"
+                : "bg-white border-gray-200"
+            }`}
+          >
+            <p className={`mb-3 text-sm ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}>
+              {t("signInToChat")}
+            </p>
+            <div className="flex justify-center gap-3">
+              <button
+                onClick={handleGoogleLogin}
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all text-sm ${
+                  isDarkMode
+                    ? "bg-gray-800 hover:bg-gray-700 text-white"
+                    : "bg-white hover:bg-gray-50 text-gray-900 border border-gray-200"
+                }`}
+              >
+                <svg className="w-4 h-4" viewBox="0 0 24 24">
+                  <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                  <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                  <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                  <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                </svg>
+                Google
+              </button>
+              <button
+                onClick={handleAnonymousLogin}
+                disabled={isAnonLoggingIn}
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all text-sm ${
+                  isDarkMode
+                    ? "bg-gray-800 hover:bg-gray-700 text-gray-300"
+                    : "bg-gray-100 hover:bg-gray-200 text-gray-700"
+                } ${isAnonLoggingIn ? "opacity-75 cursor-not-allowed" : ""}`}
+              >
+                {isAnonLoggingIn ? (
+                  <i className="fas fa-spinner fa-spin"></i>
+                ) : (
+                  <i className="fas fa-user-secret"></i>
+                )}
+                Anonymous
+              </button>
+            </div>
           </div>
-        </form>
+        )}
       </div>
     </div>
   );
