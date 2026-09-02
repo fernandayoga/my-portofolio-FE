@@ -2,6 +2,27 @@ import React, { useState, useEffect } from "react";
 import { useTheme } from "../context/ThemeContext";
 import { useTranslation } from "react-i18next";
 import { GitHubCalendar } from "react-github-calendar";
+import { Bar, Doughnut } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  ArcElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  ArcElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 
 const Dashboard = () => {
@@ -60,13 +81,14 @@ const Dashboard = () => {
 
       const data = await response.json();
       
-      if (data.data) {
+      if (data.stats && data.stats.data) {
         setWakatimeData({
-          totalTimeText: data.data.human_readable_total_including_other_language || data.data.human_readable_total || "0 hrs",
-          dailyAverageText: data.data.human_readable_daily_average || "0 hrs",
-          languages: data.data.languages || [],
-          operatingSystems: data.data.operating_systems || [],
-          editors: data.data.editors || [],
+          totalTimeText: data.stats.data.human_readable_total_including_other_language || data.stats.data.human_readable_total || "0 hrs",
+          dailyAverageText: data.stats.data.human_readable_daily_average || "0 hrs",
+          languages: data.stats.data.languages || [],
+          operatingSystems: data.stats.data.operating_systems || [],
+          editors: data.stats.data.editors || [],
+          summaries: data.summaries?.data || [],
         });
       }
     } catch (error) {
@@ -345,6 +367,69 @@ const Dashboard = () => {
       </div>
     );
   }
+
+  // WakaTime Chart Configs
+  const weekdaysData = {
+    labels: wakatimeData?.summaries?.map(day => day.range.text) || [],
+    datasets: [
+      {
+        label: 'Coding Hours',
+        data: wakatimeData?.summaries?.map(day => day.grand_total.total_seconds / 3600) || [],
+        backgroundColor: '#4f46e5',
+        borderRadius: 4,
+      }
+    ]
+  };
+
+  const barOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      y: { display: false, beginAtZero: true },
+      x: { grid: { display: false }, ticks: { color: isDarkMode ? '#9ca3af' : '#4b5563' } }
+    }
+  };
+
+  const chartColors = [
+    '#3b82f6', '#f97316', '#10b981', '#8b5cf6', '#ec4899', '#f43f5e', '#14b8a6'
+  ];
+
+  const editorsData = {
+    labels: wakatimeData?.editors?.map(e => `${e.name} - ${e.text} (${e.percent}%)`) || [],
+    datasets: [
+      {
+        data: wakatimeData?.editors?.map(e => e.total_seconds) || [],
+        backgroundColor: chartColors,
+        borderWidth: 0,
+      }
+    ]
+  };
+
+  const osData = {
+    labels: wakatimeData?.operatingSystems?.map(o => `${o.name} - ${o.text} (${o.percent}%)`) || [],
+    datasets: [
+      {
+        data: wakatimeData?.operatingSystems?.map(o => o.total_seconds) || [],
+        backgroundColor: chartColors,
+        borderWidth: 0,
+      }
+    ]
+  };
+
+  const doughnutOptions = {
+    plugins: {
+      legend: {
+        position: 'right',
+        labels: {
+          color: isDarkMode ? '#9ca3af' : '#4b5563',
+          font: { size: 11 }
+        }
+      }
+    },
+    cutout: '70%',
+    maintainAspectRatio: false,
+  };
 
   return (
     <div className="min-h-screen  py-8 pt-20 xl:pt-8   gap-6">
@@ -742,20 +827,67 @@ const Dashboard = () => {
                 )}
               </div>
               
-              {/* Editors / OS */}
-              <div className="grid grid-cols-2 gap-4">
-                {wakatimeData?.editors && wakatimeData.editors.length > 0 && (
-                   <div className={`p-4 rounded-lg ${isDarkMode ? "bg-gray-800" : "bg-gray-50"}`}>
-                      <p className={`text-sm mb-2 ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>Top Editor</p>
-                      <p className="font-bold text-blue-400">{wakatimeData.editors[0].name}</p>
-                   </div>
-                )}
-                {wakatimeData?.operatingSystems && wakatimeData.operatingSystems.length > 0 && (
-                   <div className={`p-4 rounded-lg ${isDarkMode ? "bg-gray-800" : "bg-gray-50"}`}>
-                      <p className={`text-sm mb-2 ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>Top OS</p>
-                      <p className="font-bold text-green-400">{wakatimeData.operatingSystems[0].name}</p>
-                   </div>
-                )}
+              {/* Weekdays Chart */}
+              <div>
+                <p
+                  className={`text-sm font-medium mb-3 ${
+                    isDarkMode ? "text-gray-300" : "text-gray-700"
+                  }`}
+                >
+                  Weekdays
+                </p>
+                <div className={`p-4 rounded-lg ${isDarkMode ? "bg-gray-800" : "bg-gray-50"}`}>
+                  {wakatimeData?.summaries && wakatimeData.summaries.length > 0 ? (
+                    <div className="h-48">
+                      <Bar data={weekdaysData} options={barOptions} />
+                    </div>
+                  ) : (
+                    <p className="text-sm text-gray-500">No daily stats available.</p>
+                  )}
+                </div>
+              </div>
+              
+              {/* Editors / OS Doughnuts */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-4">
+                {/* Editors */}
+                <div>
+                  <p
+                    className={`text-sm font-medium mb-3 ${
+                      isDarkMode ? "text-gray-300" : "text-gray-700"
+                    }`}
+                  >
+                    Editors
+                  </p>
+                  <div className={`p-4 rounded-lg flex items-center justify-center ${isDarkMode ? "bg-gray-800" : "bg-gray-50"}`}>
+                    {wakatimeData?.editors && wakatimeData.editors.length > 0 ? (
+                      <div className="h-48 w-full">
+                        <Doughnut data={editorsData} options={doughnutOptions} />
+                      </div>
+                    ) : (
+                      <p className="text-sm text-gray-500">No editor stats available.</p>
+                    )}
+                  </div>
+                </div>
+
+                {/* OS */}
+                <div>
+                  <p
+                    className={`text-sm font-medium mb-3 ${
+                      isDarkMode ? "text-gray-300" : "text-gray-700"
+                    }`}
+                  >
+                    Operating Systems
+                  </p>
+                  <div className={`p-4 rounded-lg flex items-center justify-center ${isDarkMode ? "bg-gray-800" : "bg-gray-50"}`}>
+                    {wakatimeData?.operatingSystems && wakatimeData.operatingSystems.length > 0 ? (
+                      <div className="h-48 w-full">
+                        <Doughnut data={osData} options={doughnutOptions} />
+                      </div>
+                    ) : (
+                      <p className="text-sm text-gray-500">No OS stats available.</p>
+                    )}
+                  </div>
+                </div>
               </div>
 
             </div>
