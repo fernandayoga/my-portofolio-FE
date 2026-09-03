@@ -1,4 +1,4 @@
-export const smartTalkTranslations = {
+export const askBotTranslations = {
   en: {
     smartTalkGreeting: "What do you want to ask?",
     askAnything: "Ask me anything",

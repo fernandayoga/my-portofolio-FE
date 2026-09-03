@@ -4,7 +4,7 @@ import { aboutTranslations } from './about';
 import { achievementsTranslations } from './achievements';
 import { projectsTranslations } from './projects';
 import { contactTranslations } from './contact';
-import { smartTalkTranslations } from './smartTalk';
+import { askBotTranslations } from './askBot';
 import { chatRoomTranslations } from './chatRoom';
 import { dashboardTranslations } from './dashboard';
 import { projectDetailsTranslations } from './projectDetails';
@@ -18,7 +18,7 @@ export const translations = {
     ...achievementsTranslations.en,
     ...projectsTranslations.en,
     ...contactTranslations.en,
-    ...smartTalkTranslations.en,
+    ...askBotTranslations.en,
     ...chatRoomTranslations.en,
     ...dashboardTranslations.en,
     ...projectDetailsTranslations.en
@@ -30,7 +30,7 @@ export const translations = {
     ...achievementsTranslations.id,
     ...projectsTranslations.id,
     ...contactTranslations.id,
-    ...smartTalkTranslations.id,
+    ...askBotTranslations.id,
     ...chatRoomTranslations.id,
     ...dashboardTranslations.id,  
     ...projectDetailsTranslations.id

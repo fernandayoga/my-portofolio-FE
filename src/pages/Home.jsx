@@ -274,7 +274,7 @@ const Home = () => {
             <div className="flex flex-col-reverse md:flex-row gap-6 items-start">
               {/* Left Side - Text */}
               <p
-                className={`flex-1 text-base md:text-md leading-relaxed md:text-left text-justify ${
+                className={`flex-1 text-base md:text-md leading-relaxed text-justify hyphens-auto ${
                   isDarkMode ? "text-gray-300" : "text-gray-600"
                 }`}
               >
