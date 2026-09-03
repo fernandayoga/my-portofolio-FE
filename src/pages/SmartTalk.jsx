@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useTheme } from "../context/ThemeContext";
 import { requestToGroq } from "../utils/groq";
 import ReactMarkdown from "react-markdown";
@@ -7,9 +7,35 @@ import { useTranslation } from "react-i18next";
 const SmartTalk = () => {
   const { isDarkMode } = useTheme();
   const [input, setInput] = useState("");
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState(() => {
+    const savedMessages = localStorage.getItem("smartTalkMessages");
+    const savedTime = localStorage.getItem("smartTalkTimestamp");
+    
+    // 24 Jam dalam milidetik
+    const EXPIRATION_TIME = 24 * 60 * 60 * 1000;
+
+    if (savedMessages && savedTime) {
+      if (Date.now() - parseInt(savedTime) < EXPIRATION_TIME) {
+        return JSON.parse(savedMessages);
+      } else {
+        localStorage.removeItem("smartTalkMessages");
+        localStorage.removeItem("smartTalkTimestamp");
+      }
+    }
+    return [];
+  });
   const [isLoading, setIsLoading] = useState(false);
   const { t } = useTranslation();
+
+  useEffect(() => {
+    if (messages.length > 0) {
+      localStorage.setItem("smartTalkMessages", JSON.stringify(messages));
+      localStorage.setItem("smartTalkTimestamp", Date.now().toString());
+    } else {
+      localStorage.removeItem("smartTalkMessages");
+      localStorage.removeItem("smartTalkTimestamp");
+    }
+  }, [messages]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -50,6 +76,13 @@ const SmartTalk = () => {
     }
   };
 
+  const handleClearChat = () => {
+    setMessages([]);
+    localStorage.removeItem("smartTalkMessages");
+    localStorage.removeItem("smartTalkTimestamp");
+  };
+
+
   const suggestedQuestions = [
     t("suggestedQuestions1"),
     t("suggestedQuestions2"),
@@ -68,8 +101,24 @@ const SmartTalk = () => {
     >
       {/* Messages Area */}
       {messages.length > 0 ? (
-        <div className="w-full max-w-4xl flex-1 overflow-y-auto py-4 sm:py-8 space-y-3 sm:space-y-6 pb-24 sm:pb-32">
-          {messages.map((message) => (
+        <div className="w-full max-w-4xl flex-1 flex flex-col py-4 sm:py-8 overflow-hidden">
+          {/* Header Action */}
+          <div className="flex justify-end mb-2 sm:mb-4 px-2">
+            <button
+              onClick={handleClearChat}
+              className={`text-xs sm:text-sm px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border transition-all flex items-center ${
+                isDarkMode 
+                  ? "border-red-500/30 text-red-400 hover:bg-red-500/10" 
+                  : "border-red-200 text-red-500 hover:bg-red-50"
+              }`}
+            >
+              <i className="fas fa-trash-alt mr-2"></i>
+              Hapus Riwayat
+            </button>
+          </div>
+          
+          <div className="flex-1 overflow-y-auto space-y-3 sm:space-y-6 pb-24 sm:pb-32 px-2">
+            {messages.map((message) => (
             <div
               key={message.id}
               className={`flex ${
@@ -153,6 +202,7 @@ const SmartTalk = () => {
               </div>
             </div>
           )}
+          </div>
         </div>
       ) : (
         // Empty State - Center Screen
