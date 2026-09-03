@@ -7,6 +7,7 @@ export const smartTalkTranslations = {
     suggestedQuestions3: "Show me the projects Fernanda has built",
     suggestedQuestions4: "What technologies were used in this portfolio web?",
     suggestedQuestions5: "How can I contact or connect with Fernanda?",
+    clearHistory: "Clear History",
   },
   id: {
     smartTalkGreeting: "Apa yang ingin Kamu tanyakan?",
@@ -16,5 +17,6 @@ export const smartTalkTranslations = {
     suggestedQuestions3: "Tunjukkan proyek-proyek yang telah dibuat Fernanda",
     suggestedQuestions4: "Teknologi apa saja yang digunakan dalam web portofolio ini?",
     suggestedQuestions5: "Bagaimana cara menghubungi atau terhubung dengan Fernanda?",
+    clearHistory: "Hapus Riwayat",
   },
 };

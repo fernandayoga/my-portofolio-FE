@@ -69,7 +69,7 @@ const Sidebar = () => {
   };
 
   // ✅ Array page yang tidak perlu button
-const hideBackToTopPages = ['/chat-room', '/contact', '/smart-talk'];
+  const hideBackToTopPages = ['/chat-room', '/contact', '/ask-bot'];
 
 // ✅ Cek apakah current page ada di list
 const shouldShowBackToTop = !hideBackToTopPages.includes(location.pathname);
@@ -338,7 +338,7 @@ const shouldShowBackToTop = !hideBackToTopPages.includes(location.pathname);
             } `}
           >
             <Link
-              to="/smart-talk"
+              to="/ask-bot"
               onClick={closeSidebar}
               className="w-full bg-gradient-to-r from-purple-400 to-violet-500 hover:from-purple-600 hover:to-violet-700 text-white px-2 py-2 rounded-lg font-medium transition-all flex items-center justify-center gap-2"
             >

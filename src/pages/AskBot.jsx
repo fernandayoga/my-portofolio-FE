@@ -4,7 +4,7 @@ import { requestToGroq } from "../utils/groq";
 import ReactMarkdown from "react-markdown";
 import { useTranslation } from "react-i18next";
 
-const SmartTalk = () => {
+const AskBot = () => {
   const { isDarkMode } = useTheme();
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState(() => {
@@ -113,7 +113,7 @@ const SmartTalk = () => {
               }`}
             >
               <i className="fas fa-trash-alt mr-2"></i>
-              Hapus Riwayat
+              {t("clearHistory")}
             </button>
           </div>
           
@@ -301,4 +301,4 @@ const SmartTalk = () => {
   );
 };
 
-export default SmartTalk;
+export default AskBot;

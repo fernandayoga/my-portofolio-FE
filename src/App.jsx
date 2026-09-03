@@ -9,7 +9,7 @@ import Projects from "./pages/Projects";
 import Dashboard from "./pages/Dashboard";
 import ChatRoom from "./pages/ChatRoom";
 import Contact from "./pages/Contact";
-import SmartTalk from "./pages/SmartTalk";
+import AskBot from "./pages/AskBot";
 import DetailProject from "./pages/DetailProject";
 
 function App() {
@@ -29,7 +29,7 @@ function App() {
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/chat-room" element={<ChatRoom />} />
                 <Route path="/contact" element={<Contact />} />
-                <Route path="/smart-talk" element={<SmartTalk />} />
+                <Route path="/ask-bot" element={<AskBot />} />
               </Routes>
             </div>
           </main>
