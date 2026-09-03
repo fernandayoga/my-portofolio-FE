@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import PageTransition from "../components/PageTransition";
 import { useTheme } from "../context/ThemeContext";
 import { achievements } from "../data/dataAchivment.js";
 import { useTranslation } from "react-i18next";
@@ -32,6 +33,7 @@ const Achievements = () => {
   }, [searchQuery]);
 
   return (
+    <PageTransition>
     <div
       className="min-h-screen py-8 pt-20 xl:pt-8 pl-4"
       data-aos="fade-down"
@@ -192,6 +194,7 @@ const Achievements = () => {
         </div>
       )}
     </div>
+    </PageTransition>
   );
 };
 

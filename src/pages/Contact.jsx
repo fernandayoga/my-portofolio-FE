@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PageTransition from "../components/PageTransition";
 import { useTheme } from "../context/ThemeContext";
 import { useTranslation } from "react-i18next";
 import { Form } from "react-router-dom";
@@ -103,6 +104,7 @@ const Contact = () => {
   ];
 
   return (
+    <PageTransition>
     <div
       className="min-h-screen px-4 md:px-8 pb-8 pt-20 xl:pt-8"
       data-aos="fade-down"
@@ -285,6 +287,7 @@ const Contact = () => {
         </div>
       </div>
     </div>
+    </PageTransition>
   );
 };
 

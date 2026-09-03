@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import PageTransition from "../components/PageTransition";
 import { useTheme } from "../context/ThemeContext";
 import { useTranslation } from "react-i18next";
 import {
@@ -233,6 +234,7 @@ const formatTime = (timestamp) => {
 
   // Chat Room
   return (
+    <PageTransition>
     <div className="min-h-screen py-8 pt-20 xl:pt-8">
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
@@ -509,6 +511,7 @@ const formatTime = (timestamp) => {
         )}
       </div>
     </div>
+    </PageTransition>
   );
 };
 
