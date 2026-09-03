@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import PageTransition from "../components/PageTransition";
 import { useTheme } from "../context/ThemeContext";
 import { cardClass, textClass } from "../utils/themeUtils";
 import { projects } from "../data/dataProject";
@@ -41,7 +40,6 @@ const Projects = () => {
   console.log(filteredProjects);
 
   return (
-    <PageTransition>
     <div
       className="min-h-screen py-8 pt-20 xl:pt-8"
       data-aos="fade-down"
@@ -196,7 +194,6 @@ const Projects = () => {
         </div>
       )}
     </div>
-    </PageTransition>
   );
 };
 

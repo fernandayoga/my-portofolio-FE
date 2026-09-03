@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import PageTransition from "../components/PageTransition";
 import { useTheme } from "../context/ThemeContext";
 import { useTranslation } from "react-i18next";
 import { GitHubCalendar } from "react-github-calendar";
@@ -433,7 +432,6 @@ const Dashboard = () => {
   };
 
   return (
-    <PageTransition>
     <div className="min-h-screen  py-8 pt-20 xl:pt-8   gap-6">
       {/* Header */}
       <div className="mb-8">
@@ -912,7 +910,6 @@ const Dashboard = () => {
         </button>
       </div>
     </div>
-    </PageTransition>
   );
 };
 

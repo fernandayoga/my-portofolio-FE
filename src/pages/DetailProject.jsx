@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import PageTransition from "../components/PageTransition";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useTheme } from "../context/ThemeContext";
 import { useTranslation } from "react-i18next";
@@ -76,7 +75,6 @@ const DetailProject = () => {
   };
 
   return (
-    <PageTransition>
     <div className="min-h-screen py-8 pt-20 xl:pt-8 pl-4">
       {/* Back Button */}
       <Link
@@ -409,7 +407,6 @@ const DetailProject = () => {
         </Link>
       </div>
     </div>
-    </PageTransition>
   );
 };
 

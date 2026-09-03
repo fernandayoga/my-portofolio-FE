@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import PageTransition from "../components/PageTransition";
 import { useTheme } from "../context/ThemeContext";
 import { useTranslation } from "react-i18next";
 import profileImage from "../assets/about/experience/imageProfile.png";
@@ -246,7 +245,6 @@ const Home = () => {
   };
 
   return (
-    <PageTransition>
     <div
       className="min-h-screen py-8 pt-20 xl:pt-8 pl-4"
       data-aos="fade-down"
@@ -403,7 +401,6 @@ const Home = () => {
         </div>
       </div>
     </div>
-    </PageTransition>
   );
 };
 

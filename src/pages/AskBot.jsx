@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import PageTransition from "../components/PageTransition";
 import { useTheme } from "../context/ThemeContext";
 import { requestToGroq } from "../utils/groq";
 import ReactMarkdown from "react-markdown";
@@ -95,7 +94,6 @@ const AskBot = () => {
 
 
   return (
-    <PageTransition>
     <div
       className={`min-h-[100dvh] flex flex-col items-center justify-center px-3 sm:px-4 ${
         isDarkMode ? "bg-black" : "bg-white"
@@ -300,7 +298,6 @@ const AskBot = () => {
         </form>
       </div>
     </div>
-    </PageTransition>
   );
 };
 

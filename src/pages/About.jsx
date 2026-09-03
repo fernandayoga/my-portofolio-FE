@@ -1,5 +1,4 @@
 import React from "react";
-import PageTransition from "../components/PageTransition";
 import { useTheme } from "../context/ThemeContext";
 import { useTranslation } from "react-i18next";
 import { cardClass, textClass, textSecondaryClass } from "../utils/themeUtils";
@@ -81,7 +80,6 @@ const About = () => {
   ];
 
   return (
-    <PageTransition>
     <div
       className="min-h-screen py-8 pt-20 xl:pt-8 pl-4"
       data-aos="fade-down"
@@ -251,7 +249,6 @@ const About = () => {
         </div>
       </div>
     </div>
-    </PageTransition>
   );
 };
 
