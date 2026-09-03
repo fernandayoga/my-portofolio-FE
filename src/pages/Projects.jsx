@@ -8,7 +8,8 @@ import { Link, useNavigate } from "react-router-dom";
 const Projects = () => {
   const { isDarkMode } = useTheme();
   const [filter, setFilter] = useState("all");
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const getLoc = (val) => (typeof val === 'object' && val !== null) ? (val[i18n.language] || val.en) : val;
   const [filteredProjects, setFilteredProjects] = useState(projects);
   const navigate = useNavigate();
   const [zoomedImage, setZoomedImage] = useState(null);
@@ -123,7 +124,7 @@ const Projects = () => {
             >
               <img
                 src={project.etalase}
-                alt={project.title}
+                alt={getLoc(project.title)}
                 className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-110"
               />
             </div>
@@ -136,16 +137,16 @@ const Projects = () => {
                   isDarkMode,
                 )}`}
               >
-                {project.title}
+                {getLoc(project.title)}
               </h3>
 
               {project.pre && (
-                <p className="text-gray-400 text-sm mb-2">{project.pre}</p>
+                <p className="text-gray-400 text-sm mb-2">{getLoc(project.pre)}</p>
               )}
 
               <p className="text-gray-400 text-sm mb-4 flex-1">
                 {/* ↑ Tambahkan: flex-1 */}
-                {project.shortDescription}
+                {getLoc(project.shortDescription)}
               </p>
 
               {/* Button di paling bawah */}

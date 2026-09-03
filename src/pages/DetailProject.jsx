@@ -9,7 +9,9 @@ const DetailProject = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { isDarkMode } = useTheme();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  
+  const getLoc = (val) => (typeof val === 'object' && val !== null) ? (val[i18n.language] || val.en) : val;
 
   const [project, setProject] = useState(null);
   const [activeImage, setActiveImage] = useState(null);
@@ -94,7 +96,7 @@ const DetailProject = () => {
             isDarkMode ? "text-white" : "text-gray-900"
           }`}
         >
-          {project.title}
+          {getLoc(project.title)}
         </h1>
 
         <p
@@ -102,7 +104,7 @@ const DetailProject = () => {
             isDarkMode ? "text-gray-400" : "text-gray-600"
           }`}
         >
-          {project.shortDescription}
+          {getLoc(project.shortDescription)}
         </p>
 
         {/* Technologies */}
@@ -181,7 +183,7 @@ const DetailProject = () => {
             isDarkMode ? "text-gray-300" : "text-gray-700"
           }`}
         >
-          {project.introduction}
+          {getLoc(project.introduction)}
         </p>
       </div>
 
@@ -213,7 +215,7 @@ const DetailProject = () => {
                     : "text-gray-900 border-gray-200"
                 }`}
               >
-                {stack.category}
+                {getLoc(stack.category)}
               </h3>
 
               <ul className="space-y-3">
@@ -224,14 +226,14 @@ const DetailProject = () => {
                         isDarkMode ? "text-purple-400" : "text-purple-600"
                       }`}
                     >
-                      {item.name}
+                      {getLoc(item.name)}
                     </div>
                     <div
                       className={`text-sm ${
                         isDarkMode ? "text-gray-400" : "text-gray-600"
                       }`}
                     >
-                      {item.description}
+                      {getLoc(item.description)}
                     </div>
                   </li>
                 ))}
@@ -275,14 +277,14 @@ const DetailProject = () => {
                       isDarkMode ? "text-white" : "text-gray-900"
                     }`}
                   >
-                    {feature.title}
+                    {getLoc(feature.title)}
                   </h3>
                   <p
                     className={`text-sm leading-relaxed ${
                       isDarkMode ? "text-gray-400" : "text-gray-600"
                     }`}
                   >
-                    {feature.description}
+                    {getLoc(feature.description)}
                   </p>
                 </div>
               </div>
@@ -317,7 +319,7 @@ const DetailProject = () => {
                 <div className="relative overflow-hidden">
                   <img
                     src={image.src}
-                    alt={image.alt}
+                    alt={getLoc(image.alt)}
                     className="w-full h-52 object-cover transition-transform duration-500 group-hover:scale-105"
                   />
 
@@ -336,7 +338,7 @@ const DetailProject = () => {
                       isDarkMode ? "text-gray-200" : "text-gray-800"
                     }`}
                   >
-                    {image.caption}
+                    {getLoc(image.caption)}
                   </p>
                 </div>
               </div>
@@ -371,7 +373,7 @@ const DetailProject = () => {
             <div className="w-full bg-black flex items-center justify-center">
               <img
                 src={project.gallery[activeImage].src}
-                alt={project.gallery[activeImage].alt}
+                alt={getLoc(project.gallery[activeImage].alt)}
                 className="max-h-[80vh] w-auto object-contain"
               />
             </div>
@@ -383,7 +385,7 @@ const DetailProject = () => {
             ${isDarkMode ? "text-gray-300" : "text-gray-700"}
           `}
               >
-                {project.gallery[activeImage].caption}
+                {getLoc(project.gallery[activeImage].caption)}
               </p>
             </div>
           </div>
