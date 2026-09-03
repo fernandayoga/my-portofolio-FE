@@ -426,20 +426,20 @@ const formatTime = (timestamp) => {
         {user ? (
           <form
             onSubmit={handleSendMessage}
-            className={`p-4 border-t ${
+            className={`w-full p-4 border-t ${
               isDarkMode
                 ? "bg-gray-900 border-gray-800"
                 : "bg-white border-gray-200"
             }`}
           >
-            <div className="flex gap-1 sm:gap-3">
+            <div className="w-full flex gap-2 sm:gap-3">
               <input
                 type="text"
                 value={newMessage}
                 onChange={(e) => setNewMessage(e.target.value)}
                 placeholder={t("typeMessage")}
                 disabled={sending}
-                className={`flex-1 max-w-[200px] sm:max-w-none px-4 py-3  rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 ${
+                className={`flex-1 w-full px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 ${
                   isDarkMode
                     ? "bg-gray-800 text-white placeholder-gray-500"
                     : "bg-gray-50 text-gray-900 placeholder-gray-400 border border-gray-200"
