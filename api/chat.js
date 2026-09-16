@@ -192,7 +192,7 @@ export default async function handler(req, res) {
           content: query,
         }
       ],
-      model: "qwen/qwen3.6-27b",
+      model: "llama-3.1-8b-instant",
       temperature: 0.7,
       max_tokens: 4096,
       top_p: 1,
