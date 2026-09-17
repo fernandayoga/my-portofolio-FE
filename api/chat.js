@@ -192,7 +192,7 @@ export default async function handler(req, res) {
           content: query,
         }
       ],
-      model: "qwen/qwen3.8-27b",
+      model: "openai/gpt-oss-20b",
       temperature: 0.7,
       max_tokens: 4096,
       top_p: 1,
