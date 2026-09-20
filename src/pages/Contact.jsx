@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useTheme } from "../context/ThemeContext";
 import { useTranslation } from "react-i18next";
-import { Form } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const Contact = () => {
@@ -14,10 +13,7 @@ const Contact = () => {
   });
 
   const [isLoading, setIsLoading] = useState(false);
-
   const { t } = useTranslation();
-
-  console.log(formData);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -40,7 +36,7 @@ const Contact = () => {
           draggable: true,
         });
 
-        setFormData({ name: "", email: "", message: "" });
+        setFormData({ name: "", email: "", subject: "", message: "" });
       } else {
         alert("Failed to send message");
       }
@@ -71,16 +67,16 @@ const Contact = () => {
       title: t('titleIg'),
       description: t('deskIg'),
       buttonText: t('buttonIg'),
-      bgGradient: "bg-gradient-to-r from-purple-600 via-pink-500 to-orange-500",
+      code: "IG // 01",
     },
     {
-      icon: "fab fa-linkedin",
+      icon: "fab fa-linkedin-in",
       link: "https://www.linkedin.com/in/fernanda-yoga-kurniawan-186b20295/",
       label: "LinkedIn",
       title: t('titleLinkedin'),
       description: t('deskLinkedin'),
       buttonText: t('buttonLinkedin'),
-      bgGradient: "bg-gradient-to-r from-blue-500 to-blue-700",
+      code: "IN // 02",
     },
     {
       icon: "fab fa-tiktok",
@@ -89,7 +85,7 @@ const Contact = () => {
       title: t('titleTt'),
       description: t('deskTt'),
       buttonText: t('buttonTt'),
-      bgGradient: "bg-gradient-to-r from-gray-700 to-gray-900",
+      code: "TT // 03",
     },
     {
       icon: "fab fa-github",
@@ -98,50 +94,85 @@ const Contact = () => {
       title: t('titleGithub'),
       description: t('deskGithub'),
       buttonText:  t('buttonGithub'),
-      bgGradient: "bg-gradient-to-r from-gray-800 via-gray-900 to-black",
+      code: "GH // 04",
     },
   ];
 
   return (
     <div
-      className="min-h-screen px-4 md:px-8 pb-8 pt-20 xl:pt-8"
+      className="min-h-screen pb-12 pt-20 xl:pt-8"
       data-aos="fade-down"
       data-aos-delay="100"
       data-aos-duration="600"
     >
-      <h1
-        className={`text-3xl md:text-4xl font-bold mb-2 ${
-          isDarkMode ? "text-white" : "text-gray-900"
-        }`}
-      >
-        {t("contactTitle")}
-      </h1>
-      <p className={`mb-8  ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}>
-        {t("contactSubtitle")}
-      </p>
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
-        {/* Contact Form */}
-        <div
-          className={`rounded-xl p-8 border ${
-            isDarkMode
-              ? "bg-gray-900 border-gray-800"
-              : "bg-white border-gray-200 shadow-lg"
-          } `}
-        >
-          <h2
-            className={`text-2xl font-semibold mb-6 flex items-center gap-3 ${
-              isDarkMode ? "text-white" : "text-gray-900"
+      {/* Header Section */}
+      <div className="mb-12">
+        <div className="flex items-center gap-3 mb-4">
+          <div
+            className={`w-2 h-2 rounded-full ${
+              isDarkMode ? "bg-[#D4F933]" : "bg-[#2D5204]"
+            }`}
+          ></div>
+          <span
+            className={`font-mono text-xs font-semibold tracking-widest uppercase ${
+              isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"
             }`}
           >
-            <i className="fas fa-paper-plane text-primary"></i>
-            {t("sendMessage")}
-          </h2>
-          <form onSubmit={handleSubmit} className="space-y-4">
+            // COMMUNICATIONS DISPATCH
+          </span>
+          <div
+            className={`flex-1 h-[1px] ${
+              isDarkMode ? "bg-white/[0.08]" : "bg-black/[0.08]"
+            }`}
+          ></div>
+        </div>
+
+        <h1
+          className={`text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-3 ${
+            isDarkMode ? "text-white" : "text-gray-900"
+          }`}
+        >
+          {t("contactTitle")}
+        </h1>
+        <p className={`font-mono text-xs sm:text-sm ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}>
+          {t("contactSubtitle")}
+        </p>
+
+        <div className="mt-8 hairline-divider"></div>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        {/* Left Column: Contact Form */}
+        <div
+          className={`lg:col-span-7 rounded-2xl p-6 sm:p-8 border ${
+            isDarkMode
+              ? "bg-[#121216] border-white/[0.08]"
+              : "bg-white border-black/[0.08] shadow-sm"
+          }`}
+        >
+          <div className="flex items-center justify-between mb-6 pb-4 border-b border-inherit">
+            <h2
+              className={`text-lg sm:text-xl font-bold flex items-center gap-2.5 ${
+                isDarkMode ? "text-white" : "text-gray-900"
+              }`}
+            >
+              <i
+                className={`fas fa-paper-plane text-xs ${
+                  isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"
+                }`}
+              ></i>
+              <span>{t("sendMessage")}</span>
+            </h2>
+            <span className="font-mono text-[10px] text-gray-500 uppercase tracking-widest">
+              DIRECT DISPATCH
+            </span>
+          </div>
+
+          <form onSubmit={handleSubmit} className="space-y-5">
             <div>
               <label
-                className={`block text-sm font-medium mb-2 ${
-                  isDarkMode ? "text-gray-300" : "text-gray-700"
+                className={`block font-mono text-[11px] uppercase tracking-wider mb-2 font-medium ${
+                  isDarkMode ? "text-gray-400" : "text-gray-600"
                 }`}
               >
                 {t("yourName")}
@@ -152,18 +183,19 @@ const Contact = () => {
                 value={formData.name}
                 onChange={handleChange}
                 required
-                className={`w-full px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 ${
+                className={`w-full px-4 py-3 rounded-lg font-mono text-xs focus:outline-none transition-all ${
                   isDarkMode
-                    ? "bg-gray-800 text-white border-gray-700"
-                    : "bg-gray-50 text-gray-900 border border-gray-300"
+                    ? "bg-[#181920] text-white border border-white/[0.1] focus:border-[#D4F933]"
+                    : "bg-gray-50 text-gray-900 border border-gray-300 focus:border-[#2D5204]"
                 }`}
-                placeholder=" "
+                placeholder="e.g. Alex Smith"
               />
             </div>
+
             <div>
               <label
-                className={`block text-sm font-medium mb-2 ${
-                  isDarkMode ? "text-gray-300" : "text-gray-700"
+                className={`block font-mono text-[11px] uppercase tracking-wider mb-2 font-medium ${
+                  isDarkMode ? "text-gray-400" : "text-gray-600"
                 }`}
               >
                 {t("emailAddress")}
@@ -174,19 +206,19 @@ const Contact = () => {
                 value={formData.email}
                 onChange={handleChange}
                 required
-                className={`w-full px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 ${
+                className={`w-full px-4 py-3 rounded-lg font-mono text-xs focus:outline-none transition-all ${
                   isDarkMode
-                    ? "bg-gray-800 text-white border-gray-700"
-                    : "bg-gray-50 text-gray-900 border border-gray-300"
+                    ? "bg-[#181920] text-white border border-white/[0.1] focus:border-[#D4F933]"
+                    : "bg-gray-50 text-gray-900 border border-gray-300 focus:border-[#2D5204]"
                 }`}
-                placeholder=""
+                placeholder="e.g. alex@domain.com"
               />
             </div>
 
             <div>
               <label
-                className={`block text-sm font-medium mb-2 ${
-                  isDarkMode ? "text-gray-300" : "text-gray-700"
+                className={`block font-mono text-[11px] uppercase tracking-wider mb-2 font-medium ${
+                  isDarkMode ? "text-gray-400" : "text-gray-600"
                 }`}
               >
                 {t("message")}
@@ -196,92 +228,128 @@ const Contact = () => {
                 value={formData.message}
                 onChange={handleChange}
                 required
-                rows="8"
-                className={`w-full   px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none ${
+                rows="6"
+                className={`w-full px-4 py-3 rounded-lg font-mono text-xs focus:outline-none transition-all resize-none ${
                   isDarkMode
-                    ? "bg-gray-800 text-white border-gray-700"
-                    : "bg-gray-50 text-gray-900 border border-gray-300"
+                    ? "bg-[#181920] text-white border border-white/[0.1] focus:border-[#D4F933]"
+                    : "bg-gray-50 text-gray-900 border border-gray-300 focus:border-[#2D5204]"
                 }`}
+                placeholder="Write your transmission..."
               ></textarea>
             </div>
+
             <button
               type="submit"
               disabled={isLoading}
-              className={`w-full py-3 rounded-lg font-medium transition-all
-    flex items-center justify-center gap-2
-    ${
-      isLoading
-        ? "bg-purple-400 cursor-not-allowed"
-        : "bg-purple-600 hover:bg-purple-700"
-    }
-    text-white
-  `}
+              className={`w-full py-3.5 rounded-lg font-mono text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-2 border ${
+                isLoading
+                  ? isDarkMode
+                    ? "bg-[#D4F933]/50 border-transparent text-black cursor-not-allowed"
+                    : "bg-black/50 border-transparent text-[#D4F933]/70 cursor-not-allowed"
+                  : isDarkMode
+                  ? "bg-[#D4F933] hover:bg-[#bce615] text-black border-[#D4F933] shadow-md"
+                  : "bg-[#0A0A0C] hover:bg-black text-[#D4F933] border-black shadow-md hover:shadow-lg"
+              }`}
             >
               {isLoading ? (
                 <>
-                  <i className="fas fa-spinner fa-spin"></i>
-                  {t("sending")}
+                  <i className="fas fa-spinner fa-spin text-xs"></i>
+                  <span>{t("sending")}</span>
                 </>
               ) : (
                 <>
-                  <i className="fas fa-paper-plane"></i>
-                  {t("sendMessage")}
+                  <i className="fas fa-paper-plane text-xs"></i>
+                  <span>{t("sendMessage")}</span>
                 </>
               )}
             </button>
           </form>
         </div>
 
-        {/* Social Links & Info */}
-        <div className="space-y-6">
-          {/* Social Media Cards */}
-          <div className="mb-12">
+        {/* Right Column: Social Channels */}
+        <div className="lg:col-span-5 space-y-4">
+          <div className="flex items-center justify-between mb-2">
             <h2
-              className={`text-2xl font-bold mb-6 ${
+              className={`text-lg sm:text-xl font-bold ${
                 isDarkMode ? "text-white" : "text-gray-900"
               }`}
             >
               {t("connectWithMe")}
             </h2>
-
-            <div className="grid grid-cols-1 gap-4">
-              {socialLinks.map((social, index) => (
-                <a
-                  key={index}
-                  href={social.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`relative p-4 rounded-2xl overflow-hidden transition-all hover:scale-[1.02] group ${social.bgGradient}`}
-                >
-                  {/* Content */}
-                  <div className="relative z-10 flex items-center justify-between">
-                    {/* Left Content */}
-                    <div className="flex-1">
-                      <h3 className="text-1xl font-bold text-white mb-2">
-                        {social.title}
-                      </h3>
-                      <p className="text-white/80 text-xs mb-4 max-w-md">
-                        {social.description}
-                      </p>
-
-                      {/* Button */}
-                      <button className="px-6 py-2.5 text-xs bg-white/90 hover:bg-white text-gray-900 rounded-lg font-medium transition-all flex items-center gap-2 shadow-lg">
-                        {social.buttonText}
-                        <i className="fas fa-arrow-right text-sm group-hover:translate-x-1 transition-transform"></i>
-                      </button>
-                    </div>
-
-                    {/* Right Icon */}
-                    <div className="flex mr-5  items-center justify-center ml-6 flex-shrink-0">
-                      <i className={`${social.icon} text-4xl lg:text-5xl text-white`}></i>
-                    </div>
-                  </div>
-                </a>
-              ))}
-            </div>
+            <span
+              className={`font-mono text-[10px] uppercase tracking-widest font-semibold ${
+                isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"
+              }`}
+            >
+              // CHANNELS
+            </span>
           </div>
 
-         
+          <div className="space-y-3">
+            {socialLinks.map((social, index) => (
+              <a
+                key={index}
+                href={social.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`p-5 rounded-xl border transition-all duration-200 block group ${
+                  isDarkMode
+                    ? "bg-[#121216] border-white/[0.08] hover:border-[#D4F933]/50 hover:bg-[#181920]"
+                    : "bg-white border-black/[0.08] hover:border-[#2D5204] hover:bg-gray-50 shadow-sm"
+                }`}
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex-1 pr-4">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span
+                        className={`font-mono text-[10px] font-semibold ${
+                          isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"
+                        }`}
+                      >
+                        {social.code}
+                      </span>
+                    </div>
+
+                    <h3
+                      className={`text-base font-bold transition-colors ${
+                        isDarkMode
+                          ? "text-white group-hover:text-[#D4F933]"
+                          : "text-gray-900 group-hover:text-[#2D5204]"
+                      }`}
+                    >
+                      {social.title}
+                    </h3>
+                    <p
+                      className={`text-xs mt-1 line-clamp-2 leading-relaxed ${
+                        isDarkMode ? "text-gray-400" : "text-gray-600"
+                      }`}
+                    >
+                      {social.description}
+                    </p>
+
+                    <div
+                      className={`mt-3 inline-flex items-center gap-1.5 font-mono text-[11px] font-semibold uppercase tracking-wider group-hover:translate-x-0.5 transition-transform ${
+                        isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"
+                      }`}
+                    >
+                      <span>{social.buttonText}</span>
+                      <i className="fas fa-arrow-right text-[9px]"></i>
+                    </div>
+                  </div>
+
+                  <div
+                    className={`w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0 transition-all ${
+                      isDarkMode
+                        ? "bg-white/[0.03] border border-white/[0.08] text-gray-300 group-hover:text-[#D4F933] group-hover:border-[#D4F933]/40"
+                        : "bg-black/[0.03] border border-black/[0.08] text-gray-700 group-hover:text-[#2D5204] group-hover:border-[#2D5204]/40"
+                    }`}
+                  >
+                    <i className={`${social.icon} text-xl`}></i>
+                  </div>
+                </div>
+              </a>
+            ))}
+          </div>
         </div>
       </div>
     </div>

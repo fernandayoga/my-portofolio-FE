@@ -9,17 +9,13 @@ const Home = () => {
   const { isDarkMode } = useTheme();
   const { t } = useTranslation();
   const [typedText, setTypedText] = useState("");
-  const[indexText, setIndexText] = useState(0);
-
-
-
+  const [indexText, setIndexText] = useState(0);
 
   const daftarText = [
     "Fullstack Developer",
     "Web Developer",
     "Mobile Developer",
-    
-  ]
+  ];
   const fullText = daftarText[indexText]; 
 
   useEffect(() => {
@@ -41,38 +37,38 @@ const Home = () => {
     }, 100);
 
     return () => clearInterval(typingInterval);
-  }, [fullText]); // Re-run saat fullText (language) berubah
+  }, [fullText]);
 
   const skills = [
-    { icon: "fa-brands fa-html5", color: "bg-orange-500", name: "HTML5" },
-    { icon: "fa-brands fa-css3-alt", color: "bg-blue-500", name: "CSS3" },
+    { icon: "fa-brands fa-html5", color: "text-orange-500", name: "HTML5" },
+    { icon: "fa-brands fa-css3-alt", color: "text-blue-500", name: "CSS3" },
     {
       icon: "fa-brands fa-bootstrap",
-      color: "bg-purple-600",
+      color: "text-purple-400",
       name: "Bootstrap",
     },
     {
       icon: "tailwind",
-      color: "bg-cyan-500",
+      color: "text-cyan-400",
       name: "Tailwind",
       isCustom: true,
     },
-    { icon: "fa-brands fa-js", color: "bg-yellow-400", name: "JavaScript" },
-    { icon: "typescript", color: "bg-transparent", name: "TypeScript", isCustom: true },
-    { icon: "fa-brands fa-react", color: "bg-blue-400", name: "React" },
-    { icon: "nextjs", color: "bg-black", name: "Next.js", isCustom: true },
-    { icon: "fa-brands fa-vuejs", color: "bg-green-500", name: "Vue.js" },
-    { icon: "fa-brands fa-figma", color: "bg-pink-500", name: "Figma" },
-    { icon: "fa-brands fa-node", color: "bg-green-700", name: "Node.js" },
-    { icon: "express", color: "bg-gray-700", name: "Express", isCustom: true },
-    { icon: "fa-brands fa-laravel", color: "bg-red-500", name: "Laravel" },
-    { icon: "fa-brands fa-docker", color: "bg-blue-500", name: "Docker" },
-    { icon: "mysql", color: "bg-blue-700", name: "MySQL", isCustom: true },
-    { icon: "fa-solid fa-leaf", color: "bg-green-500", name: "MongoDB" },
-    { icon: "fa-brands fa-git-alt", color: "bg-orange-600", name: "Git" },
-    { icon: "nginx", color: "bg-green-600", name: "Nginx", isCustom: true },
-    { icon: "flutter", color: "bg-blue-400", name: "Flutter", isCustom: true },
-    { icon: "fa-brands fa-github", color: "bg-gray-700", name: "GitHub" },
+    { icon: "fa-brands fa-js", color: "text-yellow-400", name: "JavaScript" },
+    { icon: "typescript", color: "text-blue-400", name: "TypeScript", isCustom: true },
+    { icon: "fa-brands fa-react", color: "text-cyan-400", name: "React" },
+    { icon: "nextjs", color: "text-white", name: "Next.js", isCustom: true },
+    { icon: "fa-brands fa-vuejs", color: "text-emerald-400", name: "Vue.js" },
+    { icon: "fa-brands fa-figma", color: "text-pink-400", name: "Figma" },
+    { icon: "fa-brands fa-node", color: "text-emerald-500", name: "Node.js" },
+    { icon: "express", color: "text-gray-300", name: "Express", isCustom: true },
+    { icon: "fa-brands fa-laravel", color: "text-red-500", name: "Laravel" },
+    { icon: "fa-brands fa-docker", color: "text-blue-400", name: "Docker" },
+    { icon: "mysql", color: "text-amber-500", name: "MySQL", isCustom: true },
+    { icon: "fa-solid fa-leaf", color: "text-emerald-400", name: "MongoDB" },
+    { icon: "fa-brands fa-git-alt", color: "text-orange-500", name: "Git" },
+    { icon: "nginx", color: "text-emerald-400", name: "Nginx", isCustom: true },
+    { icon: "flutter", color: "text-sky-400", name: "Flutter", isCustom: true },
+    { icon: "fa-brands fa-github", color: "text-gray-200", name: "GitHub" },
   ];
 
   const features = [
@@ -80,148 +76,99 @@ const Home = () => {
       icon: "fa-trophy",
       title: t("featAchievementsTitle"),
       description: t("featAchievementsDesc"),
-      color: "bg-yellow-500",
+      num: "01",
     },
     {
       icon: "fa-briefcase",
       title: t("featProjectsTitle"),
       description: t("featProjectsDesc"),
-      color: "bg-blue-500",
+      num: "02",
     },
     {
       icon: "fa-chart-line",
       title: t("featDashboardTitle"),
       description: t("featDashboardDesc"),
-      color: "bg-purple-500",
+      num: "03",
     },
     {
       icon: "fa-comments",
       title: t("featChatTitle"),
       description: t("featChatDesc"),
-      color: "bg-green-500",
+      num: "04",
     },
     {
       icon: "fa-envelope",
       title: t("featContactTitle"),
       description: t("featContactDesc"),
-      color: "bg-red-500",
+      num: "05",
     },
     {
       icon: "fa-robot",
       title: t("featSmartTitle"),
       description: t("featSmartDesc"),
-      color: "bg-pink-500",
+      num: "06",
     },
   ];
 
-  // Custom SVG Icons (sama seperti sebelumnya)
+  // Custom SVG Icons
   const NextJsIcon = () => (
-    <svg viewBox="0 0 24 24" fill="white" className="w-8 h-8 md:w-10 md:h-10">
+    <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 text-white">
       <path d="M11.572 0c-.176 0-.31.001-.358.007a19.76 19.76 0 0 1-.364.033C7.443.346 4.25 2.185 2.228 5.012a11.875 11.875 0 0 0-2.119 5.243c-.096.659-.108.854-.108 1.747s.012 1.089.108 1.748c.652 4.506 3.86 8.292 8.209 9.695.779.25 1.6.422 2.534.525.363.04 1.935.04 2.299 0 1.611-.178 2.977-.577 4.323-1.264.207-.106.247-.134.219-.158-.02-.013-.9-1.193-1.955-2.62l-1.919-2.592-2.404-3.558a338.739 338.739 0 0 0-2.422-3.556c-.009-.002-.018 1.579-.023 3.51-.007 3.38-.01 3.515-.052 3.595a.426.426 0 0 1-.206.214c-.075.037-.14.044-.495.044H7.81l-.108-.068a.438.438 0 0 1-.157-.171l-.05-.106.006-4.703.007-4.705.072-.092a.645.645 0 0 1 .174-.143c.096-.047.134-.051.54-.051.478 0 .558.018.682.154.035.038 1.337 1.999 2.895 4.361a10760.433 10760.433 0 0 0 4.735 7.17l1.9 2.879.096-.063a12.317 12.317 0 0 0 2.466-2.163 11.944 11.944 0 0 0 2.824-6.134c.096-.66.108-.854.108-1.748 0-.893-.012-1.088-.108-1.747-.652-4.506-3.859-8.292-8.208-9.695a12.597 12.597 0 0 0-2.499-.523A33.119 33.119 0 0 0 11.573 0zm4.069 7.217c.347 0 .408.005.486.047a.473.473 0 0 1 .237.277c.018.06.023 1.365.018 4.304l-.006 4.218-.744-1.14-.746-1.14v-3.066c0-1.982.01-3.097.023-3.15a.478.478 0 0 1 .233-.296c.096-.05.13-.054.5-.054z" />
     </svg>
   );
 
-  
-
   const TypescriptIcon = () => (
-  <svg viewBox="0 0 24 24" className="w-12 h-12 md:w-16 md:h-16">
-    {/* Background biru bulat penuh (circle) */}
-    <circle cx="12" cy="12" r="12" fill="#3178C6" />
-    {/* Tulisan TS di pojok kanan bawah */}
-    <text
-      x="20"
-      y="19"
-      textAnchor="end"
-      fontFamily="Arial, Helvetica, sans-serif"
-      fontWeight="bold"
-      fontSize="10"
-      fill="white"
-    >
-      TS
-    </text>
-  </svg>
-);
+    <svg viewBox="0 0 24 24" className="w-5 h-5">
+      <circle cx="12" cy="12" r="12" fill="#3178C6" />
+      <text
+        x="20"
+        y="19"
+        textAnchor="end"
+        fontFamily="sans-serif"
+        fontWeight="bold"
+        fontSize="10"
+        fill="white"
+      >
+        TS
+      </text>
+    </svg>
+  );
 
   const TailwindIcon = () => (
-    <svg viewBox="0 0 24 24" fill="white" className="w-8 h-8 md:w-10 md:h-10">
+    <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 text-cyan-400">
       <path d="M12.001,4.8c-3.2,0-5.2,1.6-6,4.8c1.2-1.6,2.6-2.2,4.2-1.8c0.913,0.228,1.565,0.89,2.288,1.624 C13.666,10.618,15.027,12,18.001,12c3.2,0,5.2-1.6,6-4.8c-1.2,1.6-2.6,2.2-4.2,1.8c-0.913-0.228-1.565-0.89-2.288-1.624 C16.337,6.182,14.976,4.8,12.001,4.8z M6.001,12c-3.2,0-5.2,1.6-6,4.8c1.2-1.6,2.6-2.2,4.2-1.8c0.913,0.228,1.565,0.89,2.288,1.624 c1.177,1.194,2.538,2.576,5.512,2.576c3.2,0,5.2-1.6,6-4.8c-1.2,1.6-2.6,2.2-4.2,1.8c-0.913-0.228-1.565-0.89-2.288-1.624 C10.337,13.382,8.976,12,6.001,12z" />
     </svg>
   );
 
   const ExpressIcon = () => (
-    <svg viewBox="0 0 24 24" fill="white" className="w-8 h-8 md:w-10 md:h-10">
+    <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 text-gray-300">
       <path d="M24 18.588a1.529 1.529 0 01-1.895-.72l-3.45-4.771-.5-.667-4.003 5.444a1.466 1.466 0 01-1.802.708l5.158-6.92-4.798-6.251a1.595 1.595 0 011.9.666l3.576 4.83 3.596-4.81a1.435 1.435 0 011.788-.668L21.708 7.9l-2.522 3.283a.666.666 0 000 .994l4.804 6.412zM.002 11.576l.42-2.075c1.154-4.103 5.858-5.81 9.094-3.27 1.895 1.489 2.368 3.597 2.275 5.973H1.116C.943 16.447 4.005 19.009 7.92 17.7a4.078 4.078 0 002.582-2.876c.207-.666.548-.78 1.174-.588a5.417 5.417 0 01-2.589 3.957 6.272 6.272 0 01-7.306-.933 6.575 6.575 0 01-1.64-3.858c0-.235-.08-.455-.134-.666A88.33 88.33 0 010 11.577zm1.127-.286h9.654c-.06-3.076-2.001-5.258-4.59-5.278-2.882-.04-4.944 2.094-5.071 5.264z" />
     </svg>
   );
 
   const MysqlIcon = () => (
-  <svg viewBox="0 0 200 200" className="w-8 h-8 md:w-10 md:h-10">
-    {/* Background Circle - Solid Blue */}
-    <circle cx="100" cy="100" r="100" className="fill-blue-700"/>
-    
-    {/* Text Container */}
-    <text
-      x="100"
-      y="120"
-      fontSize="60"
-      fontFamily="Arial, sans-serif"
-      fontWeight="bold"
-      textAnchor="middle"
-    >
-      <tspan fill="#FFFFFF">My</tspan>
-      <tspan fill="#E97826">SQL</tspan>
-    </text>
-  </svg>
-);
+    <div className="w-5 h-5 rounded-full bg-blue-700 flex items-center justify-center font-bold text-[8px] text-white">
+      SQL
+    </div>
+  );
 
   const NginxIcon = () => (
-    <svg viewBox="0 0 24 24" fill="white" className="w-8 h-8 md:w-10 md:h-10">
+    <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 text-emerald-400">
       <path d="M12 0L1.605 6v12L12 24l10.395-6V6L12 0zm0 1.324l9.395 5.424v10.848L12 23.018l-9.395-5.422V6.748L12 1.324zM8.832 8.168v7.664h1.584V9.918l4.32 5.914h1.416V8.168h-1.584v5.914l-4.32-5.914H8.832z" />
     </svg>
   );
 
   const FlutterIcon = () => (
-    <svg viewBox="0 0 256 317" className="w-8 h-8 md:w-10 md:h-10">
-      <defs>
-        <linearGradient
-          x1="3.952%"
-          y1="26.993%"
-          x2="75.897%"
-          y2="52.919%"
-          id="flutter-a"
-        >
-          <stop stopColor="#5BBBED" offset="0%" />
-          <stop stopColor="#61C0F2" offset="100%" />
-        </linearGradient>
-        <linearGradient
-          x1="23.481%"
-          y1="50.002%"
-          x2="75.897%"
-          y2="50.002%"
-          id="flutter-b"
-        >
-          <stop stopColor="#0A5C9E" offset="0%" />
-          <stop stopColor="#0F73C4" offset="100%" />
-        </linearGradient>
-      </defs>
-      <polygon
-        fill="url(#flutter-a)"
-        points="157.666 0 0 157.667 48.8 206.467 255.267 0"
-      />
-      <polygon
-        fill="#0F73C4"
-        points="156.567 145.397 72.146 229.818 121.055 278.726 205.476 194.305 255.267 145.397"
-      />
-      <polygon
-        fill="url(#flutter-b)"
-        points="121.133 279.531 169.933 230.731 121.133 181.931 72.333 230.731"
-      />
+    <svg viewBox="0 0 256 317" className="w-5 h-5">
+      <polygon fill="#5BBBED" points="157.666 0 0 157.667 48.8 206.467 255.267 0" />
+      <polygon fill="#0F73C4" points="156.567 145.397 72.146 229.818 121.055 278.726 205.476 194.305 255.267 145.397" />
+      <polygon fill="#0A5C9E" points="121.133 279.531 169.933 230.731 121.133 181.931 72.333 230.731" />
     </svg>
   );
 
   const renderSkillIcon = (skill) => {
     if (!skill.isCustom) {
-      return <i className={`${skill.icon} text-xl md:text-2xl text-white`}></i>;
+      return <i className={`${skill.icon} text-lg ${skill.color}`}></i>;
     }
 
     switch (skill.icon) {
@@ -246,7 +193,7 @@ const Home = () => {
 
   return (
     <div
-      className="min-h-screen py-8 pt-20 xl:pt-8 pl-4"
+      className="min-h-screen py-8 pt-20 xl:pt-8"
       data-aos="fade-down"
       data-aos-delay="100"
       data-aos-duration="600"
@@ -254,7 +201,7 @@ const Home = () => {
       {/* Header Section */}
       <div className="mb-10 mt-8">
         <div className="flex items-start justify-between">
-          <div>
+          <div className="w-full">
             <h1
               className={`text-3xl md:text-4xl lg:text-5xl font-bold mb-2 ${
                 isDarkMode ? "text-white" : "text-gray-900"
@@ -263,12 +210,16 @@ const Home = () => {
               {t("greeting")}
             </h1>
 
-            {/* Typing Effect */}
-            <div className="mb-6">
-              <span className="text-2xl md:text-3xl font-semibold text-primary">
-                {typedText}
-                <span className="animate-pulse">|</span>
+            {/* Typing Subtitle with Monospace Precision */}
+            <div className="mb-6 flex items-center gap-2 h-9 sm:h-10 lg:h-11">
+              <span className={`font-mono text-xl sm:text-2xl lg:text-3xl font-bold ${
+                isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"
+              }`}>
+                {typedText || "\u200B"}
               </span>
+              <span className={`w-2.5 h-6 sm:h-7 lg:h-8 animate-pulse inline-block ${
+                isDarkMode ? "bg-[#D4F933]" : "bg-[#2D5204]"
+              }`}></span>
             </div>
 
             <div className="flex flex-col-reverse md:flex-row gap-6 items-start">
@@ -282,7 +233,7 @@ const Home = () => {
               </p>
 
               {/* Right Side - Image */}
-              <div className="w-[170px] h-[170px] md:w-[265px] md:h-[265px] rounded-full bg-gradient-to-br from-orange-400 to-pink-500 flex items-center justify-center overflow-hidden flex-shrink-0 mx-auto md:mx-0">
+              <div className="w-[170px] h-[170px] md:w-[265px] md:h-[265px] rounded-full flex items-center justify-center overflow-hidden flex-shrink-0 mx-auto md:mx-0">
                 <img
                   src={profileImage2}
                   alt="Fernanda Yoga Kurniawan"
@@ -296,105 +247,146 @@ const Home = () => {
               <a
                 href={cvFile}
                 download="CV_Fernanda_Yoga_Kurniawan.pdf"
-                className="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-6 rounded-lg shadow-md transition-all duration-300 flex items-center gap-2 hover:scale-105"
+                className={`px-6 py-3.5 rounded-lg font-mono text-xs font-semibold tracking-wider uppercase transition-all duration-300 flex items-center gap-3 border ${
+                  isDarkMode
+                    ? "bg-[#181920] hover:bg-[#D4F933] hover:text-black text-white border-white/[0.12] hover:border-[#D4F933] shadow-md"
+                    : "bg-gray-900 hover:bg-[#2D5204] hover:text-white text-white border-transparent shadow-md"
+                }`}
               >
-                <i className="fas fa-download"></i>
-                Download CV
+                <i className="fas fa-download text-xs"></i>
+                <span>Download CV</span>
+                <span className="text-[10px] opacity-70 font-normal">[PDF]</span>
               </a>
             </div>
           </div>
         </div>
-        <div
-          className={`mb- mt-4 border-b pb-8 ${
-            isDarkMode ? "border-gray-800" : "border-gray-200"
-          }`}
-        ></div>
+
+        <div className="mt-12 hairline-divider"></div>
       </div>
 
-      {/* Skills Section */}
-      <div className="mb-16">
-        <div className="flex items-center gap-3 mb-4">
-          <i className="fas fa-code text-xl md:text-2xl text-primary"></i>
+      {/* Skills Section — Technical Index */}
+      <div className="mb-20">
+        <div className="flex items-center gap-3 mb-3">
+          <span className={`font-mono text-xs tracking-widest uppercase font-semibold ${
+            isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"
+          }`}>
+            // 01
+          </span>
           <h2
-            className={`text-2xl md:text-3xl font-bold ${
+            className={`text-2xl sm:text-3xl font-bold tracking-tight ${
               isDarkMode ? "text-white" : "text-gray-900"
             }`}
           >
             {t("skills")}
           </h2>
+          <div className={`flex-1 h-[1px] ${isDarkMode ? "bg-white/[0.08]" : "bg-black/[0.08]"}`}></div>
         </div>
-        <p className="text-gray-400 mb-4">{t("skillsSubtitle")}</p>
+        <p className={`font-mono text-xs sm:text-sm mb-6 ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}>
+          {t("skillsSubtitle")}
+        </p>
 
-        <div className="flex flex-wrap gap-3 md:gap-6 max-w-4xl">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
           {skills.map((skill, index) => (
             <div
               key={index}
-              className="flex flex-col items-center gap-2.5 cursor-pointer"
+              className={`p-3.5 rounded-lg border transition-all duration-200 flex items-center gap-3 group ${
+                isDarkMode
+                  ? "bg-[#121216] border-white/[0.08] hover:border-[#D4F933]/50 hover:bg-[#181920]"
+                  : "bg-white border-black/[0.08] hover:border-[#2D5204] hover:bg-gray-50 shadow-xs"
+              }`}
               title={skill.name}
             >
-              <div
-                className={`w-12 h-12 md:w-16 md:h-16 ${skill.color} rounded-full
-                  flex items-center justify-center
-                  hover:scale-110 transition-transform shadow-lg`}
-              >
+              <div className={`w-8 h-8 rounded-md border flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform ${
+                isDarkMode ? "bg-white/[0.03] border-white/[0.06]" : "bg-black/[0.03] border-black/[0.06]"
+              }`}>
                 {renderSkillIcon(skill)}
               </div>
+              <span
+                className={`font-mono text-xs font-medium truncate ${
+                  isDarkMode ? "text-gray-300 group-hover:text-white" : "text-gray-800 group-hover:text-black"
+                }`}
+              >
+                {skill.name}
+              </span>
             </div>
           ))}
         </div>
-        <div
-          className={`mb- mt-4 border-b pb-8 ${
-            isDarkMode ? "border-gray-800" : "border-gray-200"
-          }`}
-        ></div>
+
+        <div className="mt-12 hairline-divider"></div>
       </div>
 
-      {/* Features Section */}
-      <div>
-        <div className="flex items-center gap-3 mb-4">
-          <i className="fas fa-star text-xl md:text-2xl text-primary"></i>
+      {/* Features Section — Editorial Numerals */}
+      <div className="mb-12">
+        <div className="flex items-center gap-3 mb-3">
+          <span className={`font-mono text-xs tracking-widest uppercase font-semibold ${
+            isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"
+          }`}>
+            // 02
+          </span>
           <h2
-            className={`text-2xl md:text-3xl font-bold ${
+            className={`text-2xl sm:text-3xl font-bold tracking-tight ${
               isDarkMode ? "text-white" : "text-gray-900"
             }`}
           >
             {t("features")}
           </h2>
+          <div className={`flex-1 h-[1px] ${isDarkMode ? "bg-white/[0.08]" : "bg-black/[0.08]"}`}></div>
         </div>
-        <p className="text-gray-400 mb-8">{t("featuresSubtitle")}</p>
+        <p className={`font-mono text-xs sm:text-sm mb-8 ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}>
+          {t("featuresSubtitle")}
+        </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {features.map((feature, index) => (
             <div
               key={index}
-              className={`${
+              className={`p-6 rounded-xl border transition-all duration-200 flex flex-col justify-between group ${
                 isDarkMode
-                  ? "bg-gray-900 border-gray-800 hover:border-purple-500"
-                  : "bg-white border-gray-200 hover:border-purple-500"
-              } border rounded-xl p-6 transition-all duration-300 hover:scale-105  group`}
+                  ? "bg-[#121216] border-white/[0.08] hover:border-[#D4F933]/40 hover:bg-[#181920]"
+                  : "bg-white border-black/[0.08] hover:border-[#2D5204] hover:bg-gray-50 shadow-sm"
+              }`}
             >
-              <div className="flex items-start gap-4">
-                <div
-                  className={`${feature.color} w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform`}
+              <div>
+                <div className="flex items-center justify-between mb-4">
+                  <span className={`font-mono text-xs tracking-wider font-semibold ${
+                    isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"
+                  }`}>
+                    [{feature.num}]
+                  </span>
+                  <div className={`w-8 h-8 rounded-md border flex items-center justify-center ${
+                    isDarkMode 
+                      ? "bg-white/[0.04] border-white/[0.06] text-[#D4F933]" 
+                      : "bg-black/[0.04] border-black/[0.06] text-[#2D5204]"
+                  }`}>
+                    <i className={`fas ${feature.icon} text-xs`}></i>
+                  </div>
+                </div>
+
+                <h3
+                  className={`text-lg font-bold mb-2 tracking-tight transition-colors ${
+                    isDarkMode 
+                      ? "text-white group-hover:text-[#D4F933]" 
+                      : "text-gray-900 group-hover:text-[#2D5204]"
+                  }`}
                 >
-                  <i className={`fas ${feature.icon} text-white text-xl`}></i>
-                </div>
-                <div className="flex-1">
-                  <h3
-                    className={`text-lg font-semibold mb-2 ${
-                      isDarkMode ? "text-white" : "text-gray-900"
-                    }`}
-                  >
-                    {feature.title}
-                  </h3>
-                  <p
-                    className={`text-sm leading-relaxed ${
-                      isDarkMode ? "text-gray-400" : "text-gray-600"
-                    }`}
-                  >
-                    {feature.description}
-                  </p>
-                </div>
+                  {feature.title}
+                </h3>
+                <p
+                  className={`text-sm leading-relaxed ${
+                    isDarkMode ? "text-gray-400" : "text-gray-600"
+                  }`}
+                >
+                  {feature.description}
+                </p>
+              </div>
+
+              <div className={`mt-6 pt-4 border-t flex items-center justify-between font-mono text-[10px] ${
+                isDarkMode ? "border-white/[0.06] text-gray-500" : "border-black/[0.06] text-gray-500"
+              }`}>
+                <span>SECTION // 0{index + 1}</span>
+                <i className={`fas fa-arrow-right text-[10px] group-hover:translate-x-1 transition-transform ${
+                  isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"
+                }`}></i>
               </div>
             </div>
           ))}

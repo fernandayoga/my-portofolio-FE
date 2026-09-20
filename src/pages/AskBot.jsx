@@ -54,7 +54,6 @@ const AskBot = () => {
 
     try {
       const ai = await requestToGroq(input);
-      console.log(ai.content)
       const aiResponse = {
         id: Date.now() + 1,
         type: "assistant",
@@ -82,7 +81,6 @@ const AskBot = () => {
     localStorage.removeItem("smartTalkTimestamp");
   };
 
-
   const suggestedQuestions = [
     t("suggestedQuestions1"),
     t("suggestedQuestions2"),
@@ -91,163 +89,203 @@ const AskBot = () => {
     t("suggestedQuestions5"),
   ];
 
-
-
   return (
     <div
-      className={`min-h-[100dvh] flex flex-col items-center justify-center px-3 sm:px-4 ${
-        isDarkMode ? "bg-black" : "bg-white"
+      className={`min-h-[100dvh] flex flex-col items-center justify-between px-3 sm:px-4 ${
+        isDarkMode ? "bg-[#0A0A0C]" : "bg-white"
       }`}
     >
+      {/* Top Header Eyebrow */}
+      <div
+        className={`w-full max-w-4xl pt-20 xl:pt-8 pb-4 flex items-center justify-between border-b ${
+          isDarkMode ? "border-white/[0.08]" : "border-black/[0.08]"
+        }`}
+      >
+        <div
+          className={`flex items-center gap-2 font-mono text-xs ${
+            isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"
+          }`}
+        >
+          <span
+            className={`w-2 h-2 rounded-full animate-pulse ${
+              isDarkMode ? "bg-[#D4F933]" : "bg-[#2D5204]"
+            }`}
+          ></span>
+          <span>AI COMMAND TERMINAL // V2</span>
+        </div>
+
+        {messages.length > 0 && (
+          <button
+            onClick={handleClearChat}
+            className="font-mono text-xs px-3 py-1.5 rounded-md border border-red-500/30 text-red-400 hover:bg-red-500/10 transition-all flex items-center gap-1.5"
+          >
+            <i className="fas fa-trash-alt text-[10px]"></i>
+            <span>{t("clearHistory")}</span>
+          </button>
+        )}
+      </div>
+
       {/* Messages Area */}
       {messages.length > 0 ? (
-        <div className="w-full max-w-4xl flex-1 flex flex-col py-4 sm:py-8 overflow-hidden">
-          {/* Header Action */}
-          <div className="flex justify-end mb-2 sm:mb-4 px-2">
-            <button
-              onClick={handleClearChat}
-              className={`text-xs sm:text-sm px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border transition-all flex items-center ${
-                isDarkMode 
-                  ? "border-red-500/30 text-red-400 hover:bg-red-500/10" 
-                  : "border-red-200 text-red-500 hover:bg-red-50"
-              }`}
-            >
-              <i className="fas fa-trash-alt mr-2"></i>
-              {t("clearHistory")}
-            </button>
-          </div>
-          
-          <div className="flex-1 overflow-y-auto space-y-3 sm:space-y-6 pb-24 sm:pb-32 px-2">
+        <div className="w-full max-w-4xl flex-1 flex flex-col py-4 overflow-hidden">
+          <div className="flex-1 overflow-y-auto space-y-4 pb-12 px-1">
             {messages.map((message) => (
-            <div
-              key={message.id}
-              className={`flex ${
-                message.type === "user" ? "justify-end" : "justify-start"
-              }`}
-            >
               <div
-                className={`max-w-[85%] sm:max-w-3xl px-3 sm:px-6 py-3 sm:py-4 rounded-2xl break-words whitespace-pre-wrap overflow-hidden text-sm sm:text-base ${
-                  message.type === "user"
-                    ? isDarkMode
-                      ? "bg-purple-600 text-white"
-                      : "bg-purple-500 text-white"
-                    : isDarkMode
-                    ? "bg-gray-800 text-gray-100"
-                    : "bg-white text-gray-900 border border-gray-200"
+                key={message.id}
+                className={`flex ${
+                  message.type === "user" ? "justify-end" : "justify-start"
                 }`}
               >
-                {message.type === "assistant" ? (
-                  <ReactMarkdown
-                    components={{
-                      pre: ({ node, ...props }) => (
-                        <pre
-                          {...props}
-                          className="whitespace-pre-wrap break-words overflow-hidden max-w-full text-xs sm:text-sm bg-gray-900 p-2 sm:p-3 rounded-lg my-2"
-                        />
-                      ),
-                      code: ({ node, inline, ...props }) =>
-                        inline ? (
-                          <code
+                <div
+                  className={`max-w-[85%] sm:max-w-3xl px-4 sm:px-6 py-3.5 sm:py-4 rounded-xl text-sm leading-relaxed border ${
+                    message.type === "user"
+                      ? isDarkMode
+                        ? "bg-[#181920] border-[#D4F933]/30 text-white"
+                        : "bg-gray-900 border-gray-800 text-white"
+                      : isDarkMode
+                      ? "bg-[#121216] border-white/[0.08] text-gray-200"
+                      : "bg-gray-50 border-gray-200 text-gray-900"
+                  }`}
+                >
+                  <div className="flex items-center gap-2 mb-2 pb-1.5 border-b border-inherit font-mono text-[10px] text-gray-400">
+                    <span
+                      className={`font-semibold ${
+                        isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"
+                      }`}
+                    >
+                      {message.type === "user" ? "// USER QUERY" : "// ASSISTANT RESPONSE"}
+                    </span>
+                  </div>
+
+                  {message.type === "assistant" ? (
+                    <ReactMarkdown
+                      components={{
+                        pre: ({ node, ...props }) => (
+                          <pre
                             {...props}
-                            className="break-words whitespace-pre-wrap bg-gray-700 px-1 py-0.5 rounded text-xs sm:text-sm"
-                          />
-                        ) : (
-                          <code
-                            {...props}
-                            className="break-words whitespace-pre-wrap text-xs sm:text-sm"
+                            className="whitespace-pre-wrap break-words overflow-x-auto max-w-full font-mono text-xs bg-black/50 p-3 rounded-lg border border-white/[0.08] my-3"
                           />
                         ),
-                      p: ({ node, ...props }) => (
-                        <p {...props} className="mb-2 last:mb-0" />
-                      ),
-                      ul: ({ node, ...props }) => (
-                        <ul {...props} className="list-disc ml-4 mb-2" />
-                      ),
-                      ol: ({ node, ...props }) => (
-                        <ol {...props} className="list-decimal ml-4 mb-2" />
-                      ),
-                      li: ({ node, ...props }) => (
-                        <li {...props} className="mb-1" />
-                      ),
-                    }}
-                  >
-                    {message.text}
-                  </ReactMarkdown>
-                ) : (
-                  <p className="break-words whitespace-pre-wrap">
-                    {message.text}
-                  </p>
-                )}
-              </div>
-            </div>
-          ))}
-          {isLoading && (
-            <div className="flex justify-start">
-              <div
-                className={`max-w-[85%] sm:max-w-2xl px-4 sm:px-6 py-3 sm:py-4 rounded-2xl ${
-                  isDarkMode ? "bg-gray-800" : "bg-white border border-gray-200"
-                }`}
-              >
-                <div className="flex gap-1.5 sm:gap-2">
-                  <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-gray-400 rounded-full animate-bounce"></span>
-                  <span
-                    className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-gray-400 rounded-full animate-bounce"
-                    style={{ animationDelay: "0.2s" }}
-                  ></span>
-                  <span
-                    className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-gray-400 rounded-full animate-bounce"
-                    style={{ animationDelay: "0.4s" }}
-                  ></span>
+                        code: ({ node, inline, ...props }) =>
+                          inline ? (
+                            <code
+                              {...props}
+                              className={`font-mono px-1.5 py-0.5 rounded text-xs ${
+                                isDarkMode
+                                  ? "bg-white/[0.08] text-[#D4F933]"
+                                  : "bg-black/[0.08] text-[#2D5204]"
+                              }`}
+                            />
+                          ) : (
+                            <code
+                              {...props}
+                              className="font-mono text-xs"
+                            />
+                          ),
+                        p: ({ node, ...props }) => (
+                          <p {...props} className="mb-2 last:mb-0" />
+                        ),
+                        ul: ({ node, ...props }) => (
+                          <ul {...props} className="list-disc ml-5 mb-2 space-y-1" />
+                        ),
+                        ol: ({ node, ...props }) => (
+                          <ol {...props} className="list-decimal ml-5 mb-2 space-y-1" />
+                        ),
+                        li: ({ node, ...props }) => (
+                          <li {...props} className="mb-0.5" />
+                        ),
+                      }}
+                    >
+                      {message.text}
+                    </ReactMarkdown>
+                  ) : (
+                    <p className="break-words whitespace-pre-wrap font-sans">
+                      {message.text}
+                    </p>
+                  )}
                 </div>
               </div>
-            </div>
-          )}
+            ))}
+
+            {isLoading && (
+              <div className="flex justify-start">
+                <div
+                  className={`px-5 py-3 rounded-xl border ${
+                    isDarkMode ? "bg-[#121216] border-white/[0.08]" : "bg-white border-gray-200"
+                  }`}
+                >
+                  <div
+                    className={`flex items-center gap-2 font-mono text-xs ${
+                      isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"
+                    }`}
+                  >
+                    <span
+                      className={`w-1.5 h-1.5 rounded-full animate-bounce ${
+                        isDarkMode ? "bg-[#D4F933]" : "bg-[#2D5204]"
+                      }`}
+                    ></span>
+                    <span
+                      className={`w-1.5 h-1.5 rounded-full animate-bounce [animation-delay:0.2s] ${
+                        isDarkMode ? "bg-[#D4F933]" : "bg-[#2D5204]"
+                      }`}
+                    ></span>
+                    <span
+                      className={`w-1.5 h-1.5 rounded-full animate-bounce [animation-delay:0.4s] ${
+                        isDarkMode ? "bg-[#D4F933]" : "bg-[#2D5204]"
+                      }`}
+                    ></span>
+                    <span className="ml-1 text-[11px] text-gray-400">PROCESSING TRANSMISSION...</span>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       ) : (
-        // Empty State - Center Screen
-        <div className="flex-1 flex flex-col items-center justify-center w-full px-2 sm:px-4">
-          <div className="flex flex-col items-center gap-4 sm:gap-6 md:flex-row max-w-2xl">
-            {/* Icon */}
+        /* Empty State */
+        <div className="flex-1 flex flex-col items-center justify-center w-full px-2 sm:px-4 my-auto py-12">
+          <div className="flex flex-col items-center text-center max-w-xl">
             <div
-              className={`w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center shadow-lg flex-shrink-0 ${
+              className={`w-16 h-16 rounded-xl flex items-center justify-center mb-6 shadow-lg ${
                 isDarkMode
-                  ? "bg-purple-600/20 border border-purple-500"
-                  : "bg-purple-100 border border-purple-300"
+                  ? "bg-[#D4F933]/10 border border-[#D4F933]/30 text-[#D4F933]"
+                  : "bg-[#0A0A0C] border border-black text-[#D4F933]"
               }`}
             >
-              <i
-                className={`fas fa-robot text-2xl sm:text-3xl md:text-4xl ${
-                  isDarkMode ? "text-purple-400" : "text-purple-600"
-                }`}
-              ></i>
+              <i className="fas fa-terminal text-2xl"></i>
             </div>
 
-            {/* Text */}
             <h1
-              className={`text-2xl sm:text-3xl md:text-5xl font-normal text-center ${
+              className={`text-2xl sm:text-4xl font-extrabold tracking-tight mb-3 ${
                 isDarkMode ? "text-white" : "text-gray-900"
               }`}
             >
               {t("smartTalkGreeting")}
             </h1>
+            <p
+              className={`font-mono text-xs max-w-md ${
+                isDarkMode ? "text-gray-400" : "text-gray-600"
+              }`}
+            >
+              Ask about Fernanda's technical stack, experience, repositories, and architectural methodologies.
+            </p>
           </div>
         </div>
       )}
 
       {/* Suggested Questions */}
       {messages.length === 0 && (
-        <div className="w-full max-w-4xl pb-4 sm:pb-4 px-2">
-          <div className="flex flex-wrap gap-1.5 sm:gap-2 justify-center">
+        <div className="w-full max-w-4xl pb-4 px-2">
+          <div className="flex flex-wrap gap-2 justify-center">
             {suggestedQuestions.map((question, index) => (
               <button
                 key={index}
                 type="button"
                 onClick={() => setInput(question)}
-                className={`px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm transition-all whitespace-nowrap ${
+                className={`px-3.5 py-2 rounded-lg font-mono text-xs transition-all border ${
                   isDarkMode
-                    ? "bg-gray-800 text-gray-300 hover:bg-gray-700"
-                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                    ? "bg-[#121216] border-white/[0.08] text-gray-300 hover:border-[#D4F933]/50 hover:text-white"
+                    : "bg-gray-100 border-black/[0.08] text-gray-700 hover:border-[#2D5204] hover:bg-gray-200"
                 }`}
               >
                 {question}
@@ -257,42 +295,50 @@ const AskBot = () => {
         </div>
       )}
 
-      {/* Input Area - Fixed Bottom */}
-      <div className="w-full max-w-4xl pb-20 sm:pb-8 pt-3 sm:pt-4 px-2 sm:px-0">
+      {/* Input Area */}
+      <div className="w-full max-w-4xl pb-16 sm:pb-8 pt-3 px-2 sm:px-0">
         <form onSubmit={handleSubmit} className="relative">
           <div
-            className={`flex items-center  px-2.5 sm:px-6 py-2.5 sm:py-4 rounded-full border  ${
+            className={`flex items-center px-4 py-3 rounded-xl border transition-all ${
               isDarkMode
-                ? "bg-gray-900 border-gray-700"
-                : "bg-white border-gray-300 shadow-lg"
+                ? "bg-[#121216] border-white/[0.12] focus-within:border-[#D4F933]"
+                : "bg-white border-black/[0.12] focus-within:border-[#2D5204] shadow-sm"
             }`}
           >
-            {/* Input Field */}
+            <span
+              className={`font-mono text-xs mr-3 select-none font-bold ${
+                isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"
+              }`}
+            >
+              &gt;
+            </span>
+
             <input
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder={t("askAnything")}
-              className={`flex-1 bg-transparent outline-none text-sm sm:text-base min-w-0${
+              className={`flex-1 bg-transparent outline-none font-mono text-xs sm:text-sm min-w-0 ${
                 isDarkMode
                   ? "text-white placeholder-gray-500"
                   : "text-gray-900 placeholder-gray-400"
               }`}
             />
 
-            {/* Submit Button */}
             <button
               type="submit"
               disabled={!input.trim()}
-              className={`flex-shrink-0 w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center mr-4 md:mr-0 ${
+              className={`flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center transition-all ${
                 input.trim()
-                  ? "bg-purple-600 hover:bg-purple-700 text-white"
+                  ? isDarkMode
+                    ? "bg-[#D4F933] hover:bg-[#bce615] text-black font-bold shadow-xs"
+                    : "bg-[#0A0A0C] hover:bg-black text-[#D4F933] font-bold shadow-xs"
                   : isDarkMode
-                  ? "bg-gray-800 text-gray-600"
-                  : "bg-gray-200 text-gray-400"
-              } transition-all`}
+                  ? "bg-[#181920] text-gray-600 cursor-not-allowed"
+                  : "bg-gray-200 text-gray-400 cursor-not-allowed"
+              }`}
             >
-              <i className="fas fa-arrow-up text-sm sm:text-base"></i>
+              <i className="fas fa-arrow-up text-xs"></i>
             </button>
           </div>
         </form>

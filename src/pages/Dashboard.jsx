@@ -359,8 +359,25 @@ const Dashboard = () => {
     return (
       <div className="min-h-screen flex items-center justify-center py-8 pt-20 xl:pt-8">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-purple-600 mx-auto mb-4"></div>
-          <p className={isDarkMode ? "text-gray-400" : "text-gray-600"}>
+          <div
+            className={`flex items-center gap-3 font-mono text-sm mb-4 justify-center ${
+              isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"
+            }`}
+          >
+            <div
+              className={`w-2.5 h-2.5 rounded-full animate-ping ${
+                isDarkMode ? "bg-[#D4F933]" : "bg-[#2D5204]"
+              }`}
+            ></div>
+            <span>FETCHING TELEMETRY METRICS...</span>
+          </div>
+          <p
+            className={
+              isDarkMode
+                ? "text-gray-400 font-mono text-xs"
+                : "text-gray-600 font-mono text-xs"
+            }
+          >
             {t("loadingDashboard")}
           </p>
         </div>
@@ -370,15 +387,21 @@ const Dashboard = () => {
 
   // WakaTime Chart Configs
   const weekdaysData = {
-    labels: wakatimeData?.summaries?.map(day => day.range.text ? day.range.text.split(" ")[0] : "") || [],
+    labels:
+      wakatimeData?.summaries?.map((day) =>
+        day.range.text ? day.range.text.split(" ")[0] : ""
+      ) || [],
     datasets: [
       {
-        label: 'Coding Hours',
-        data: wakatimeData?.summaries?.map(day => day.grand_total.total_seconds / 3600) || [],
-        backgroundColor: '#4f46e5',
+        label: "Coding Hours",
+        data:
+          wakatimeData?.summaries?.map(
+            (day) => day.grand_total.total_seconds / 3600
+          ) || [],
+        backgroundColor: isDarkMode ? "#D4F933" : "#2D5204",
         borderRadius: 4,
-      }
-    ]
+      },
+    ],
   };
 
   const barOptions = {
@@ -392,7 +415,7 @@ const Dashboard = () => {
   };
 
   const chartColors = [
-    '#3b82f6', '#f97316', '#10b981', '#8b5cf6', '#ec4899', '#f43f5e', '#14b8a6'
+    '#D4F933', '#D0EEFF', '#bce615', '#94a3b8', '#64748b', '#38bdf8', '#10b981'
   ];
 
   const editorsData = {
@@ -432,63 +455,89 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="min-h-screen  py-8 pt-20 xl:pt-8   gap-6">
+    <div className="min-h-screen py-8 pt-20 xl:pt-8 max-w-6xl">
       {/* Header */}
-      <div className="mb-8">
+      <div className="mb-10">
+        <div className="flex items-center gap-3 mb-4">
+          <div
+            className={`w-2 h-2 rounded-full ${
+              isDarkMode ? "bg-[#D4F933]" : "bg-[#2D5204]"
+            }`}
+          ></div>
+          <span
+            className={`font-mono text-xs font-semibold tracking-widest uppercase ${
+              isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"
+            }`}
+          >
+            // TELEMETRY & SYSTEM METRICS
+          </span>
+          <div
+            className={`flex-1 h-[1px] ${
+              isDarkMode ? "bg-white/[0.08]" : "bg-black/[0.08]"
+            }`}
+          ></div>
+        </div>
+
         <h1
-          className={`text-3xl md:text-4xl font-bold mb-2 ${
+          className={`text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-2 ${
             isDarkMode ? "text-white" : "text-gray-900"
           }`}
         >
           Dashboard
         </h1>
-        <p className={isDarkMode ? "text-gray-400" : "text-gray-600"}>
+        <p className={`font-mono text-xs sm:text-sm ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}>
           {t("dashboardSubtitle")}
         </p>
+
+        <div className="mt-8 hairline-divider"></div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-1 gap-6">
+      <div className="grid grid-cols-1 gap-8">
         {/* 1. GitHub Contributions */}
         <div
-          className={`rounded-2xl p-6 border ${
+          className={`rounded-2xl p-6 sm:p-8 border ${
             isDarkMode
-              ? "bg-gray-900 border-gray-800"
-              : "bg-white border-gray-200 shadow-lg"
+              ? "bg-[#121216] border-white/[0.08]"
+              : "bg-white border-black/[0.08] shadow-sm"
           }`}
         >
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-12 h-12 bg-gray-800 rounded-lg flex items-center justify-center">
-              <i className="fab fa-github text-white text-xl"></i>
+          <div className="flex items-center gap-3 mb-6 pb-4 border-b border-inherit">
+            <div className="w-10 h-10 bg-white/[0.04] border border-white/[0.08] rounded-lg flex items-center justify-center text-gray-200">
+              <i className="fab fa-github text-lg"></i>
             </div>
             <div>
               <h2
-                className={`text-xl font-bold ${
+                className={`text-lg sm:text-xl font-bold ${
                   isDarkMode ? "text-white" : "text-gray-900"
                 }`}
               >
                 {t("githubActivity")}
               </h2>
-              <p className="text-sm text-gray-400">
+              <p className="font-mono text-xs text-gray-400">
                 {t("githubContributions")}
               </p>
             </div>
           </div>
 
           {githubData?.error ? (
-            <p className="text-red-500 text-sm">{githubData.error}</p>
+            <p className="text-red-400 font-mono text-xs">{githubData.error}</p>
           ) : (
-            <div className="space-y-4">
-              <div className="grid grid-cols-3 gap-4 text-center ">
+            <div className="space-y-6">
+              <div className="grid grid-cols-3 gap-3 sm:gap-4 text-center">
                 <div
-                  className={`p-4 rounded-lg ${
-                    isDarkMode ? "bg-gray-800" : "bg-gray-50"
+                  className={`p-4 sm:p-5 rounded-xl border ${
+                    isDarkMode ? "bg-[#181920] border-white/[0.06]" : "bg-gray-50 border-gray-200"
                   }`}
                 >
-                  <p className="text-2xl font-bold text-purple-600">
+                  <p
+                    className={`text-2xl sm:text-3xl font-mono font-bold ${
+                      isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"
+                    }`}
+                  >
                     {githubData?.repos || 0}
                   </p>
                   <p
-                    className={`text-xs sm:text-sm break-words whitespace-normal ${
+                    className={`font-mono text-[10px] sm:text-xs uppercase tracking-wider mt-1 ${
                       isDarkMode ? "text-gray-400" : "text-gray-600"
                     }`}
                   >
@@ -497,15 +546,19 @@ const Dashboard = () => {
                 </div>
 
                 <div
-                  className={`p-4 rounded-lg ${
-                    isDarkMode ? "bg-gray-800" : "bg-gray-50"
+                  className={`p-4 sm:p-5 rounded-xl border ${
+                    isDarkMode ? "bg-[#181920] border-white/[0.06]" : "bg-gray-50 border-gray-200"
                   }`}
                 >
-                  <p className="text-2xl font-bold text-blue-600">
+                  <p
+                    className={`text-2xl sm:text-3xl font-mono font-bold ${
+                      isDarkMode ? "text-white" : "text-gray-900"
+                    }`}
+                  >
                     {githubData?.followers || 0}
                   </p>
                   <p
-                    className={`text-xs sm:text-sm ${
+                    className={`font-mono text-[10px] sm:text-xs uppercase tracking-wider mt-1 ${
                       isDarkMode ? "text-gray-400" : "text-gray-600"
                     }`}
                   >
@@ -514,15 +567,19 @@ const Dashboard = () => {
                 </div>
 
                 <div
-                  className={`p-4 rounded-lg ${
-                    isDarkMode ? "bg-gray-800" : "bg-gray-50"
+                  className={`p-4 sm:p-5 rounded-xl border ${
+                    isDarkMode ? "bg-[#181920] border-white/[0.06]" : "bg-gray-50 border-gray-200"
                   }`}
                 >
-                  <p className="text-2xl font-bold text-green-600">
+                  <p
+                    className={`text-2xl sm:text-3xl font-mono font-bold ${
+                      isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"
+                    }`}
+                  >
                     {githubData?.contributions || 0}
                   </p>
                   <p
-                    className={`text-xs sm:text-sm ${
+                    className={`font-mono text-[10px] sm:text-xs uppercase tracking-wider mt-1 ${
                       isDarkMode ? "text-gray-400" : "text-gray-600"
                     }`}
                   >
@@ -533,43 +590,43 @@ const Dashboard = () => {
 
               {/* GitHub Contribution Graph */}
               <div
-                className={`rounded-lg overflow-hidden p-3 ${
-                  isDarkMode ? "bg-gray-800" : "bg-gray-50"
+                className={`rounded-xl border overflow-x-auto p-4 ${
+                  isDarkMode ? "bg-[#0A0A0C] border-white/[0.08]" : "bg-gray-50 border-gray-200"
                 }`}
               >
                 <GitHubCalendar
                   username={import.meta.env.VITE_GITHUB_USERNAME}
                   blockSize={12}
                   blockMargin={4}
-                  fontSize={14}
+                  fontSize={12}
                   colorScheme={isDarkMode ? "dark" : "light"}
                   theme={{
                     light: [
                       "#ebedf0",
-                      "#9be9a8",
-                      "#40c463",
-                      "#30a14e",
-                      "#216e39",
+                      "#e8fba3",
+                      "#d4f933",
+                      "#b5d81e",
+                      "#8ba90f",
                     ],
                     dark: [
-                      "#161b22",
-                      "#0e4429",
-                      "#006d32",
-                      "#26a641",
-                      "#39d353",
+                      "#121216",
+                      "#202c00",
+                      "#455a00",
+                      "#94b80b",
+                      "#d4f933",
                     ],
                   }}
                 />
               </div>
 
-              {/* Top Languages - Custom */}
+              {/* Top Languages */}
               <div
-                className={`p-4 rounded-lg ${
-                  isDarkMode ? "bg-gray-800" : "bg-gray-50"
+                className={`p-5 rounded-xl border ${
+                  isDarkMode ? "bg-[#181920] border-white/[0.06]" : "bg-gray-50 border-gray-200"
                 }`}
               >
                 <p
-                  className={`text-sm font-medium mb-3 ${
+                  className={`font-mono text-xs uppercase tracking-wider font-semibold mb-4 ${
                     isDarkMode ? "text-gray-300" : "text-gray-700"
                   }`}
                 >
@@ -577,36 +634,36 @@ const Dashboard = () => {
                 </p>
 
                 {topLanguages.length > 0 ? (
-                  <div className="space-y-3">
-                    {topLanguages.map((lang, index) => (
+                  <div className="space-y-3.5">
+                    {topLanguages.map((lang) => (
                       <div key={lang.name}>
-                        <div className="flex items-center justify-between mb-1">
+                        <div className="flex items-center justify-between mb-1.5 font-mono text-xs">
                           <div className="flex items-center gap-2">
                             <div
-                              className="w-3 h-3 rounded-full"
+                              className="w-2.5 h-2.5 rounded-full"
                               style={{
                                 backgroundColor: getLanguageColor(lang.name),
                               }}
                             ></div>
                             <span
-                              className={`text-sm ${
-                                isDarkMode ? "text-gray-400" : "text-gray-600"
-                              }`}
+                              className={
+                                isDarkMode ? "text-gray-300" : "text-gray-700"
+                              }
                             >
                               {lang.name}
                             </span>
                           </div>
                           <span
-                            className={`text-sm ${
-                              isDarkMode ? "text-gray-400" : "text-gray-600"
+                            className={`font-semibold ${
+                              isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"
                             }`}
                           >
                             {lang.percentage}%
                           </span>
                         </div>
                         <div
-                          className={`w-full h-2 rounded-full ${
-                            isDarkMode ? "bg-gray-700" : "bg-gray-200"
+                          className={`w-full h-1.5 rounded-full ${
+                            isDarkMode ? "bg-[#121216]" : "bg-gray-200"
                           }`}
                         >
                           <div
@@ -622,7 +679,7 @@ const Dashboard = () => {
                   </div>
                 ) : (
                   <p
-                    className={`text-sm ${
+                    className={`font-mono text-xs ${
                       isDarkMode ? "text-gray-500" : "text-gray-400"
                     }`}
                   >
@@ -633,63 +690,69 @@ const Dashboard = () => {
 
               {/* GitHub Recent Activity */}
               <div
-                className={`rounded-2xl p-6 border ${
+                className={`rounded-2xl p-6 sm:p-7 border ${
                   isDarkMode
-                    ? "bg-gray-900 border-gray-800"
-                    : "bg-white border-gray-200 shadow-lg"
+                    ? "bg-[#121216] border-white/[0.08]"
+                    : "bg-white border-black/[0.08]"
                 }`}
               >
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-12 h-12 bg-gray-800 rounded-lg flex items-center justify-center">
-                    <i className="fab fa-github text-white text-xl"></i>
+                <div className="flex items-center gap-3 mb-6 pb-3 border-b border-inherit">
+                  <div className="w-9 h-9 bg-white/[0.04] border border-white/[0.08] rounded-lg flex items-center justify-center text-gray-200">
+                    <i className="fab fa-github text-base"></i>
                   </div>
                   <div>
                     <h2
-                      className={`text-xl font-bold ${
+                      className={`text-base sm:text-lg font-bold ${
                         isDarkMode ? "text-white" : "text-gray-900"
                       }`}
                     >
                       {t("githubActivityLatest")}
                     </h2>
-                    <p className="text-sm text-gray-400">
+                    <p className="font-mono text-xs text-gray-400">
                       {t("RecentActivity")}
                     </p>
                   </div>
                 </div>
 
                 {githubActivity.length > 0 ? (
-                  <div className="space-y-3">
+                  <div className="space-y-2.5">
                     {githubActivity.map((activity) => (
                       <div
                         key={activity.id}
-                        className={`flex items-start gap-3 p-3 rounded-lg transition-all hover:scale-[1.02] ${
+                        className={`flex items-start gap-3 p-3 rounded-xl border transition-all ${
                           isDarkMode
-                            ? "bg-gray-800 hover:bg-gray-750"
-                            : "bg-gray-50 hover:bg-gray-100"
+                            ? "bg-[#181920] border-white/[0.06] hover:border-[#D4F933]/40"
+                            : "bg-gray-50 border-gray-200 hover:border-[#D4F933]"
                         }`}
                       >
                         <div
-                          className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
-                            isDarkMode ? "bg-gray-700" : "bg-white"
+                          className={`flex-shrink-0 w-7 h-7 rounded-lg flex items-center justify-center ${
+                            isDarkMode
+                              ? "bg-white/[0.04] text-[#D4F933]"
+                              : "bg-black/[0.05] text-[#2D5204]"
                           }`}
                         >
                           <i
-                            className={`fas ${activity.icon} ${activity.color} text-sm`}
+                            className={`fas ${activity.icon} text-xs`}
                           ></i>
                         </div>
 
                         <div className="flex-1 min-w-0">
                           <p
-                            className={`text-sm ${
+                            className={`text-xs sm:text-sm ${
                               isDarkMode ? "text-gray-300" : "text-gray-700"
                             }`}
                           >
                             {activity.action}{" "}
-                            <span className="font-semibold text-purple-600">
+                            <span
+                              className={`font-mono font-semibold ${
+                                isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"
+                              }`}
+                            >
                               {activity.repo.split("/")[1]}
                             </span>
                           </p>
-                          <p className="text-xs text-gray-500 mt-1">
+                          <p className="font-mono text-[10px] text-gray-500 mt-0.5">
                             {activity.timeAgo}
                           </p>
                         </div>
@@ -702,8 +765,8 @@ const Dashboard = () => {
                       isDarkMode ? "text-gray-500" : "text-gray-400"
                     }`}
                   >
-                    <i className="fab fa-github text-4xl mb-2"></i>
-                    <p className="text-sm">No recent activity</p>
+                    <i className="fab fa-github text-3xl mb-2 text-gray-600"></i>
+                    <p className="font-mono text-xs">No recent activity</p>
                   </div>
                 )}
               </div>
@@ -711,46 +774,56 @@ const Dashboard = () => {
           )}
         </div>
 
-        {/* 4. WakaTime Coding Stats */}
+        {/* 2. WakaTime Coding Stats */}
         <div
-          className={`rounded-2xl p-6 border ${
+          className={`rounded-2xl p-6 sm:p-8 border ${
             isDarkMode
-              ? "bg-gray-900 border-gray-800"
-              : "bg-white border-gray-200 shadow-lg"
+              ? "bg-[#121216] border-white/[0.08]"
+              : "bg-white border-black/[0.08] shadow-sm"
           }`}
         >
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center">
-              <i className="fas fa-code text-white text-xl"></i>
+          <div className="flex items-center gap-3 mb-6 pb-4 border-b border-inherit">
+            <div
+              className={`w-10 h-10 rounded-lg flex items-center justify-center ${
+                isDarkMode
+                  ? "bg-[#D4F933]/10 border border-[#D4F933]/30 text-[#D4F933]"
+                  : "bg-[#0A0A0C] border border-black text-[#D4F933] shadow-xs"
+              }`}
+            >
+              <i className="fas fa-code text-base"></i>
             </div>
             <div>
               <h2
-                className={`text-xl font-bold ${
+                className={`text-lg sm:text-xl font-bold ${
                   isDarkMode ? "text-white" : "text-gray-900"
                 }`}
               >
                 {t("wakatimeTitle")}
               </h2>
-              <p className="text-sm text-gray-400">{t("wakatimeSub")}</p>
+              <p className="font-mono text-xs text-gray-400">{t("wakatimeSub")}</p>
             </div>
           </div>
 
           {wakatimeData?.error ? (
-            <p className="text-red-500 text-sm">{wakatimeData.error}</p>
+            <p className="text-red-400 font-mono text-xs">{wakatimeData.error}</p>
           ) : (
             <div className="space-y-6">
               {/* Total Time & Daily Average */}
               <div className="grid grid-cols-2 gap-4 text-center">
                 <div
-                  className={`p-4 rounded-lg ${
-                    isDarkMode ? "bg-gray-800" : "bg-gray-50"
+                  className={`p-5 rounded-xl border ${
+                    isDarkMode ? "bg-[#181920] border-white/[0.06]" : "bg-gray-50 border-gray-200"
                   }`}
                 >
-                  <p className="text-2xl font-bold text-blue-500">
+                  <p
+                    className={`text-2xl sm:text-3xl font-mono font-bold ${
+                      isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"
+                    }`}
+                  >
                     {wakatimeData?.totalTimeText || "0 hrs"}
                   </p>
                   <p
-                    className={`text-xs sm:text-sm ${
+                    className={`font-mono text-[10px] sm:text-xs uppercase tracking-wider mt-1 ${
                       isDarkMode ? "text-gray-400" : "text-gray-600"
                     }`}
                   >
@@ -759,15 +832,19 @@ const Dashboard = () => {
                 </div>
 
                 <div
-                  className={`p-4 rounded-lg ${
-                    isDarkMode ? "bg-gray-800" : "bg-gray-50"
+                  className={`p-5 rounded-xl border ${
+                    isDarkMode ? "bg-[#181920] border-white/[0.06]" : "bg-gray-50 border-gray-200"
                   }`}
                 >
-                  <p className="text-2xl font-bold text-purple-500">
+                  <p
+                    className={`text-2xl sm:text-3xl font-mono font-bold ${
+                      isDarkMode ? "text-white" : "text-gray-900"
+                    }`}
+                  >
                     {wakatimeData?.dailyAverageText || "0 hrs"}
                   </p>
                   <p
-                    className={`text-xs sm:text-sm ${
+                    className={`font-mono text-[10px] sm:text-xs uppercase tracking-wider mt-1 ${
                       isDarkMode ? "text-gray-400" : "text-gray-600"
                     }`}
                   >
@@ -777,9 +854,13 @@ const Dashboard = () => {
               </div>
 
               {/* WakaTime Top Languages */}
-              <div>
+              <div
+                className={`p-5 rounded-xl border ${
+                  isDarkMode ? "bg-[#181920] border-white/[0.06]" : "bg-gray-50 border-gray-200"
+                }`}
+              >
                 <p
-                  className={`text-sm font-medium mb-3 ${
+                  className={`font-mono text-xs uppercase tracking-wider font-semibold mb-4 ${
                     isDarkMode ? "text-gray-300" : "text-gray-700"
                   }`}
                 >
@@ -787,28 +868,28 @@ const Dashboard = () => {
                 </p>
                 
                 {wakatimeData?.languages && wakatimeData.languages.length > 0 ? (
-                  <div className="space-y-3">
+                  <div className="space-y-3.5">
                     {wakatimeData.languages.slice(0, 5).map((lang) => (
                       <div key={lang.name}>
-                        <div className="flex items-center justify-between mb-1">
+                        <div className="flex items-center justify-between mb-1.5 font-mono text-xs">
                           <span
-                            className={`text-sm ${
-                              isDarkMode ? "text-gray-400" : "text-gray-600"
-                            }`}
+                            className={
+                              isDarkMode ? "text-gray-300" : "text-gray-700"
+                            }
                           >
                             {lang.name}
                           </span>
                           <span
-                            className={`text-sm ${
-                              isDarkMode ? "text-gray-400" : "text-gray-600"
+                            className={`font-semibold ${
+                              isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"
                             }`}
                           >
                             {lang.text} ({Math.round(lang.percent)}%)
                           </span>
                         </div>
                         <div
-                          className={`w-full h-2 rounded-full ${
-                            isDarkMode ? "bg-gray-800" : "bg-gray-200"
+                          className={`w-full h-1.5 rounded-full ${
+                            isDarkMode ? "bg-[#121216]" : "bg-gray-200"
                           }`}
                         >
                           <div
@@ -823,26 +904,30 @@ const Dashboard = () => {
                     ))}
                   </div>
                 ) : (
-                  <p className="text-sm text-gray-500">{t("noTechData")}</p>
+                  <p className="font-mono text-xs text-gray-500">{t("noTechData")}</p>
                 )}
               </div>
               
               {/* Weekdays Chart */}
-              <div>
+              <div
+                className={`p-5 rounded-xl border ${
+                  isDarkMode ? "bg-[#181920] border-white/[0.06]" : "bg-gray-50 border-gray-200"
+                }`}
+              >
                 <p
-                  className={`text-sm font-medium mb-3 ${
+                  className={`font-mono text-xs uppercase tracking-wider font-semibold mb-4 ${
                     isDarkMode ? "text-gray-300" : "text-gray-700"
                   }`}
                 >
                   {t("weekdays")}
                 </p>
-                <div className={`p-4 rounded-lg ${isDarkMode ? "bg-gray-800" : "bg-gray-50"}`}>
+                <div>
                   {wakatimeData?.summaries && wakatimeData.summaries.length > 0 ? (
                     <div className="h-48">
                       <Bar data={weekdaysData} options={barOptions} />
                     </div>
                   ) : (
-                    <p className="text-sm text-gray-500">{t("noDailyStats")}</p>
+                    <p className="font-mono text-xs text-gray-500">{t("noDailyStats")}</p>
                   )}
                 </div>
               </div>
@@ -850,41 +935,49 @@ const Dashboard = () => {
               {/* Editors / OS Doughnuts */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-4">
                 {/* Editors */}
-                <div>
+                <div
+                  className={`p-5 rounded-xl border ${
+                    isDarkMode ? "bg-[#181920] border-white/[0.06]" : "bg-gray-50 border-gray-200"
+                  }`}
+                >
                   <p
-                    className={`text-sm font-medium mb-3 ${
+                    className={`font-mono text-xs uppercase tracking-wider font-semibold mb-4 ${
                       isDarkMode ? "text-gray-300" : "text-gray-700"
                     }`}
                   >
                     {t("editors")}
                   </p>
-                  <div className={`p-4 rounded-lg flex items-center justify-center ${isDarkMode ? "bg-gray-800" : "bg-gray-50"}`}>
+                  <div className="flex items-center justify-center">
                     {wakatimeData?.editors && wakatimeData.editors.length > 0 ? (
                       <div className="h-48 w-full">
                         <Doughnut data={editorsData} options={doughnutOptions} />
                       </div>
                     ) : (
-                      <p className="text-sm text-gray-500">{t("noEditorStats")}</p>
+                      <p className="font-mono text-xs text-gray-500">{t("noEditorStats")}</p>
                     )}
                   </div>
                 </div>
 
                 {/* OS */}
-                <div>
+                <div
+                  className={`p-5 rounded-xl border ${
+                    isDarkMode ? "bg-[#181920] border-white/[0.06]" : "bg-gray-50 border-gray-200"
+                  }`}
+                >
                   <p
-                    className={`text-sm font-medium mb-3 ${
+                    className={`font-mono text-xs uppercase tracking-wider font-semibold mb-4 ${
                       isDarkMode ? "text-gray-300" : "text-gray-700"
                     }`}
                   >
                     {t("operatingSystems")}
                   </p>
-                  <div className={`p-4 rounded-lg flex items-center justify-center ${isDarkMode ? "bg-gray-800" : "bg-gray-50"}`}>
+                  <div className="flex items-center justify-center">
                     {wakatimeData?.operatingSystems && wakatimeData.operatingSystems.length > 0 ? (
                       <div className="h-48 w-full">
                         <Doughnut data={osData} options={doughnutOptions} />
                       </div>
                     ) : (
-                      <p className="text-sm text-gray-500">{t("noOsStats")}</p>
+                      <p className="font-mono text-xs text-gray-500">{t("noOsStats")}</p>
                     )}
                   </div>
                 </div>
@@ -896,17 +989,17 @@ const Dashboard = () => {
       </div>
 
       {/* Refresh Button */}
-      <div className="mt-6 flex justify-center">
+      <div className="mt-10 flex justify-center">
         <button
           onClick={() => window.location.reload()}
-          className={`px-6 py-3 rounded-lg font-medium transition-all ${
+          className={`px-6 py-3 rounded-lg font-mono text-xs font-semibold uppercase tracking-wider transition-all flex items-center gap-2 border ${
             isDarkMode
-              ? "bg-gray-800 hover:bg-gray-700 text-white"
-              : "bg-gray-100 hover:bg-gray-200 text-gray-900"
+              ? "bg-[#181920] hover:bg-[#D4F933] hover:text-black text-white border-white/[0.12] hover:border-[#D4F933] shadow-md"
+              : "bg-gray-900 hover:bg-[#D4F933] hover:text-black text-white border-transparent"
           }`}
         >
-          <i className="fas fa-sync-alt mr-2"></i>
-          Refresh Data
+          <i className="fas fa-sync-alt text-xs"></i>
+          <span>Refresh Data</span>
         </button>
       </div>
     </div>

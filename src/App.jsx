@@ -19,7 +19,7 @@ function App() {
         <div className="flex">
           <Sidebar />
           <main className="xl:ml-72 flex-1 min-h-screen w-full">
-            <div className="max-w-[1920px] mx-auto px-[30px]">
+            <div className="max-w-[1600px] mx-auto px-4 sm:px-6 md:px-8 xl:px-12 py-4">
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/about" element={<About />} />

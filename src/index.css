@@ -8,30 +8,39 @@
   box-sizing: border-box;
 }
 
-body {
-  font-family: 'Poppins', sans-serif;
-  overflow-x: hidden;
+html {
+  scroll-behavior: smooth;
 }
 
-/* Dark mode (default) */
 body {
-  background-color: #000000;
-  color: #ffffff;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  overflow-x: hidden;
+  background-color: #0A0A0C;
+  color: #F3F4F6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 /* Light mode */
 body.light-mode {
-  background-color: #ffffff;
-  color: #000000;
+  background-color: #F8FAFC;
+  color: #0A0A0C;
 }
 
-/* Custom scrollbar - Dark mode */
+/* Technical Monospace Elements */
+code, pre, .font-mono, [data-mono] {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Custom Scrollbar - Dark Mode Minimalist */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #1e293b;
+  background: #0A0A0C;
 }
 
 body.light-mode ::-webkit-scrollbar-track {
@@ -39,15 +48,53 @@ body.light-mode ::-webkit-scrollbar-track {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #9333ea;
-  border-radius: 4px;
+  background: #232834;
+  border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #7e22ce;
+  background: #D4F933;
 }
 
-/* Smooth transitions */
-* {
-  transition: all 0.3s ease;
+body.light-mode ::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+}
+
+body.light-mode ::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Subtle Technical Utilities */
+.hairline-border {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.hairline-divider {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+body.light-mode .hairline-border {
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+body.light-mode .hairline-divider {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+/* Smooth Interactive Elements */
+a, button, input, textarea, select {
+  transition-property: color, background-color, border-color, transform, opacity, box-shadow;
+  transition-duration: 200ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Custom subtle selection */
+::selection {
+  background-color: rgba(212, 249, 51, 0.25);
+  color: #D4F933;
+}
+
+body.light-mode ::selection {
+  background-color: #2D5204;
+  color: #FFFFFF;
 }

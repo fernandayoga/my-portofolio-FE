@@ -1,18 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { useTheme } from "../context/ThemeContext";
 import { useTranslation } from "react-i18next";
-import { cardClass, textClass, textSecondaryClass } from "../utils/themeUtils";
 import untag from "../assets/about/untag.png";
 import coreInitiative from "../assets/about/experience/coreInitiatif.jpeg";
 import wmk from "../assets/about/experience/wmk.jpg"; 
 import infranexia from "../assets/about/experience/infranexia.png";
 import wootix from "../assets/about/experience/wootix.png";
-import { useState, useEffect } from "react";
 
 const About = () => {
   const { isDarkMode } = useTheme();
   const { t } = useTranslation();
-
   const [openIndex, setOpenIndex] = useState(null);
 
   const toggleAccordion = (index) => {
@@ -25,6 +22,7 @@ const About = () => {
       image: wootix,
       role: t("aboutExpWootix"),
       period: t("aboutWootixPeriod"),
+      indexCode: "01",
       description: [
         t("aboutWootixDesc1"),
         t("aboutWootixDesc2"),
@@ -38,6 +36,7 @@ const About = () => {
       image: infranexia,
       role: t("aboutExpInfranexia"),
       period: t("aboutInfranexiaPeriod"),
+      indexCode: "02",
       description: [
         t("aboutInfranexiaDesc1"),
         t("aboutInfranexiaDesc2"),
@@ -52,6 +51,7 @@ const About = () => {
       image: coreInitiative,
       role: t("aboutExpRole1"),
       period: t("aboutExpPeriod1"),
+      indexCode: "03",
       description: [
         t("aboutExpDesc1_1"),
         t("aboutExpDesc1_2"),
@@ -62,10 +62,11 @@ const About = () => {
       ],
     },
     {
-      company: "Wirausaha Merdedeka (WMK)",
+      company: "Wirausaha Merdeka (WMK)",
       image: wmk,
       role: t("aboutExpWmk"),
       period: t("aboutWmkPeriod"),
+      indexCode: "04",
       description: [
         t("aboutWmkDesc1"),
         t("aboutWmkDesc2"),
@@ -73,174 +74,254 @@ const About = () => {
         t("aboutWmkDesc4"),
         t("aboutWmkDesc5"),
         t("aboutWmkDesc6"),
-        
       ],
     },
-    
   ];
 
   return (
     <div
-      className="min-h-screen py-8 pt-20 xl:pt-8 pl-4"
+      className="min-h-screen py-8 pt-20 xl:pt-8"
       data-aos="fade-down"
       data-aos-delay="100"
       data-aos-duration="600"
     >
-      <h1
-        className={`text-3xl md:text-4xl font-bold mb-2 ${textClass(
-          isDarkMode,
-        )}`}
-      >
-        {t("aboutTitle")}
-      </h1>
-      <p
-        className={`text-sm md:text-base  ${
-          isDarkMode ? "text-gray-400" : "text-gray-600"
-        }`}
-      >
-        {t("aboutSubtitle")}
-      </p>
-
-      <div
-        className={`mb-5  border-b pb-8 ${
-          isDarkMode ? "border-gray-800" : "border-gray-200"
-        }`}
-      ></div>
-
-      <div className="flex flex-col gap-8 max-w-5xl">
-        {/* Who I Am */}
-        <div className={`${cardClass(isDarkMode)} p-6`}>
-          <p
-            className={`${textSecondaryClass(isDarkMode)} leading-relaxed mb-4 text-justify hyphens-auto`}
-          >
-            {t("aboutPara1")}
-          </p>
-          <p
-            className={`${textSecondaryClass(isDarkMode)} leading-relaxed mb-4 text-justify hyphens-auto`}
-          >
-            {t("aboutPara2")}
-          </p>
-          <p className={`${textSecondaryClass(isDarkMode)} leading-relaxed text-justify hyphens-auto`}>
-            {t("aboutPara3")}
-          </p>
+      {/* Header Section */}
+      <div className="mb-12">
+        <div className="flex items-center gap-3 mb-4">
+          <div className={`w-2 h-2 rounded-full ${isDarkMode ? "bg-[#D4F933]" : "bg-[#2D5204]"}`}></div>
+          <span className={`font-mono text-xs font-semibold tracking-widest uppercase ${
+            isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"
+          }`}>
+            // PROFILE & BACKGROUND
+          </span>
+          <div className={`flex-1 h-[1px] ${isDarkMode ? "bg-white/[0.08]" : "bg-black/[0.08]"}`}></div>
         </div>
 
-        {/* Education */}
-        <div className={`${cardClass(isDarkMode)} p-6`}>
-          <h2
-            className={`text-2xl font-semibold mb-6 pb-2 flex items-center
-            ${
+        <h1
+          className={`text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-3 ${
+            isDarkMode ? "text-white" : "text-gray-900"
+          }`}
+        >
+          {t("aboutTitle")}
+        </h1>
+        <p
+          className={`font-mono text-xs sm:text-sm ${
+            isDarkMode ? "text-gray-400" : "text-gray-600"
+          }`}
+        >
+          {t("aboutSubtitle")}
+        </p>
+
+        <div className="mt-8 hairline-divider"></div>
+      </div>
+
+      <div className="flex flex-col gap-12 max-w-5xl">
+        {/* Section 01: Biography / Who I Am */}
+        <div>
+          <div className="flex items-center gap-3 mb-4">
+            <span className={`font-mono text-xs tracking-wider font-semibold ${
+              isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"
+            }`}>
+              // 01
+            </span>
+            <span className="font-mono text-xs tracking-wider uppercase text-gray-500">
+              BIOGRAPHY
+            </span>
+          </div>
+
+          <div
+            className={`p-6 sm:p-8 rounded-xl border border-l-4 ${
               isDarkMode
-                ? "border-b border-gray-700"
-                : "border-b border-gray-300"
+                ? "bg-[#121216] border-white/[0.08] border-l-[#D4F933]"
+                : "bg-white border-black/[0.08] border-l-[#2D5204] shadow-sm"
             }`}
           >
-            <i className="fas fa-graduation-cap mr-3 text-primary"></i>
-            {t("aboutEducation")}
-          </h2>
+            <p
+              className={`leading-relaxed mb-4 text-justify hyphens-auto text-sm sm:text-base ${
+                isDarkMode ? "text-gray-300" : "text-gray-700"
+              }`}
+            >
+              {t("aboutPara1")}
+            </p>
+            <p
+              className={`leading-relaxed mb-4 text-justify hyphens-auto text-sm sm:text-base ${
+                isDarkMode ? "text-gray-300" : "text-gray-700"
+              }`}
+            >
+              {t("aboutPara2")}
+            </p>
+            <p
+              className={`leading-relaxed text-justify hyphens-auto text-sm sm:text-base ${
+                isDarkMode ? "text-gray-300" : "text-gray-700"
+              }`}
+            >
+              {t("aboutPara3")}
+            </p>
+          </div>
+        </div>
 
-          <div className="flex items-start gap-4">
-            <img
-              src={untag}
-              alt="University Logo"
-              className="w-12 h-12 object-contain rounded-md"
-            />
+        {/* Section 02: Education */}
+        <div>
+          <div className="flex items-center gap-3 mb-4">
+            <span className={`font-mono text-xs tracking-wider font-semibold ${
+              isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"
+            }`}>
+              // 02
+            </span>
+            <span className="font-mono text-xs tracking-wider uppercase text-gray-500">
+              ACADEMIC CREDENTIAL
+            </span>
+          </div>
 
-            <div>
-              <h3 className={`text-md font-semibold ${textClass(isDarkMode)}`}>
-                {t("aboutEduMajor")}
-              </h3>
-              <p className="text-gray-400 text-sm">{t("aboutEduUniversity")}</p>
+          <div
+            className={`p-6 rounded-xl border flex flex-col sm:flex-row sm:items-center justify-between gap-6 ${
+              isDarkMode
+                ? "bg-[#121216] border-white/[0.08]"
+                : "bg-white border-black/[0.08] shadow-sm"
+            }`}
+          >
+            <div className="flex items-center gap-4">
+              <div className="w-14 h-14 p-2 rounded-lg bg-white/[0.04] border border-white/[0.08] flex items-center justify-center flex-shrink-0">
+                <img
+                  src={untag}
+                  alt="University Logo"
+                  className="w-full h-full object-contain"
+                />
+              </div>
+
+              <div>
+                <h3
+                  className={`text-base sm:text-lg font-bold ${
+                    isDarkMode ? "text-white" : "text-gray-900"
+                  }`}
+                >
+                  {t("aboutEduMajor")}
+                </h3>
+                <p className="text-sm text-gray-400 mt-0.5">
+                  {t("aboutEduUniversity")}
+                </p>
+              </div>
+            </div>
+
+            <div className={`font-mono text-xs px-3 py-1.5 rounded self-start sm:self-center font-semibold ${
+              isDarkMode 
+                ? "bg-[#D4F933]/10 border border-[#D4F933]/30 text-[#D4F933]" 
+                : "bg-[#0A0A0C] border border-black text-[#D4F933] shadow-xs"
+            }`}>
+              UNDERGRADUATE
             </div>
           </div>
         </div>
 
-        {/* Experience */}
-        <div className={`${cardClass(isDarkMode)} p-6`}>
-          <h2
-            className={`text-2xl font-semibold mb-6 pb-2 flex items-center
-            ${
-              isDarkMode
-                ? "border-b border-gray-700"
-                : "border-b border-gray-300"
-            }`}
-          >
-            <i className="fas fa-briefcase mr-3 text-primary"></i>
-            {t("aboutExperience")}
-          </h2>
+        {/* Section 03: Experience */}
+        <div>
+          <div className="flex items-center gap-3 mb-4">
+            <span className={`font-mono text-xs tracking-wider font-semibold ${
+              isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"
+            }`}>
+              // 03
+            </span>
+            <span className="font-mono text-xs tracking-wider uppercase text-gray-500">
+              PROFESSIONAL TRAJECTORY
+            </span>
+          </div>
 
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-4">
             {experienceData.map((exp, index) => (
               <div
                 key={index}
-                className={`rounded-xl border p-6 transition-all   ${
+                className={`rounded-xl border transition-all duration-200 overflow-hidden ${
                   isDarkMode
-                    ? "bg-slate-900 border-gray-800 text-white"
-                    : "bg-white border-gray-200 text-gray-900"
+                    ? "bg-[#121216] border-white/[0.08] hover:border-white/[0.16]"
+                    : "bg-white border-black/[0.08] hover:border-black/[0.16] shadow-sm"
                 }`}
               >
-                <div className="flex flex-col gap-4 items-start min-[476px]:flex-row">
-                  {/* Image */}
-                  <img
-                    src={exp.image}
-                    alt={exp.company}
-                    className="w-14 h-14 rounded-lg object-cover border"
-                  />
-
-                  {/* Content */}
-                  <div className="flex-1">
-                    <h3 className="text-lg font-semibold">{exp.company}</h3>
-                    <p className="text-sm  font-medium">{exp.role}</p>
-                    <p className="text-xs text-gray-400 mb-1">{exp.period}</p>
-
-                    {/* Accordion Content */}
-                    <div
-                      className={`overflow-hidden transition-all duration-500 ease-in-out ${
-                        openIndex === index
-                          ? "max-h-[1200px] opacity-100 mt-3"
-                          : "max-h-0 opacity-0"
-                      }`}
-                    >
-                      <ul
-                        className={`list-disc pl-5 space-y-2 text-sm leading-relaxed ${
-                          isDarkMode ? "text-gray-300" : "text-gray-600"
-                        }`}
-                      >
-                        {exp.description.map((item, i) => (
-                          <li key={i}>{item}</li>
-                        ))}
-                      </ul>
+                <div className="p-6">
+                  <div className="flex flex-col sm:flex-row gap-5 items-start">
+                    {/* Company Logo */}
+                    <div className={`w-14 h-14 rounded-lg overflow-hidden border p-1 flex-shrink-0 ${
+                      isDarkMode ? "border-white/[0.1] bg-[#181920]" : "border-black/[0.1] bg-gray-50"
+                    }`}>
+                      <img
+                        src={exp.image}
+                        alt={exp.company}
+                        className="w-full h-full object-cover rounded-md"
+                      />
                     </div>
 
-                    {/* Button */}
-                    <button
-                      onClick={() => toggleAccordion(index)}
-                      className={`mt-4 px-4 py-2 rounded-full text-sm font-medium
-                        flex items-center gap-2 transition-all duration-300
-                        ${
-                          isDarkMode
-                            ? "bg-gray-800 text-gray-200 hover:bg-gray-700"
-                            : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                        }`}
-                    >
-                      <span
-                        className={`transition-opacity duration-600 text-xs  ${
-                          openIndex === index ? "opacity-100" : "opacity-90"
+                    {/* Role & Company Information */}
+                    <div className="flex-1 min-w-0">
+                      <div className="flex flex-wrap items-center justify-between gap-2 mb-1">
+                        <h3
+                          className={`text-base sm:text-lg font-bold tracking-tight ${
+                            isDarkMode ? "text-white" : "text-gray-900"
+                          }`}
+                        >
+                          {exp.company}
+                        </h3>
+                        <span className={`font-mono text-xs px-2.5 py-0.5 rounded font-semibold ${
+                          isDarkMode 
+                            ? "bg-[#D4F933]/10 border border-[#D4F933]/30 text-[#D4F933]" 
+                            : "bg-[#0A0A0C] border border-black text-[#D4F933] shadow-xs"
+                        }`}>
+                          {exp.period}
+                        </span>
+                      </div>
+
+                      <p
+                        className={`text-sm font-medium ${
+                          isDarkMode ? "text-gray-300" : "text-gray-700"
                         }`}
                       >
-                        {openIndex === index
-                          ? t("aboutClose")
-                          : t("aboutShowResponsibilities")}
-                      </span>
+                        {exp.role}
+                      </p>
 
-                      <i
-                        className={`fas fa-chevron-${
-                          openIndex === index ? "up" : "down"
-                        } text-xs transition-transform duration-600 ${
-                          openIndex === index ? "rotate-180" : "rotate-0"
+                      {/* Accordion Content */}
+                      <div
+                        className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                          openIndex === index
+                            ? "max-h-[1000px] opacity-100 mt-4 pt-4 border-t border-inherit"
+                            : "max-h-0 opacity-0"
                         }`}
-                      ></i>
-                    </button>
+                      >
+                        <ul className="space-y-2.5 font-mono text-xs leading-relaxed">
+                          {exp.description.map((item, i) => (
+                            <li
+                              key={i}
+                              className={`flex items-start gap-2.5 ${
+                                isDarkMode ? "text-gray-400" : "text-gray-600"
+                              }`}
+                            >
+                              <span className={`mt-0.5 ${isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"}`}>→</span>
+                              <span className="font-sans text-xs sm:text-sm">{item}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      {/* Expand / Collapse Button */}
+                      <button
+                        onClick={() => toggleAccordion(index)}
+                        className={`mt-4 px-3.5 py-2 rounded-lg font-mono text-xs font-semibold tracking-wider uppercase flex items-center gap-2 border transition-all ${
+                          isDarkMode
+                            ? "bg-[#181920] border-white/[0.1] text-gray-300 hover:text-white hover:border-[#D4F933]/50"
+                            : "bg-gray-100 border-black/[0.1] text-gray-700 hover:text-black hover:border-[#2D5204]"
+                        }`}
+                      >
+                        <span>
+                          {openIndex === index
+                            ? t("aboutClose")
+                            : t("aboutShowResponsibilities")}
+                        </span>
+                        <i
+                          className={`fas fa-chevron-${
+                            openIndex === index ? "up" : "down"
+                          } text-[10px] transition-transform ${
+                            isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"
+                          }`}
+                        ></i>
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
