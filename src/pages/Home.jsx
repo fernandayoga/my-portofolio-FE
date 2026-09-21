@@ -10,6 +10,18 @@ const Home = () => {
   const { t } = useTranslation();
   const [typedText, setTypedText] = useState("");
   const [indexText, setIndexText] = useState(0);
+  const [mousePos, setMousePos] = useState({});
+
+  const handleMouseMove = (index, e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    setMousePos((prev) => ({
+      ...prev,
+      [index]: {
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top,
+      },
+    }));
+  };
 
   const daftarText = [
     "Fullstack Developer",
@@ -70,6 +82,9 @@ const Home = () => {
     { icon: "flutter", color: "text-sky-400", name: "Flutter", isCustom: true },
     { icon: "fa-brands fa-github", color: "text-gray-200", name: "GitHub" },
   ];
+
+  const skillsRow1 = skills.slice(0, 10);
+  const skillsRow2 = skills.slice(10);
 
   const features = [
     {
@@ -193,7 +208,7 @@ const Home = () => {
 
   return (
     <div
-      className="min-h-screen py-8 pt-20 xl:pt-8"
+      className="min-h-screen py-8 pt-20 xl:pt-8 w-full max-w-full overflow-x-hidden"
       data-aos="fade-down"
       data-aos-delay="100"
       data-aos-duration="600"
@@ -267,49 +282,137 @@ const Home = () => {
       {/* Skills Section — Technical Index */}
       <div className="mb-20">
         <div className="flex items-center gap-3 mb-3">
-          <span className={`font-mono text-xs tracking-widest uppercase font-semibold ${
-            isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"
-          }`}>
-            // 01
-          </span>
           <h2
-            className={`text-2xl sm:text-3xl font-bold tracking-tight ${
+            className={`text-2xl sm:text-3xl font-bold tracking-tight flex items-center gap-2.5 ${
               isDarkMode ? "text-white" : "text-gray-900"
             }`}
           >
-            {t("skills")}
+            <span className={`font-mono ${isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"}`}>
+              //
+            </span>
+            <span>{t("skills")}</span>
           </h2>
-          <div className={`flex-1 h-[1px] ${isDarkMode ? "bg-white/[0.08]" : "bg-black/[0.08]"}`}></div>
+          
         </div>
         <p className={`font-mono text-xs sm:text-sm mb-6 ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}>
           {t("skillsSubtitle")}
         </p>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
-          {skills.map((skill, index) => (
-            <div
-              key={index}
-              className={`p-3.5 rounded-lg border transition-all duration-200 flex items-center gap-3 group ${
-                isDarkMode
-                  ? "bg-[#121216] border-white/[0.08] hover:border-[#D4F933]/50 hover:bg-[#181920]"
-                  : "bg-white border-black/[0.08] hover:border-[#2D5204] hover:bg-gray-50 shadow-xs"
-              }`}
-              title={skill.name}
-            >
-              <div className={`w-8 h-8 rounded-md border flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform ${
-                isDarkMode ? "bg-white/[0.03] border-white/[0.06]" : "bg-black/[0.03] border-black/[0.06]"
-              }`}>
-                {renderSkillIcon(skill)}
-              </div>
-              <span
-                className={`font-mono text-xs font-medium truncate ${
-                  isDarkMode ? "text-gray-300 group-hover:text-white" : "text-gray-800 group-hover:text-black"
-                }`}
-              >
-                {skill.name}
-              </span>
+        {/* Infinite Running Tech Marquee */}
+        <div className="marquee-wrapper w-full max-w-full min-w-0 overflow-hidden py-3 space-y-3.5 marquee-mask">
+          {/* Row 1 — Moving Left */}
+          <div className="flex w-max marquee-row">
+            <div className="flex shrink-0 animate-marquee-left gap-3.5 pr-3.5">
+              {[...skillsRow1, ...skillsRow1].map((skill, index) => (
+                <div
+                  key={`r1-a-${index}`}
+                  className={`marquee-item px-4 py-3 rounded-lg border transition-all duration-200 flex items-center gap-3 group flex-shrink-0 cursor-pointer ${
+                    isDarkMode
+                      ? "bg-[#121216] border-white/[0.08] hover:border-[#D4F933]/50 hover:bg-[#181920]"
+                      : "bg-white border-black/[0.08] hover:border-[#2D5204] hover:bg-gray-50 shadow-xs"
+                  }`}
+                  title={skill.name}
+                >
+                  <div className={`w-8 h-8 rounded-md border flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform ${
+                    isDarkMode ? "bg-white/[0.03] border-white/[0.06]" : "bg-black/[0.03] border-black/[0.06]"
+                  }`}>
+                    {renderSkillIcon(skill)}
+                  </div>
+                  <span
+                    className={`font-mono text-xs font-medium ${
+                      isDarkMode ? "text-gray-300 group-hover:text-white" : "text-gray-800 group-hover:text-black"
+                    }`}
+                  >
+                    {skill.name}
+                  </span>
+                </div>
+              ))}
             </div>
-          ))}
+
+            <div className="flex shrink-0 animate-marquee-left gap-3.5 pr-3.5" aria-hidden="true">
+              {[...skillsRow1, ...skillsRow1].map((skill, index) => (
+                <div
+                  key={`r1-b-${index}`}
+                  className={`marquee-item px-4 py-3 rounded-lg border transition-all duration-200 flex items-center gap-3 group flex-shrink-0 cursor-pointer ${
+                    isDarkMode
+                      ? "bg-[#121216] border-white/[0.08] hover:border-[#D4F933]/50 hover:bg-[#181920]"
+                      : "bg-white border-black/[0.08] hover:border-[#2D5204] hover:bg-gray-50 shadow-xs"
+                  }`}
+                  title={skill.name}
+                >
+                  <div className={`w-8 h-8 rounded-md border flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform ${
+                    isDarkMode ? "bg-white/[0.03] border-white/[0.06]" : "bg-black/[0.03] border-black/[0.06]"
+                  }`}>
+                    {renderSkillIcon(skill)}
+                  </div>
+                  <span
+                    className={`font-mono text-xs font-medium ${
+                      isDarkMode ? "text-gray-300 group-hover:text-white" : "text-gray-800 group-hover:text-black"
+                    }`}
+                  >
+                    {skill.name}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Row 2 — Moving Right */}
+          <div className="flex w-max marquee-row">
+            <div className="flex shrink-0 animate-marquee-right gap-3.5 pr-3.5">
+              {[...skillsRow2, ...skillsRow2].map((skill, index) => (
+                <div
+                  key={`r2-a-${index}`}
+                  className={`marquee-item px-4 py-3 rounded-lg border transition-all duration-200 flex items-center gap-3 group flex-shrink-0 cursor-pointer ${
+                    isDarkMode
+                      ? "bg-[#121216] border-white/[0.08] hover:border-[#D4F933]/50 hover:bg-[#181920]"
+                      : "bg-white border-black/[0.08] hover:border-[#2D5204] hover:bg-gray-50 shadow-xs"
+                  }`}
+                  title={skill.name}
+                >
+                  <div className={`w-8 h-8 rounded-md border flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform ${
+                    isDarkMode ? "bg-white/[0.03] border-white/[0.06]" : "bg-black/[0.03] border-black/[0.06]"
+                  }`}>
+                    {renderSkillIcon(skill)}
+                  </div>
+                  <span
+                    className={`font-mono text-xs font-medium ${
+                      isDarkMode ? "text-gray-300 group-hover:text-white" : "text-gray-800 group-hover:text-black"
+                    }`}
+                  >
+                    {skill.name}
+                  </span>
+                </div>
+              ))}
+            </div>
+
+            <div className="flex shrink-0 animate-marquee-right gap-3.5 pr-3.5" aria-hidden="true">
+              {[...skillsRow2, ...skillsRow2].map((skill, index) => (
+                <div
+                  key={`r2-b-${index}`}
+                  className={`marquee-item px-4 py-3 rounded-lg border transition-all duration-200 flex items-center gap-3 group flex-shrink-0 cursor-pointer ${
+                    isDarkMode
+                      ? "bg-[#121216] border-white/[0.08] hover:border-[#D4F933]/50 hover:bg-[#181920]"
+                      : "bg-white border-black/[0.08] hover:border-[#2D5204] hover:bg-gray-50 shadow-xs"
+                  }`}
+                  title={skill.name}
+                >
+                  <div className={`w-8 h-8 rounded-md border flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform ${
+                    isDarkMode ? "bg-white/[0.03] border-white/[0.06]" : "bg-black/[0.03] border-black/[0.06]"
+                  }`}>
+                    {renderSkillIcon(skill)}
+                  </div>
+                  <span
+                    className={`font-mono text-xs font-medium ${
+                      isDarkMode ? "text-gray-300 group-hover:text-white" : "text-gray-800 group-hover:text-black"
+                    }`}
+                  >
+                    {skill.name}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
 
         <div className="mt-12 hairline-divider"></div>
@@ -318,19 +421,17 @@ const Home = () => {
       {/* Features Section — Editorial Numerals */}
       <div className="mb-12">
         <div className="flex items-center gap-3 mb-3">
-          <span className={`font-mono text-xs tracking-widest uppercase font-semibold ${
-            isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"
-          }`}>
-            // 02
-          </span>
           <h2
-            className={`text-2xl sm:text-3xl font-bold tracking-tight ${
+            className={`text-2xl sm:text-3xl font-bold tracking-tight flex items-center gap-2.5 ${
               isDarkMode ? "text-white" : "text-gray-900"
             }`}
           >
-            {t("features")}
+            <span className={`font-mono ${isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"}`}>
+              //
+            </span>
+            <span>{t("features")}</span>
           </h2>
-          <div className={`flex-1 h-[1px] ${isDarkMode ? "bg-white/[0.08]" : "bg-black/[0.08]"}`}></div>
+          
         </div>
         <p className={`font-mono text-xs sm:text-sm mb-8 ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}>
           {t("featuresSubtitle")}
@@ -340,20 +441,31 @@ const Home = () => {
           {features.map((feature, index) => (
             <div
               key={index}
-              className={`p-6 rounded-xl border transition-all duration-200 flex flex-col justify-between group ${
+              onMouseMove={(e) => handleMouseMove(index, e)}
+              className={`relative p-6 rounded-xl border transition-all duration-300 flex flex-col justify-between group overflow-hidden ${
                 isDarkMode
-                  ? "bg-[#121216] border-white/[0.08] hover:border-[#D4F933]/40 hover:bg-[#181920]"
-                  : "bg-white border-black/[0.08] hover:border-[#2D5204] hover:bg-gray-50 shadow-sm"
-              }`}
+                  ? "bg-[#121216] border-white/[0.08] hover:border-[#D4F933]/50 hover:shadow-[0_12px_32px_-8px_rgba(212,249,51,0.14)]"
+                  : "bg-white border-black/[0.08] hover:border-[#2D5204]/60 hover:shadow-lg"
+              } hover:-translate-y-1`}
             >
-              <div>
+              {/* Interactive Spotlight Radial Light */}
+              <div
+                className="pointer-events-none absolute -inset-px rounded-xl opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                style={{
+                  background: isDarkMode
+                    ? `radial-gradient(350px circle at ${mousePos[index]?.x || 0}px ${mousePos[index]?.y || 0}px, rgba(212, 249, 51, 0.12), transparent 80%)`
+                    : `radial-gradient(350px circle at ${mousePos[index]?.x || 0}px ${mousePos[index]?.y || 0}px, rgba(45, 82, 4, 0.08), transparent 80%)`,
+                }}
+              />
+
+              <div className="relative z-10">
                 <div className="flex items-center justify-between mb-4">
                   <span className={`font-mono text-xs tracking-wider font-semibold ${
                     isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"
                   }`}>
                     [{feature.num}]
                   </span>
-                  <div className={`w-8 h-8 rounded-md border flex items-center justify-center ${
+                  <div className={`w-8 h-8 rounded-md border flex items-center justify-center transition-transform group-hover:scale-110 ${
                     isDarkMode 
                       ? "bg-white/[0.04] border-white/[0.06] text-[#D4F933]" 
                       : "bg-black/[0.04] border-black/[0.06] text-[#2D5204]"
@@ -380,11 +492,11 @@ const Home = () => {
                 </p>
               </div>
 
-              <div className={`mt-6 pt-4 border-t flex items-center justify-between font-mono text-[10px] ${
+              <div className={`relative z-10 mt-6 pt-4 border-t flex items-center justify-between font-mono text-[10px] ${
                 isDarkMode ? "border-white/[0.06] text-gray-500" : "border-black/[0.06] text-gray-500"
               }`}>
                 <span>SECTION // 0{index + 1}</span>
-                <i className={`fas fa-arrow-right text-[10px] group-hover:translate-x-1 transition-transform ${
+                <i className={`fas fa-arrow-right text-[10px] group-hover:translate-x-1.5 transition-transform ${
                   isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"
                 }`}></i>
               </div>
