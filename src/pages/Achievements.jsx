@@ -9,6 +9,18 @@ const Achievements = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const { t } = useTranslation();
   const [filteredAchievements, setFilteredAchievements] = useState(achievements);
+  const [mousePos, setMousePos] = useState({});
+
+  const handleMouseMove = (id, e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    setMousePos((prev) => ({
+      ...prev,
+      [id]: {
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top,
+      },
+    }));
+  };
 
   useEffect(() => {
     const filter = achievements.filter(
@@ -23,16 +35,26 @@ const Achievements = () => {
     setFilteredAchievements(filter);
   }, [searchQuery]);
 
-  // Lock scroll on zoom
+  // Lock scroll on zoom & handle ESC key
   useEffect(() => {
     if (selectedImage) {
+      document.documentElement.style.overflow = "hidden";
       document.body.style.overflow = "hidden";
+      const handleKeyDown = (e) => {
+        if (e.key === "Escape") {
+          setSelectedImage(null);
+        }
+      };
+      window.addEventListener("keydown", handleKeyDown);
+      return () => {
+        document.documentElement.style.overflow = "";
+        document.body.style.overflow = "";
+        window.removeEventListener("keydown", handleKeyDown);
+      };
     } else {
-      document.body.style.overflow = "auto";
+      document.documentElement.style.overflow = "";
+      document.body.style.overflow = "";
     }
-    return () => {
-      document.body.style.overflow = "auto";
-    };
   }, [selectedImage]);
 
   return (
@@ -44,25 +66,6 @@ const Achievements = () => {
     >
       {/* Header */}
       <div className="mb-10">
-        <div className="flex items-center gap-3 mb-4">
-          <div
-            className={`w-2 h-2 rounded-full ${
-              isDarkMode ? "bg-[#D4F933]" : "bg-[#2D5204]"
-            }`}
-          ></div>
-          <span
-            className={`font-mono text-xs font-semibold tracking-widest uppercase ${
-              isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"
-            }`}
-          >
-            // VERIFIED CERTIFICATIONS & HONORS
-          </span>
-          <div
-            className={`flex-1 h-[1px] ${
-              isDarkMode ? "bg-white/[0.08]" : "bg-black/[0.08]"
-            }`}
-          ></div>
-        </div>
 
         <h1
           className={`text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-3 ${
@@ -84,23 +87,46 @@ const Achievements = () => {
 
       {/* Controls & Search Bar */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
-        <div className="relative max-w-md w-full">
+        <div
+          className={`relative max-w-md w-full rounded-lg transition-shadow duration-300 ${
+            isDarkMode
+              ? "focus-within:shadow-[0_0_24px_rgba(212,249,51,0.18)]"
+              : "focus-within:shadow-[0_0_20px_rgba(45,82,4,0.14)]"
+          }`}
+        >
           <input
             type="text"
             placeholder={t("search")}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className={`w-full px-4 py-2.5 pl-10 rounded-lg border font-mono text-xs focus:outline-none transition-all ${
+            className={`w-full px-4 py-2.5 pl-10 pr-9 rounded-lg border font-mono text-xs outline-none focus:outline-none focus-visible:outline-none ring-0 focus:ring-0 transition-colors duration-200 ${
               isDarkMode
-                ? "bg-[#121216] border-white/[0.1] text-white placeholder-gray-500 focus:border-[#D4F933]"
-                : "bg-white border-black/[0.1] text-gray-900 placeholder-gray-400 focus:border-[#2D5204] shadow-xs"
+                ? "bg-[#121216] border-white/[0.1] text-white placeholder-gray-500 focus:border-[#D4F933] caret-[#D4F933]"
+                : "bg-white border-black/[0.1] text-gray-900 placeholder-gray-400 focus:border-[#2D5204] caret-[#2D5204] shadow-xs"
             }`}
           />
           <i
-            className={`fas fa-search absolute left-3.5 top-1/2 -translate-y-1/2 text-xs ${
-              isDarkMode ? "text-gray-500" : "text-gray-400"
+            className={`fas fa-search absolute left-3.5 top-1/2 -translate-y-1/2 text-xs transition-colors duration-200 ${
+              searchQuery
+                ? isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"
+                : isDarkMode ? "text-gray-500" : "text-gray-400"
             }`}
           ></i>
+
+          {/* Quick Clear Button */}
+          {searchQuery && (
+            <button
+              onClick={() => setSearchQuery("")}
+              title="Clear search"
+              className={`absolute right-2.5 top-1/2 -translate-y-1/2 w-5 h-5 rounded-full flex items-center justify-center font-mono text-xs transition-all duration-200 ${
+                isDarkMode
+                  ? "bg-white/10 hover:bg-[#D4F933] text-gray-300 hover:text-black"
+                  : "bg-black/10 hover:bg-[#2D5204] text-gray-600 hover:text-white"
+              }`}
+            >
+              &times;
+            </button>
+          )}
         </div>
 
         {/* Counter Badge - Inverted Dark Pill in Light Mode */}
@@ -111,26 +137,27 @@ const Achievements = () => {
               : "bg-[#0A0A0C] border border-black text-[#D4F933] shadow-xs"
           }`}
         >
-          RECORDS: {filteredAchievements.length} // TOTAL: {achievements.length}
+          TOTAL: {filteredAchievements.length}{filteredAchievements.length !== achievements.length ? ` / ${achievements.length}` : ""}
         </div>
       </div>
 
-      {/* Zoom Modal */}
+      {/* Zoom Modal with Smooth Scale Animation */}
       {selectedImage && (
         <div
-          className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4"
+          className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 animate-backdrop-fade overscroll-contain touch-none select-none"
           onClick={() => setSelectedImage(null)}
+          onWheel={(e) => e.stopPropagation()}
         >
           <div
-            className="relative max-w-4xl w-full"
+            className="relative max-w-4xl w-full animate-modal-zoom"
             onClick={(e) => e.stopPropagation()}
           >
             <button
               onClick={() => setSelectedImage(null)}
-              className="absolute -top-10 right-0 font-mono text-xs text-white/80 hover:text-[#D4F933] flex items-center gap-1.5 transition-colors"
+              className="group absolute -top-10 right-0 font-mono text-xs text-white/80 hover:text-[#D4F933] flex items-center gap-1.5 transition-colors"
             >
-              <span>[CLOSE]</span>
-              <span className="text-lg leading-none">&times;</span>
+              <span className="tracking-wider">[ESC / CLOSE]</span>
+              <span className="text-xl leading-none transition-transform duration-200 group-hover:rotate-90">&times;</span>
             </button>
 
             <img
@@ -148,12 +175,23 @@ const Achievements = () => {
           <div
             key={achievement.id}
             onClick={() => setSelectedImage(achievement.image)}
-            className={`group rounded-xl overflow-hidden border transition-all duration-300 cursor-pointer flex flex-col ${
+            onMouseMove={(e) => handleMouseMove(achievement.id, e)}
+            className={`group relative rounded-xl overflow-hidden border transition-all duration-300 cursor-pointer flex flex-col hover:-translate-y-1.5 ${
               isDarkMode
-                ? "bg-[#121216] border-white/[0.08] hover:border-white/[0.2]"
-                : "bg-white border-black/[0.08] hover:border-black/[0.2] shadow-sm"
+                ? "bg-[#121216] border-white/[0.08] hover:border-[#D4F933]/50 hover:shadow-[0_12px_32px_-8px_rgba(212,249,51,0.12)]"
+                : "bg-white border-black/[0.08] hover:border-[#2D5204]/60 hover:shadow-xl"
             }`}
           >
+            {/* Interactive Spotlight Radial Light */}
+            <div
+              className="pointer-events-none absolute -inset-px rounded-xl opacity-0 transition-opacity duration-300 group-hover:opacity-100 z-10"
+              style={{
+                background: isDarkMode
+                  ? `radial-gradient(350px circle at ${mousePos[achievement.id]?.x || 0}px ${mousePos[achievement.id]?.y || 0}px, rgba(212, 249, 51, 0.12), transparent 80%)`
+                  : `radial-gradient(350px circle at ${mousePos[achievement.id]?.x || 0}px ${mousePos[achievement.id]?.y || 0}px, rgba(45, 82, 4, 0.08), transparent 80%)`,
+              }}
+            />
+
             <div className="relative h-48 overflow-hidden bg-[#181920] border-b border-inherit">
               <img
                 src={achievement.image}
@@ -162,24 +200,27 @@ const Achievements = () => {
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
 
-              <div className="absolute top-3 left-3 font-mono text-[10px] px-2 py-0.5 rounded bg-black/70 backdrop-blur-xs border border-white/[0.1] text-[#D4F933] font-semibold">
+              {/* Holographic Shine Sweep Effect */}
+              <div className="pointer-events-none absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out z-10 bg-gradient-to-r from-transparent via-white/[0.18] to-transparent skew-x-[-20deg]" />
+
+              <div className="absolute top-3 left-3 z-20 font-mono text-[10px] px-2 py-0.5 rounded bg-black/70 backdrop-blur-xs border border-white/[0.1] text-[#D4F933] font-semibold">
                 REC #{idx + 1 < 10 ? `0${idx + 1}` : idx + 1}
               </div>
 
               {/* Hover Overlay */}
-              <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                <span className="font-mono text-xs text-white bg-black/80 px-3 py-1 rounded border border-white/[0.2] flex items-center gap-1.5">
+              <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                <span className="font-mono text-xs text-white bg-black/80 px-3 py-1 rounded border border-white/[0.2] flex items-center gap-1.5 shadow-lg">
                   <i className="fas fa-search-plus text-[#D4F933] text-xs"></i>
                   <span>INSPECT</span>
                 </span>
               </div>
             </div>
 
-            <div className="p-5 flex-1 flex flex-col justify-between">
+            <div className="relative z-10 p-5 flex-1 flex flex-col justify-between">
               <div>
                 <h3
-                  className={`text-base font-bold mb-1.5 line-clamp-2 ${
-                    isDarkMode ? "text-white" : "text-gray-900"
+                  className={`text-base font-bold mb-1.5 line-clamp-2 transition-colors duration-200 ${
+                    isDarkMode ? "text-white group-hover:text-[#D4F933]" : "text-gray-900 group-hover:text-[#2D5204]"
                   }`}
                 >
                   {achievement.title}
