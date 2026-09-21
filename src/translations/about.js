@@ -8,6 +8,7 @@ export const aboutTranslations = {
       "As a proactive problem solver, I do more than just write code; I ensure that every product I build is optimized for performance and prepared for future growth. I pay close attention to technical details to guarantee the security and reliability of the systems I develop. By maintaining a quality-oriented approach, I am committed to writing clean, maintainable code that ensures the long-term sustainability of every project.",
     aboutPara3:
       "I am highly enthusiastic about adopting best practices and exploring the latest methodologies to help organizations build reliable, efficient, and high-impact digital products. I view every challenge as an opportunity to innovate and provide smarter solutions. My ultimate goal is to deliver digital products that not only meet technical requirements but also empower businesses to scale and reach their full potential through technology.",
+    aboutBiography: "Biography",
     aboutEducation: "Education",
     aboutEduMajor: "Information System and Technology",
     aboutEduUniversity: "University 17 August Surabaya 1945",
@@ -88,6 +89,7 @@ export const aboutTranslations = {
       "Sebagai seorang pemecah masalah yang proaktif, saya tidak hanya sekadar menulis kode, tetapi juga memastikan setiap produk yang saya bangun memiliki performa yang optimal dan siap untuk berkembang di masa depan. Saya sangat teliti dalam memperhatikan detail teknis guna memastikan keamanan dan keandalan sistem yang saya kembangkan. Dengan pendekatan yang berorientasi pada kualitas, saya berkomitmen untuk menulis kode yang bersih dan mudah dipelihara demi keberlanjutan proyek jangka panjang.",
     aboutPara3:
       "Saya sangat antusias dalam mengadopsi praktik terbaik dan mengeksplorasi metodologi terbaru untuk membantu organisasi membangun produk digital yang andal, efisien, dan berdampak luas. Saya memandang setiap tantangan sebagai peluang untuk berinovasi dan memberikan solusi yang lebih cerdas. Tujuan utama saya adalah menghadirkan produk digital yang tidak hanya memenuhi kebutuhan teknis, tetapi juga membantu bisnis tumbuh dan mencapai potensi maksimalnya melalui teknologi.",
+    aboutBiography: "Biografi",
     aboutEducation: "Pendidikan",
     aboutEduMajor: "Sistem dan Teknologi Informasi",
     aboutEduUniversity: "Universitas 17 Agustus 1945 Surabaya",

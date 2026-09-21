@@ -11,6 +11,18 @@ const About = () => {
   const { isDarkMode } = useTheme();
   const { t } = useTranslation();
   const [openIndex, setOpenIndex] = useState(null);
+  const [mousePos, setMousePos] = useState({});
+
+  const handleMouseMove = (id, e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    setMousePos((prev) => ({
+      ...prev,
+      [id]: {
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top,
+      },
+    }));
+  };
 
   const toggleAccordion = (index) => {
     setOpenIndex(openIndex === index ? null : index);
@@ -102,21 +114,24 @@ const About = () => {
           {t("aboutSubtitle")}
         </p>
 
-        <div className="mt-8 hairline-divider"></div>
+       
       </div>
 
       <div className="flex flex-col gap-12 max-w-5xl">
         {/* Section 01: Biography / Who I Am */}
         <div>
-          <div className="flex items-center gap-3 mb-4">
-            <span className={`font-mono text-xs tracking-wider font-semibold ${
-              isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"
+          <div className="flex items-center gap-3 mb-5">
+            <div className={`w-2 h-2 rounded-full flex-shrink-0 ${
+              isDarkMode 
+                ? "bg-[#D4F933] shadow-[0_0_8px_rgba(212,249,51,0.6)]" 
+                : "bg-[#2D5204] shadow-[0_0_8px_rgba(45,82,4,0.4)]"
+            }`}></div>
+            <h2 className={`text-xl sm:text-2xl font-bold tracking-tight ${
+              isDarkMode ? "text-white" : "text-gray-900"
             }`}>
-              // 01
-            </span>
-            <span className="font-mono text-xs tracking-wider uppercase text-gray-500">
-              BIOGRAPHY
-            </span>
+              {t("aboutBiography")}
+            </h2>
+            <div className={`flex-1 h-[1px] ${isDarkMode ? "bg-white/[0.08]" : "bg-black/[0.08]"}`}></div>
           </div>
 
           <div
@@ -152,26 +167,42 @@ const About = () => {
 
         {/* Section 02: Education */}
         <div>
-          <div className="flex items-center gap-3 mb-4">
-            <span className={`font-mono text-xs tracking-wider font-semibold ${
-              isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"
+          <div className="flex items-center gap-3 mb-5">
+            <div className={`w-2 h-2 rounded-full flex-shrink-0 ${
+              isDarkMode 
+                ? "bg-[#D4F933] shadow-[0_0_8px_rgba(212,249,51,0.6)]" 
+                : "bg-[#2D5204] shadow-[0_0_8px_rgba(45,82,4,0.4)]"
+            }`}></div>
+            <h2 className={`text-xl sm:text-2xl font-bold tracking-tight ${
+              isDarkMode ? "text-white" : "text-gray-900"
             }`}>
-              // 02
-            </span>
-            <span className="font-mono text-xs tracking-wider uppercase text-gray-500">
-              ACADEMIC CREDENTIAL
-            </span>
+              {t("aboutEducation")}
+            </h2>
+            <div className={`flex-1 h-[1px] ${isDarkMode ? "bg-white/[0.08]" : "bg-black/[0.08]"}`}></div>
           </div>
 
           <div
-            className={`p-6 rounded-xl border flex flex-col sm:flex-row sm:items-center justify-between gap-6 ${
+            onMouseMove={(e) => handleMouseMove("edu", e)}
+            className={`relative p-6 rounded-xl border transition-all duration-300 flex flex-col sm:flex-row sm:items-center justify-between gap-6 group overflow-hidden ${
               isDarkMode
-                ? "bg-[#121216] border-white/[0.08]"
-                : "bg-white border-black/[0.08] shadow-sm"
-            }`}
+                ? "bg-[#121216] border-white/[0.08] hover:border-[#D4F933]/50 hover:shadow-[0_12px_32px_-8px_rgba(212,249,51,0.14)]"
+                : "bg-white border-black/[0.08] hover:border-[#2D5204]/60 hover:shadow-lg"
+            } hover:-translate-y-1`}
           >
-            <div className="flex items-center gap-4">
-              <div className="w-14 h-14 p-2 rounded-lg bg-white/[0.04] border border-white/[0.08] flex items-center justify-center flex-shrink-0">
+            {/* Interactive Spotlight Radial Light */}
+            <div
+              className="pointer-events-none absolute -inset-px rounded-xl opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+              style={{
+                background: isDarkMode
+                  ? `radial-gradient(400px circle at ${mousePos["edu"]?.x || 0}px ${mousePos["edu"]?.y || 0}px, rgba(212, 249, 51, 0.12), transparent 80%)`
+                  : `radial-gradient(400px circle at ${mousePos["edu"]?.x || 0}px ${mousePos["edu"]?.y || 0}px, rgba(45, 82, 4, 0.08), transparent 80%)`,
+              }}
+            />
+
+            <div className="relative z-10 flex items-center gap-4">
+              <div className={`w-14 h-14 p-2 rounded-lg border flex items-center justify-center flex-shrink-0 transition-transform duration-200 group-hover:scale-105 ${
+                isDarkMode ? "bg-white/[0.04] border-white/[0.08]" : "bg-black/[0.04] border-black/[0.08]"
+              }`}>
                 <img
                   src={untag}
                   alt="University Logo"
@@ -181,8 +212,8 @@ const About = () => {
 
               <div>
                 <h3
-                  className={`text-base sm:text-lg font-bold ${
-                    isDarkMode ? "text-white" : "text-gray-900"
+                  className={`text-base sm:text-lg font-bold tracking-tight transition-colors duration-200 ${
+                    isDarkMode ? "text-white group-hover:text-[#D4F933]" : "text-gray-900 group-hover:text-[#2D5204]"
                   }`}
                 >
                   {t("aboutEduMajor")}
@@ -193,7 +224,7 @@ const About = () => {
               </div>
             </div>
 
-            <div className={`font-mono text-xs px-3 py-1.5 rounded self-start sm:self-center font-semibold ${
+            <div className={`relative z-10 font-mono text-xs px-3 py-1.5 rounded self-start sm:self-center font-semibold tracking-wider ${
               isDarkMode 
                 ? "bg-[#D4F933]/10 border border-[#D4F933]/30 text-[#D4F933]" 
                 : "bg-[#0A0A0C] border border-black text-[#D4F933] shadow-xs"
@@ -205,31 +236,45 @@ const About = () => {
 
         {/* Section 03: Experience */}
         <div>
-          <div className="flex items-center gap-3 mb-4">
-            <span className={`font-mono text-xs tracking-wider font-semibold ${
-              isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"
+          <div className="flex items-center gap-3 mb-5">
+            <div className={`w-2 h-2 rounded-full flex-shrink-0 ${
+              isDarkMode 
+                ? "bg-[#D4F933] shadow-[0_0_8px_rgba(212,249,51,0.6)]" 
+                : "bg-[#2D5204] shadow-[0_0_8px_rgba(45,82,4,0.4)]"
+            }`}></div>
+            <h2 className={`text-xl sm:text-2xl font-bold tracking-tight ${
+              isDarkMode ? "text-white" : "text-gray-900"
             }`}>
-              // 03
-            </span>
-            <span className="font-mono text-xs tracking-wider uppercase text-gray-500">
-              PROFESSIONAL TRAJECTORY
-            </span>
+              {t("aboutExperience")}
+            </h2>
+            <div className={`flex-1 h-[1px] ${isDarkMode ? "bg-white/[0.08]" : "bg-black/[0.08]"}`}></div>
           </div>
 
           <div className="flex flex-col gap-4">
             {experienceData.map((exp, index) => (
               <div
                 key={index}
-                className={`rounded-xl border transition-all duration-200 overflow-hidden ${
+                onMouseMove={(e) => handleMouseMove(`exp-${index}`, e)}
+                className={`relative rounded-xl border transition-all duration-300 overflow-hidden group ${
                   isDarkMode
-                    ? "bg-[#121216] border-white/[0.08] hover:border-white/[0.16]"
-                    : "bg-white border-black/[0.08] hover:border-black/[0.16] shadow-sm"
-                }`}
+                    ? "bg-[#121216] border-white/[0.08] hover:border-[#D4F933]/50 hover:shadow-[0_12px_32px_-8px_rgba(212,249,51,0.12)]"
+                    : "bg-white border-black/[0.08] hover:border-[#2D5204]/60 hover:shadow-lg"
+                } hover:-translate-y-1`}
               >
-                <div className="p-6">
+                {/* Interactive Spotlight Radial Light */}
+                <div
+                  className="pointer-events-none absolute -inset-px rounded-xl opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                  style={{
+                    background: isDarkMode
+                      ? `radial-gradient(450px circle at ${mousePos[`exp-${index}`]?.x || 0}px ${mousePos[`exp-${index}`]?.y || 0}px, rgba(212, 249, 51, 0.12), transparent 80%)`
+                      : `radial-gradient(450px circle at ${mousePos[`exp-${index}`]?.x || 0}px ${mousePos[`exp-${index}`]?.y || 0}px, rgba(45, 82, 4, 0.08), transparent 80%)`,
+                  }}
+                />
+
+                <div className="relative z-10 p-6">
                   <div className="flex flex-col sm:flex-row gap-5 items-start">
                     {/* Company Logo */}
-                    <div className={`w-14 h-14 rounded-lg overflow-hidden border p-1 flex-shrink-0 ${
+                    <div className={`w-14 h-14 rounded-lg overflow-hidden border p-1 flex-shrink-0 transition-transform duration-200 group-hover:scale-105 ${
                       isDarkMode ? "border-white/[0.1] bg-[#181920]" : "border-black/[0.1] bg-gray-50"
                     }`}>
                       <img
@@ -243,13 +288,13 @@ const About = () => {
                     <div className="flex-1 min-w-0">
                       <div className="flex flex-wrap items-center justify-between gap-2 mb-1">
                         <h3
-                          className={`text-base sm:text-lg font-bold tracking-tight ${
-                            isDarkMode ? "text-white" : "text-gray-900"
+                          className={`text-base sm:text-lg font-bold tracking-tight transition-colors duration-200 ${
+                            isDarkMode ? "text-white group-hover:text-[#D4F933]" : "text-gray-900 group-hover:text-[#2D5204]"
                           }`}
                         >
                           {exp.company}
                         </h3>
-                        <span className={`font-mono text-xs px-2.5 py-0.5 rounded font-semibold ${
+                        <span className={`font-mono text-xs px-2.5 py-0.5 rounded font-semibold tracking-wider ${
                           isDarkMode 
                             ? "bg-[#D4F933]/10 border border-[#D4F933]/30 text-[#D4F933]" 
                             : "bg-[#0A0A0C] border border-black text-[#D4F933] shadow-xs"
@@ -266,7 +311,7 @@ const About = () => {
                         {exp.role}
                       </p>
 
-                      {/* Accordion Content */}
+                      {/* Accordion Content with Staggered Fade-in */}
                       <div
                         className={`overflow-hidden transition-all duration-300 ease-in-out ${
                           openIndex === index
@@ -278,24 +323,33 @@ const About = () => {
                           {exp.description.map((item, i) => (
                             <li
                               key={i}
-                              className={`flex items-start gap-2.5 ${
-                                isDarkMode ? "text-gray-400" : "text-gray-600"
+                              style={{
+                                transitionDelay: openIndex === index ? `${i * 60}ms` : "0ms",
+                              }}
+                              className={`flex items-start gap-2.5 transition-all duration-300 ease-out transform ${
+                                openIndex === index
+                                  ? "opacity-100 translate-x-0"
+                                  : "opacity-0 -translate-x-3"
+                              } ${
+                                isDarkMode ? "text-gray-400 hover:text-gray-200" : "text-gray-600 hover:text-gray-900"
                               }`}
                             >
-                              <span className={`mt-0.5 ${isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"}`}>→</span>
+                              <span className={`mt-0.5 flex-shrink-0 transition-transform ${
+                                isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"
+                              }`}>→</span>
                               <span className="font-sans text-xs sm:text-sm">{item}</span>
                             </li>
                           ))}
                         </ul>
                       </div>
 
-                      {/* Expand / Collapse Button */}
+                      {/* Expand / Collapse Button with Micro-Rotation */}
                       <button
                         onClick={() => toggleAccordion(index)}
-                        className={`mt-4 px-3.5 py-2 rounded-lg font-mono text-xs font-semibold tracking-wider uppercase flex items-center gap-2 border transition-all ${
+                        className={`mt-4 px-3.5 py-2 rounded-lg font-mono text-xs font-semibold tracking-wider uppercase flex items-center gap-2 border transition-all duration-200 ${
                           isDarkMode
-                            ? "bg-[#181920] border-white/[0.1] text-gray-300 hover:text-white hover:border-[#D4F933]/50"
-                            : "bg-gray-100 border-black/[0.1] text-gray-700 hover:text-black hover:border-[#2D5204]"
+                            ? "bg-[#181920] border-white/[0.1] text-gray-300 hover:text-white hover:border-[#D4F933]/50 hover:bg-[#1f2129]"
+                            : "bg-gray-100 border-black/[0.1] text-gray-700 hover:text-black hover:border-[#2D5204] hover:bg-gray-200"
                         }`}
                       >
                         <span>
@@ -304,10 +358,10 @@ const About = () => {
                             : t("aboutShowResponsibilities")}
                         </span>
                         <i
-                          className={`fas fa-chevron-${
-                            openIndex === index ? "up" : "down"
-                          } text-[10px] transition-transform ${
-                            isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"
+                          className={`fas fa-chevron-down text-[10px] transition-transform duration-300 ease-out ${
+                            openIndex === index 
+                              ? "rotate-180 text-[#D4F933]" 
+                              : isDarkMode ? "text-gray-400" : "text-gray-500"
                           }`}
                         ></i>
                       </button>
