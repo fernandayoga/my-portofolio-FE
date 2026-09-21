@@ -9,17 +9,11 @@ const Achievements = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const { t } = useTranslation();
   const [filteredAchievements, setFilteredAchievements] = useState(achievements);
-  const [mousePos, setMousePos] = useState({});
 
-  const handleMouseMove = (id, e) => {
+  const handleMouseMove = (e) => {
     const rect = e.currentTarget.getBoundingClientRect();
-    setMousePos((prev) => ({
-      ...prev,
-      [id]: {
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top,
-      },
-    }));
+    e.currentTarget.style.setProperty("--mouse-x", `${e.clientX - rect.left}px`);
+    e.currentTarget.style.setProperty("--mouse-y", `${e.clientY - rect.top}px`);
   };
 
   useEffect(() => {
@@ -149,12 +143,12 @@ const Achievements = () => {
           onWheel={(e) => e.stopPropagation()}
         >
           <div
-            className="relative max-w-4xl w-full animate-modal-zoom"
+            className="relative inline-flex flex-col items-end max-w-[92vw] animate-modal-zoom"
             onClick={(e) => e.stopPropagation()}
           >
             <button
               onClick={() => setSelectedImage(null)}
-              className="group absolute -top-10 right-0 font-mono text-xs text-white/80 hover:text-[#D4F933] flex items-center gap-1.5 transition-colors"
+              className="group mb-2 font-mono text-xs text-white/80 hover:text-[#D4F933] flex items-center gap-1.5 transition-colors cursor-pointer"
             >
               <span className="tracking-wider">[ESC / CLOSE]</span>
               <span className="text-xl leading-none transition-transform duration-200 group-hover:rotate-90">&times;</span>
@@ -163,7 +157,7 @@ const Achievements = () => {
             <img
               src={selectedImage}
               alt="Certificate Preview"
-              className="w-full max-h-[82vh] object-contain rounded-xl border border-white/[0.15] shadow-2xl bg-black"
+              className="max-h-[82vh] max-w-full w-auto h-auto object-contain rounded-lg shadow-2xl"
             />
           </div>
         </div>
@@ -175,8 +169,8 @@ const Achievements = () => {
           <div
             key={achievement.id}
             onClick={() => setSelectedImage(achievement.image)}
-            onMouseMove={(e) => handleMouseMove(achievement.id, e)}
-            className={`group relative rounded-xl overflow-hidden border transition-all duration-300 cursor-pointer flex flex-col hover:-translate-y-1.5 ${
+            onMouseMove={handleMouseMove}
+            className={`group relative rounded-xl overflow-hidden border transition-all duration-300 cursor-pointer flex flex-col hover:-translate-y-1.5 [content-visibility:auto] [contain-intrinsic-size:380px] ${
               isDarkMode
                 ? "bg-[#121216] border-white/[0.08] hover:border-[#D4F933]/50 hover:shadow-[0_12px_32px_-8px_rgba(212,249,51,0.12)]"
                 : "bg-white border-black/[0.08] hover:border-[#2D5204]/60 hover:shadow-xl"
@@ -187,8 +181,8 @@ const Achievements = () => {
               className="pointer-events-none absolute -inset-px rounded-xl opacity-0 transition-opacity duration-300 group-hover:opacity-100 z-10"
               style={{
                 background: isDarkMode
-                  ? `radial-gradient(350px circle at ${mousePos[achievement.id]?.x || 0}px ${mousePos[achievement.id]?.y || 0}px, rgba(212, 249, 51, 0.12), transparent 80%)`
-                  : `radial-gradient(350px circle at ${mousePos[achievement.id]?.x || 0}px ${mousePos[achievement.id]?.y || 0}px, rgba(45, 82, 4, 0.08), transparent 80%)`,
+                  ? "radial-gradient(350px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(212, 249, 51, 0.12), transparent 80%)"
+                  : "radial-gradient(350px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(45, 82, 4, 0.08), transparent 80%)",
               }}
             />
 
@@ -196,7 +190,9 @@ const Achievements = () => {
               <img
                 src={achievement.image}
                 alt={achievement.title}
-                loading="lazy"
+                loading={idx < 3 ? "eager" : "lazy"}
+                decoding="async"
+                fetchPriority={idx < 3 ? "high" : "low"}
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
 

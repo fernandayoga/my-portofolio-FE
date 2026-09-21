@@ -11,17 +11,11 @@ const About = () => {
   const { isDarkMode } = useTheme();
   const { t } = useTranslation();
   const [openIndex, setOpenIndex] = useState(null);
-  const [mousePos, setMousePos] = useState({});
 
-  const handleMouseMove = (id, e) => {
+  const handleMouseMove = (e) => {
     const rect = e.currentTarget.getBoundingClientRect();
-    setMousePos((prev) => ({
-      ...prev,
-      [id]: {
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top,
-      },
-    }));
+    e.currentTarget.style.setProperty("--mouse-x", `${e.clientX - rect.left}px`);
+    e.currentTarget.style.setProperty("--mouse-y", `${e.clientY - rect.top}px`);
   };
 
   const toggleAccordion = (index) => {
@@ -135,33 +129,46 @@ const About = () => {
           </div>
 
           <div
-            className={`p-6 sm:p-8 rounded-xl border border-l-4 ${
+            onMouseMove={handleMouseMove}
+            className={`relative p-6 sm:p-8 rounded-xl border border-l-4 transition-all duration-300 group overflow-hidden hover:-translate-y-1 ${
               isDarkMode
-                ? "bg-[#121216] border-white/[0.08] border-l-[#D4F933]"
-                : "bg-white border-black/[0.08] border-l-[#2D5204] shadow-sm"
+                ? "bg-[#121216] border-white/[0.08] border-l-[#D4F933] hover:border-[#D4F933]/50 hover:border-l-[#D4F933] hover:shadow-[0_12px_32px_-8px_rgba(212,249,51,0.12)]"
+                : "bg-white border-black/[0.08] border-l-[#2D5204] hover:border-[#2D5204]/60 hover:border-l-[#2D5204] hover:shadow-lg"
             }`}
           >
-            <p
-              className={`leading-relaxed mb-4 text-justify hyphens-auto text-sm sm:text-base ${
-                isDarkMode ? "text-gray-300" : "text-gray-700"
-              }`}
-            >
-              {t("aboutPara1")}
-            </p>
-            <p
-              className={`leading-relaxed mb-4 text-justify hyphens-auto text-sm sm:text-base ${
-                isDarkMode ? "text-gray-300" : "text-gray-700"
-              }`}
-            >
-              {t("aboutPara2")}
-            </p>
-            <p
-              className={`leading-relaxed text-justify hyphens-auto text-sm sm:text-base ${
-                isDarkMode ? "text-gray-300" : "text-gray-700"
-              }`}
-            >
-              {t("aboutPara3")}
-            </p>
+            {/* Interactive Spotlight Radial Light */}
+            <div
+              className="pointer-events-none absolute -inset-px rounded-xl opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+              style={{
+                background: isDarkMode
+                  ? "radial-gradient(450px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(212, 249, 51, 0.12), transparent 80%)"
+                  : "radial-gradient(450px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(45, 82, 4, 0.08), transparent 80%)",
+              }}
+            />
+
+            <div className="relative z-10">
+              <p
+                className={`leading-relaxed mb-4 text-justify hyphens-auto text-sm sm:text-base ${
+                  isDarkMode ? "text-gray-300" : "text-gray-700"
+                }`}
+              >
+                {t("aboutPara1")}
+              </p>
+              <p
+                className={`leading-relaxed mb-4 text-justify hyphens-auto text-sm sm:text-base ${
+                  isDarkMode ? "text-gray-300" : "text-gray-700"
+                }`}
+              >
+                {t("aboutPara2")}
+              </p>
+              <p
+                className={`leading-relaxed text-justify hyphens-auto text-sm sm:text-base ${
+                  isDarkMode ? "text-gray-300" : "text-gray-700"
+                }`}
+              >
+                {t("aboutPara3")}
+              </p>
+            </div>
           </div>
         </div>
 
@@ -182,7 +189,7 @@ const About = () => {
           </div>
 
           <div
-            onMouseMove={(e) => handleMouseMove("edu", e)}
+            onMouseMove={handleMouseMove}
             className={`relative p-6 rounded-xl border transition-all duration-300 flex flex-col sm:flex-row sm:items-center justify-between gap-6 group overflow-hidden ${
               isDarkMode
                 ? "bg-[#121216] border-white/[0.08] hover:border-[#D4F933]/50 hover:shadow-[0_12px_32px_-8px_rgba(212,249,51,0.14)]"
@@ -194,8 +201,8 @@ const About = () => {
               className="pointer-events-none absolute -inset-px rounded-xl opacity-0 transition-opacity duration-300 group-hover:opacity-100"
               style={{
                 background: isDarkMode
-                  ? `radial-gradient(400px circle at ${mousePos["edu"]?.x || 0}px ${mousePos["edu"]?.y || 0}px, rgba(212, 249, 51, 0.12), transparent 80%)`
-                  : `radial-gradient(400px circle at ${mousePos["edu"]?.x || 0}px ${mousePos["edu"]?.y || 0}px, rgba(45, 82, 4, 0.08), transparent 80%)`,
+                  ? "radial-gradient(400px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(212, 249, 51, 0.12), transparent 80%)"
+                  : "radial-gradient(400px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(45, 82, 4, 0.08), transparent 80%)",
               }}
             />
 
@@ -254,7 +261,7 @@ const About = () => {
             {experienceData.map((exp, index) => (
               <div
                 key={index}
-                onMouseMove={(e) => handleMouseMove(`exp-${index}`, e)}
+                onMouseMove={handleMouseMove}
                 className={`relative rounded-xl border transition-all duration-300 overflow-hidden group ${
                   isDarkMode
                     ? "bg-[#121216] border-white/[0.08] hover:border-[#D4F933]/50 hover:shadow-[0_12px_32px_-8px_rgba(212,249,51,0.12)]"
@@ -266,8 +273,8 @@ const About = () => {
                   className="pointer-events-none absolute -inset-px rounded-xl opacity-0 transition-opacity duration-300 group-hover:opacity-100"
                   style={{
                     background: isDarkMode
-                      ? `radial-gradient(450px circle at ${mousePos[`exp-${index}`]?.x || 0}px ${mousePos[`exp-${index}`]?.y || 0}px, rgba(212, 249, 51, 0.12), transparent 80%)`
-                      : `radial-gradient(450px circle at ${mousePos[`exp-${index}`]?.x || 0}px ${mousePos[`exp-${index}`]?.y || 0}px, rgba(45, 82, 4, 0.08), transparent 80%)`,
+                      ? "radial-gradient(450px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(212, 249, 51, 0.12), transparent 80%)"
+                      : "radial-gradient(450px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(45, 82, 4, 0.08), transparent 80%)",
                   }}
                 />
 

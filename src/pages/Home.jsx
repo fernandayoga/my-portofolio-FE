@@ -25,8 +25,8 @@ const Home = () => {
 
   const daftarText = [
     "Fullstack Developer",
-    "Web Developer",
-    "Mobile Developer",
+    "Software Engineer",
+    "AI Integration Enthusiast",
   ];
   const fullText = daftarText[indexText]; 
 
@@ -287,9 +287,7 @@ const Home = () => {
               isDarkMode ? "text-white" : "text-gray-900"
             }`}
           >
-            <span className={`font-mono ${isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"}`}>
-              //
-            </span>
+           
             <span>{t("skills")}</span>
           </h2>
           
@@ -426,9 +424,7 @@ const Home = () => {
               isDarkMode ? "text-white" : "text-gray-900"
             }`}
           >
-            <span className={`font-mono ${isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"}`}>
-              //
-            </span>
+           
             <span>{t("features")}</span>
           </h2>
           
