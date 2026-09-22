@@ -18,6 +18,10 @@ export const financeTracker = {
       id: "Aplikasi web keuangan pribadi yang dibangun dengan React dan Express. Dilengkapi fitur pelacakan pendapatan & pengeluaran, visualisasi analitik pengeluaran, dan wawasan keuangan bertenaga AI dalam satu aplikasi."
     },
     category: "web",
+    categoryLabel: { en: "Web Application", id: "Aplikasi Web" },
+    role: { en: "Fullstack Developer", id: "Fullstack Developer" },
+    deployment: "Vercel Cloud",
+    status: { en: "Production", id: "Produksi" },
     mainImage: FinanceTrackerMain,
     etalase: etalaseFinance,
 

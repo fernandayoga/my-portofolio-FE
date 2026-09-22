@@ -19,6 +19,10 @@ export const ramadhanApp = {
       id: "Aplikasi web Ramadhan yang dibangun dengan React menggunakan pendekatan offline-first. Jadwal shalat, Al-Qur'an, arah Kiblat, pelacak ibadah, dan jurnal puasa dalam satu aplikasi."
     },
     category: "web",
+    categoryLabel: { en: "Web Application", id: "Aplikasi Web" },
+    role: { en: "Frontend Developer", id: "Frontend Developer" },
+    deployment: "Vercel Cloud",
+    status: { en: "Production", id: "Produksi" },
     mainImage: mainImageRamadhan,
     etalase: EtalaseRmdhn,
 

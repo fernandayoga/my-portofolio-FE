@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { useTheme } from "../context/ThemeContext";
 import { projects } from "../data/dataProject";
 import { useTranslation } from "react-i18next";
@@ -182,32 +183,38 @@ const Projects = () => {
       </div>
 
       {/* Image Zoom Modal with Smooth Scale Animation */}
-      {zoomedImage && (
-        <div
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-4 sm:p-6 backdrop-blur-md animate-backdrop-fade overscroll-contain touch-none select-none"
-          onClick={() => setZoomedImage(null)}
-          onWheel={(e) => e.stopPropagation()}
-        >
+      {zoomedImage &&
+        createPortal(
           <div
-            className="relative inline-flex flex-col items-end max-w-[92vw] animate-modal-zoom"
-            onClick={(e) => e.stopPropagation()}
+            className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/95 p-4 sm:p-6 md:p-8 backdrop-blur-md animate-backdrop-fade select-none"
+            onClick={() => setZoomedImage(null)}
+            onWheel={(e) => e.stopPropagation()}
           >
-            <button
-              onClick={() => setZoomedImage(null)}
-              className="group mb-2 font-mono text-xs text-white/80 hover:text-[#D4F933] flex items-center gap-1.5 transition-colors cursor-pointer"
+            <div
+              className="relative flex flex-col items-center max-w-[92vw] max-h-[92vh] animate-modal-zoom"
+              onClick={(e) => e.stopPropagation()}
             >
-              <span className="tracking-wider">[ESC / CLOSE]</span>
-              <span className="text-xl leading-none transition-transform duration-200 group-hover:rotate-90">&times;</span>
-            </button>
-            <img
-              src={zoomedImage}
-              alt="Zoomed Project"
-              decoding="async"
-              className="max-h-[85vh] max-w-full w-auto h-auto object-contain rounded-lg shadow-2xl cursor-default"
-            />
-          </div>
-        </div>
-      )}
+              <div className="w-full flex justify-end mb-2.5">
+                <button
+                  onClick={() => setZoomedImage(null)}
+                  className="group flex items-center gap-2 text-gray-300 hover:text-black hover:bg-[#D4F933] transition-all duration-200 cursor-pointer px-3 py-1 rounded-md bg-[#121216] border border-white/[0.15] hover:border-[#D4F933] hover:shadow-[0_0_16px_rgba(212,249,51,0.3)]"
+                >
+                  <span className="tracking-wider text-[11px] font-semibold">[ESC / CLOSE]</span>
+                  <span className="text-lg leading-none transition-transform duration-200 group-hover:rotate-90">&times;</span>
+                </button>
+              </div>
+              <div className="relative flex items-center justify-center overflow-hidden rounded-xl border-2 border-[#D4F933]/60 shadow-[0_0_40px_rgba(212,249,51,0.22)] bg-[#0E0E12]">
+                <img
+                  src={zoomedImage}
+                  alt="Zoomed Project"
+                  decoding="async"
+                  className="max-h-[75vh] max-w-[88vw] w-auto h-auto object-contain rounded-lg shadow-2xl cursor-default"
+                />
+              </div>
+            </div>
+          </div>,
+          document.body
+        )}
     </div>
   );
 };

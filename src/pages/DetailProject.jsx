@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useTheme } from "../context/ThemeContext";
 import { useTranslation } from "react-i18next";
@@ -164,12 +165,12 @@ const DetailProject = () => {
             <div className={`font-mono text-[10px] uppercase tracking-wider mb-1 ${
               isDarkMode ? "text-gray-400" : "text-gray-500"
             }`}>
-              // CATEGORY
+              {t("categoryLabel", "CATEGORY")}
             </div>
             <div className={`font-mono text-xs sm:text-sm font-bold uppercase truncate ${
               isDarkMode ? "text-white" : "text-gray-900"
             }`}>
-              {project.category || "WEB APPLICATION"}
+              {project.categoryLabel ? getLoc(project.categoryLabel) : (project.category || "WEB APPLICATION")}
             </div>
           </div>
 
@@ -177,12 +178,12 @@ const DetailProject = () => {
             <div className={`font-mono text-[10px] uppercase tracking-wider mb-1 ${
               isDarkMode ? "text-gray-400" : "text-gray-500"
             }`}>
-              // ROLE
+              {t("roleLabel", "ROLE")}
             </div>
             <div className={`font-mono text-xs sm:text-sm font-bold uppercase truncate ${
               isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"
             }`}>
-              FULLSTACK DEV
+              {project.role ? getLoc(project.role) : "FULLSTACK DEV"}
             </div>
           </div>
 
@@ -190,12 +191,12 @@ const DetailProject = () => {
             <div className={`font-mono text-[10px] uppercase tracking-wider mb-1 ${
               isDarkMode ? "text-gray-400" : "text-gray-500"
             }`}>
-              // DEPLOYMENT
+              {t("deploymentLabel", "DEPLOYMENT")}
             </div>
             <div className={`font-mono text-xs sm:text-sm font-bold uppercase truncate ${
               isDarkMode ? "text-white" : "text-gray-900"
             }`}>
-              VERCEL CLOUD
+              {project.deployment ? getLoc(project.deployment) : "VERCEL CLOUD"}
             </div>
           </div>
 
@@ -203,11 +204,14 @@ const DetailProject = () => {
             <div className={`font-mono text-[10px] uppercase tracking-wider mb-1 ${
               isDarkMode ? "text-gray-400" : "text-gray-500"
             }`}>
-              // STATUS
+              {t("statusLabel", "STATUS")}
             </div>
-            <div className="font-mono text-xs sm:text-sm font-bold uppercase truncate text-emerald-500 flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span>
-              <span>PRODUCTION</span>
+            <div className="font-mono text-xs sm:text-sm font-bold uppercase truncate text-emerald-500 flex items-center gap-2">
+              <span className="relative flex h-2 w-2 flex-shrink-0">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+              </span>
+              <span className="truncate">{project.status ? getLoc(project.status) : "PRODUCTION"}</span>
             </div>
           </div>
         </div>
@@ -325,7 +329,7 @@ const DetailProject = () => {
 
               {/* Status Badge */}
               <div className="flex items-center gap-1.5 font-mono text-[10px] text-emerald-500 font-semibold">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse flex-shrink-0"></span>
                 <span className="hidden sm:inline">ONLINE</span>
               </div>
             </div>
@@ -635,98 +639,79 @@ const DetailProject = () => {
       </div>
 
       {/* Lightbox Modal for Gallery & Hero */}
-      {(activeImage !== null || heroZoom) && (
-        <div
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-4 sm:p-6 backdrop-blur-md animate-backdrop-fade overscroll-contain touch-none select-none"
-          onClick={() => {
-            setActiveImage(null);
-            setHeroZoom(false);
-          }}
-          onWheel={(e) => e.stopPropagation()}
-        >
-          {/* Floating Left Button (only when multiple gallery images) */}
-          {activeImage !== null && project.gallery && project.gallery.length > 1 && (
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                setActiveImage((prev) => (prev > 0 ? prev - 1 : project.gallery.length - 1));
-              }}
-              className="absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-black/70 hover:bg-[#D4F933] hover:text-black text-white border border-white/[0.2] flex items-center justify-center transition-all cursor-pointer shadow-2xl backdrop-blur-sm"
-              title="Previous Image (←)"
-            >
-              <i className="fas fa-chevron-left text-sm"></i>
-            </button>
-          )}
-
-          {/* Floating Right Button (only when multiple gallery images) */}
-          {activeImage !== null && project.gallery && project.gallery.length > 1 && (
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                setActiveImage((prev) => (prev < project.gallery.length - 1 ? prev + 1 : 0));
-              }}
-              className="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-black/70 hover:bg-[#D4F933] hover:text-black text-white border border-white/[0.2] flex items-center justify-center transition-all cursor-pointer shadow-2xl backdrop-blur-sm"
-              title="Next Image (→)"
-            >
-              <i className="fas fa-chevron-right text-sm"></i>
-            </button>
-          )}
-
+      {(activeImage !== null || heroZoom) &&
+        createPortal(
           <div
-            className="relative inline-flex flex-col items-end max-w-[92vw] animate-modal-zoom"
-            onClick={(e) => e.stopPropagation()}
+            className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/95 p-4 sm:p-6 md:p-8 backdrop-blur-md animate-backdrop-fade select-none"
+            onClick={() => {
+              setActiveImage(null);
+              setHeroZoom(false);
+            }}
+            onWheel={(e) => e.stopPropagation()}
           >
-            {/* Modal Controls Header */}
-            <div className="w-full flex items-center justify-between mb-2.5 font-mono text-xs text-white/80">
-              {activeImage !== null && project.gallery ? (
-                <span className="text-[#D4F933] font-semibold tracking-wider">
-                  [ {activeImage + 1} / {project.gallery.length} ]
-                </span>
-              ) : (
-                <span className="text-[#D4F933] font-semibold tracking-wider">
-                  [ MAIN ARTIFACT PREVIEW ]
-                </span>
-              )}
+            <div
+              className="relative flex flex-col items-center max-w-[92vw] max-h-[92vh] animate-modal-zoom"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Modal Controls Header */}
+              <div className="w-full flex items-center justify-between mb-3 font-mono text-xs text-white/80">
+                {activeImage !== null && project.gallery ? (
+                  <span className="text-[#D4F933] font-semibold tracking-wider flex items-center gap-1.5 bg-[#121216] px-3 py-1 rounded-md border border-white/[0.1]">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#D4F933] animate-ping"></span>
+                    <span>[ {activeImage + 1} / {project.gallery.length} ]</span>
+                  </span>
+                ) : (
+                  <span className="text-[#D4F933] font-semibold tracking-wider flex items-center gap-1.5 bg-[#121216] px-3 py-1 rounded-md border border-white/[0.1]">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#D4F933] animate-ping"></span>
+                    <span>[ MAIN ARTIFACT PREVIEW ]</span>
+                  </span>
+                )}
 
-              <button
-                onClick={() => {
-                  setActiveImage(null);
-                  setHeroZoom(false);
-                }}
-                className="group flex items-center gap-1.5 hover:text-[#D4F933] transition-colors cursor-pointer"
-              >
-                <span className="tracking-wider">[ESC / CLOSE]</span>
-                <span className="text-xl leading-none transition-transform duration-200 group-hover:rotate-90">&times;</span>
-              </button>
-            </div>
-
-            {/* Displayed Image */}
-            <img
-              src={
-                heroZoom
-                  ? project.mainImage || project.etalase
-                  : project.gallery[activeImage].src
-              }
-              alt={
-                heroZoom
-                  ? getLoc(project.title)
-                  : getLoc(project.gallery[activeImage].alt)
-              }
-              decoding="async"
-              className="max-h-[75vh] max-w-full w-auto h-auto object-contain rounded-lg shadow-2xl cursor-default border border-white/[0.12]"
-            />
-
-            {/* Caption bar for gallery items */}
-            {activeImage !== null && project.gallery && project.gallery[activeImage]?.caption && (
-              <div className="w-full mt-3 p-3 rounded-lg bg-black/80 border border-white/[0.1] text-center">
-                <p className="text-xs sm:text-sm font-mono text-gray-300">
-                  {getLoc(project.gallery[activeImage].caption)}
-                </p>
+                <button
+                  onClick={() => {
+                    setActiveImage(null);
+                    setHeroZoom(false);
+                  }}
+                  className="group flex items-center gap-2 text-gray-300 hover:text-black hover:bg-[#D4F933] transition-all duration-200 cursor-pointer px-3 py-1 rounded-md bg-[#121216] border border-white/[0.15] hover:border-[#D4F933] hover:shadow-[0_0_16px_rgba(212,249,51,0.3)]"
+                >
+                  <span className="tracking-wider text-[11px] font-semibold">[ESC / CLOSE]</span>
+                  <span className="text-lg leading-none transition-transform duration-200 group-hover:rotate-90">&times;</span>
+                </button>
               </div>
-            )}
-          </div>
-        </div>
-      )}
+
+              {/* Displayed Image Container with Bold Cyber Lime Border & Ambient Glow */}
+              <div className="relative flex items-center justify-center overflow-hidden rounded-xl border-2 border-[#D4F933]/60 shadow-[0_0_40px_rgba(212,249,51,0.22)] bg-[#0E0E12]">
+                <img
+                  src={
+                    heroZoom
+                      ? project.mainImage || project.etalase
+                      : project.gallery[activeImage].src
+                  }
+                  alt={
+                    heroZoom
+                      ? getLoc(project.title)
+                      : getLoc(project.gallery[activeImage].alt)
+                  }
+                  decoding="async"
+                  className="max-h-[66vh] sm:max-h-[70vh] max-w-[86vw] w-auto h-auto object-contain rounded-lg"
+                />
+              </div>
+
+              {/* Caption bar for gallery items — High Contrast Colored Card */}
+              {activeImage !== null && project.gallery && project.gallery[activeImage]?.caption && (
+                <div className="w-full mt-3 px-5 py-3 rounded-xl bg-[#121216] border border-[#D4F933]/45 shadow-[0_8px_32px_rgba(0,0,0,0.8),0_0_24px_rgba(212,249,51,0.14)] text-center backdrop-blur-md">
+                  <div className="flex items-center justify-center gap-2.5">
+                    <span className="w-2 h-2 rounded-full bg-[#D4F933] flex-shrink-0 animate-pulse"></span>
+                    <p className="text-xs sm:text-sm font-mono text-white font-medium tracking-wide">
+                      {getLoc(project.gallery[activeImage].caption)}
+                    </p>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>,
+          document.body
+        )}
     </div>
   );
 };

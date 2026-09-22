@@ -19,6 +19,10 @@ export const umkmPos = {
     id: "Aplikasi web Point of Sale (POS) dan manajemen inventori full-stack modern untuk UMKM ritel, dilengkapi asisten bisnis AI, upload foto produk Cloudinary, dan laporan keuangan real-time."
   },
   category: "web",
+  categoryLabel: { en: "POS Web System", id: "Sistem Web POS" },
+  role: { en: "Fullstack Developer", id: "Fullstack Developer" },
+  deployment: "Vercel Cloud",
+  status: { en: "Production", id: "Produksi" },
   mainImage: UmkmPosMain,
   etalase: etalaseUmkmPos,
   technologies: [

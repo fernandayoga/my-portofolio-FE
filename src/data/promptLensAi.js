@@ -12,6 +12,10 @@ export const promptLensAi = {
     id: "Aplikasi web full-stack yang mengubah gambar referensi apa pun menjadi prompt pembuatan gambar AI yang terperinci dan siap pakai menggunakan model visi OpenRouter — dengan kontrol mode dan tingkat detail, analisis visual, dan ekspor sekali klik."
   },
   category: "web",
+  categoryLabel: { en: "AI Vision Tool", id: "Alat AI Vision" },
+  role: { en: "Fullstack Developer", id: "Fullstack Developer" },
+  deployment: "Vercel Cloud",
+  status: { en: "Production", id: "Produksi" },
   mainImage: PromptLensMain,
   etalase: etalasePromptLens,
   technologies: [

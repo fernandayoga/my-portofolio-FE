@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { useTheme } from "../context/ThemeContext";
 import { achievements } from "../data/dataAchivment.js";
 import { useTranslation } from "react-i18next";
@@ -136,32 +137,39 @@ const Achievements = () => {
       </div>
 
       {/* Zoom Modal with Smooth Scale Animation */}
-      {selectedImage && (
-        <div
-          className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 animate-backdrop-fade overscroll-contain touch-none select-none"
-          onClick={() => setSelectedImage(null)}
-          onWheel={(e) => e.stopPropagation()}
-        >
+      {selectedImage &&
+        createPortal(
           <div
-            className="relative inline-flex flex-col items-end max-w-[92vw] animate-modal-zoom"
-            onClick={(e) => e.stopPropagation()}
+            className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/95 p-4 sm:p-6 md:p-8 backdrop-blur-md animate-backdrop-fade select-none"
+            onClick={() => setSelectedImage(null)}
+            onWheel={(e) => e.stopPropagation()}
           >
-            <button
-              onClick={() => setSelectedImage(null)}
-              className="group mb-2 font-mono text-xs text-white/80 hover:text-[#D4F933] flex items-center gap-1.5 transition-colors cursor-pointer"
+            <div
+              className="relative flex flex-col items-center max-w-[92vw] max-h-[92vh] animate-modal-zoom"
+              onClick={(e) => e.stopPropagation()}
             >
-              <span className="tracking-wider">[ESC / CLOSE]</span>
-              <span className="text-xl leading-none transition-transform duration-200 group-hover:rotate-90">&times;</span>
-            </button>
+              <div className="w-full flex justify-end mb-2.5">
+                <button
+                  onClick={() => setSelectedImage(null)}
+                  className="group flex items-center gap-2 text-gray-300 hover:text-black hover:bg-[#D4F933] transition-all duration-200 cursor-pointer px-3 py-1 rounded-md bg-[#121216] border border-white/[0.15] hover:border-[#D4F933] hover:shadow-[0_0_16px_rgba(212,249,51,0.3)]"
+                >
+                  <span className="tracking-wider text-[11px] font-semibold">[ESC / CLOSE]</span>
+                  <span className="text-lg leading-none transition-transform duration-200 group-hover:rotate-90">&times;</span>
+                </button>
+              </div>
 
-            <img
-              src={selectedImage}
-              alt="Certificate Preview"
-              className="max-h-[82vh] max-w-full w-auto h-auto object-contain rounded-lg shadow-2xl"
-            />
-          </div>
-        </div>
-      )}
+              <div className="relative flex items-center justify-center overflow-hidden rounded-xl border-2 border-[#D4F933]/60 shadow-[0_0_40px_rgba(212,249,51,0.22)] bg-[#0E0E12]">
+                <img
+                  src={selectedImage}
+                  alt="Certificate Preview"
+                  decoding="async"
+                  className="max-h-[75vh] max-w-[88vw] w-auto h-auto object-contain rounded-lg shadow-2xl cursor-default"
+                />
+              </div>
+            </div>
+          </div>,
+          document.body
+        )}
 
       {/* Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

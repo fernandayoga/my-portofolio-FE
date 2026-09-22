@@ -14,6 +14,10 @@ export const aiTravelPlanner = {
     id: "Aplikasi web Next.js full-stack yang memanfaatkan AI generatif untuk menyusun itinerary perjalanan harian yang dipersonalisasi dan rincian anggaran secara instan."
   },
   category: "web",
+  categoryLabel: { en: "AI Travel App", id: "Aplikasi Travel AI" },
+  role: { en: "Fullstack Developer", id: "Fullstack Developer" },
+  deployment: "Vercel Cloud",
+  status: { en: "Production", id: "Produksi" },
   mainImage: AiTravelPlannerMain,
   etalase: etalaseAiTravelPlanner,
   technologies: [

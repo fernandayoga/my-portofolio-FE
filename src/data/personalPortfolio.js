@@ -21,6 +21,10 @@ export const personalPortfolio = {
       id: "Portofolio pribadi modern yang memamerkan proyek, analitik GitHub real-time, dan fitur interaktif dengan desain yang bersih dan responsif."
     },
     category: "web",
+    categoryLabel: { en: "Web Application", id: "Aplikasi Web" },
+    role: { en: "Fullstack Developer", id: "Fullstack Developer" },
+    deployment: "Vercel Cloud",
+    status: { en: "Production", id: "Produksi" },
     mainImage: mainImagePort,
     etalase: etalasePorto,
 

@@ -17,6 +17,10 @@ export const aiStudyPlanner = {
     id: "Aplikasi web Next.js full-stack yang memanfaatkan AI untuk menghasilkan peta jalan studi harian yang dipersonalisasi dan secara otomatis menyusun tutorial video YouTube untuk setiap tugas."
   },
   category: "web",
+  categoryLabel: { en: "AI Web Application", id: "Aplikasi Web AI" },
+  role: { en: "Fullstack Developer", id: "Fullstack Developer" },
+  deployment: "Vercel Cloud",
+  status: { en: "Production", id: "Produksi" },
   mainImage: AiStudyPlannerMain,
   etalase: etalaseAiStudyPlanner,
   technologies: [

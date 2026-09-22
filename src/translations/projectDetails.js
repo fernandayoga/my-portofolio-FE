@@ -6,14 +6,16 @@ export const projectDetailsTranslations = {
         sourceCode: "Source Code",
         livePreview: "Live Preview",
         introduction: "Introduction",
-        techStak: "Tech Stak",
+        techStak: "Tech Stack",
         keyFeatures: "Key Features",
         viewAllProjects: "View All Projects",
-
+        categoryLabel: "CATEGORY",
+        roleLabel: "ROLE",
+        deploymentLabel: "DEPLOYMENT",
+        statusLabel: "STATUS",
 
         //project 1
         subDeskripsi1 : "Modern e-commerce platform for perfume shopping with advanced filtering and payment integration.",
-        
     },
     id: {
         backButton: "Kembali Ke Proyek",
@@ -23,7 +25,11 @@ export const projectDetailsTranslations = {
         techStak: "Teknologi",
         keyFeatures: "Fitur Utama",
         viewAllProjects: "Lihat Semua Proyek",
-        
+        categoryLabel: "KATEGORI",
+        roleLabel: "PERAN",
+        deploymentLabel: "DEPLOYMENT",
+        statusLabel: "STATUS",
+
         //project 1
         subDeskripsi1 : "Platform e-commerce modern untuk belanja parfum dengan filtering dan integrasi pembayaran yang canggih.",
     },
