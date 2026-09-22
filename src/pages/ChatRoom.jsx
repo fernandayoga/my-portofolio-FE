@@ -373,7 +373,7 @@ const ChatRoom = () => {
     )}&background=D4F933&color=000&bold=true&size=128`;
   };
 
-  // Date Label Helper (Today, Yesterday, or Date with Year)
+  // Date Label Helper (Today, Yesterday, or Short Date)
   const getDateLabel = (timestamp) => {
     if (!timestamp) return "";
     const messageDate = new Date(timestamp);
@@ -396,7 +396,6 @@ const ChatRoom = () => {
     return messageDate.toLocaleDateString(undefined, {
       day: "numeric",
       month: "short",
-      year: "numeric",
     });
   };
 
