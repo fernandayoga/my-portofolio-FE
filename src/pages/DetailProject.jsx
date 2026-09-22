@@ -16,7 +16,6 @@ const DetailProject = () => {
   const [project, setProject] = useState(() => getProjectById(id));
   const [activeImage, setActiveImage] = useState(null);
   const [heroZoom, setHeroZoom] = useState(false);
-  const [copied, setCopied] = useState(false);
 
   // Compute previous and next project for seamless navigation
   const currentIndex = projects.findIndex((p) => p.id === id);
@@ -35,7 +34,6 @@ const DetailProject = () => {
     setProject(projectData);
     setActiveImage(null);
     setHeroZoom(false);
-    setCopied(false);
   }, [id, navigate]);
 
   // Lock body scroll and handle keyboard navigation for modal (ESC, Arrow Left/Right)
@@ -70,12 +68,6 @@ const DetailProject = () => {
       document.body.style.overflow = "";
     }
   }, [activeImage, heroZoom, project]);
-
-  const handleCopyLink = () => {
-    navigator.clipboard.writeText(window.location.href);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
 
   if (!project) {
     return (
@@ -121,11 +113,11 @@ const DetailProject = () => {
   };
 
   return (
-    <div className="min-h-screen py-8 pt-20 xl:pt-8 max-w-5xl animate-backdrop-fade">
+    <div key={id} className="min-h-screen py-8 pt-20 xl:pt-8 max-w-5xl">
       {/* Back to Projects Action */}
       <Link
         to="/projects"
-        className={`inline-flex items-center gap-2 mb-8 font-mono text-xs font-semibold tracking-wider uppercase transition-colors ${
+        className={`inline-flex items-center gap-2 mb-8 font-mono text-xs font-semibold tracking-wider uppercase transition-colors animate-fade-in-up ${
           isDarkMode
             ? "text-gray-400 hover:text-[#D4F933]"
             : "text-gray-600 hover:text-black"
@@ -136,7 +128,7 @@ const DetailProject = () => {
       </Link>
 
       {/* Case Study Header Banner */}
-      <div className="mb-12">
+      <div className="mb-12 animate-fade-in-up animation-delay-75">
         <h1
           className={`text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight mb-4 ${
             isDarkMode ? "text-white" : "text-gray-900"
@@ -240,14 +232,17 @@ const DetailProject = () => {
               href={project.liveDemo}
               target="_blank"
               rel="noopener noreferrer"
-              className={`flex items-center gap-2 px-5 py-3 rounded-lg font-mono text-xs font-bold uppercase tracking-wider transition-all shadow-md cursor-pointer select-none ${
+              className={`group/btn relative overflow-hidden flex items-center gap-2 px-5 py-3 rounded-lg font-mono text-xs font-bold uppercase tracking-wider transition-all duration-300 shadow-md hover:-translate-y-0.5 active:translate-y-0 cursor-pointer select-none ${
                 isDarkMode
-                  ? "bg-[#D4F933] hover:bg-[#bce615] text-black shadow-[0_0_20px_rgba(212,249,51,0.25)]"
-                  : "bg-[#0A0A0C] hover:bg-black text-[#D4F933] border border-black shadow-lg"
+                  ? "bg-[#D4F933] hover:bg-[#cbf522] text-black shadow-[0_0_20px_rgba(212,249,51,0.25)] hover:shadow-[0_0_32px_rgba(212,249,51,0.5)]"
+                  : "bg-[#0A0A0C] hover:bg-black text-[#D4F933] border border-black shadow-lg hover:shadow-xl"
               }`}
             >
-              <i className="fas fa-external-link-alt text-xs"></i>
-              <span>{t("livePreview")}</span>
+              {/* Holographic Light Sheen Sweep */}
+              <div className="pointer-events-none absolute inset-0 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700 ease-out z-10 bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-[-20deg]" />
+
+              <i className="fas fa-external-link-alt text-xs transition-transform duration-300 ease-out group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 relative z-20"></i>
+              <span className="relative z-20">{t("livePreview")}</span>
             </a>
           )}
 
@@ -256,33 +251,19 @@ const DetailProject = () => {
               href={project.sourceCode}
               target="_blank"
               rel="noopener noreferrer"
-              className={`flex items-center gap-2 px-5 py-3 rounded-lg font-mono text-xs font-semibold uppercase tracking-wider transition-all border cursor-pointer select-none ${
+              className={`group/btn relative overflow-hidden flex items-center gap-2 px-5 py-3 rounded-lg font-mono text-xs font-semibold uppercase tracking-wider transition-all duration-300 border hover:-translate-y-0.5 active:translate-y-0 cursor-pointer select-none ${
                 isDarkMode
-                  ? "bg-[#181920] hover:bg-white hover:text-black text-white border-white/[0.12]"
-                  : "bg-white hover:bg-gray-100 text-gray-900 border-black/[0.12] shadow-xs"
+                  ? "bg-[#181920] hover:bg-[#1f212a] text-white hover:text-[#D4F933] border-white/[0.12] hover:border-[#D4F933]/50 hover:shadow-[0_4px_20px_rgba(0,0,0,0.4),0_0_16px_rgba(212,249,51,0.12)]"
+                  : "bg-white hover:bg-gray-50 text-gray-900 hover:text-black border-black/[0.12] hover:border-black/[0.3] shadow-xs hover:shadow-md"
               }`}
             >
-              <i className="fab fa-github text-sm"></i>
-              <span>{t("sourceCode")}</span>
+              {/* Holographic Light Sheen Sweep */}
+              <div className="pointer-events-none absolute inset-0 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700 ease-out z-10 bg-gradient-to-r from-transparent via-white/[0.15] to-transparent skew-x-[-20deg]" />
+
+              <i className="fab fa-github text-sm transition-transform duration-300 ease-out group-hover/btn:rotate-12 group-hover/btn:scale-110 relative z-20"></i>
+              <span className="relative z-20">{t("sourceCode")}</span>
             </a>
           )}
-
-          {/* Copy / Share Link Action */}
-          <button
-            onClick={handleCopyLink}
-            className={`flex items-center gap-2 px-4 py-3 rounded-lg font-mono text-xs font-semibold uppercase tracking-wider transition-all border cursor-pointer select-none ${
-              copied
-                ? isDarkMode
-                  ? "bg-[#D4F933]/15 text-[#D4F933] border-[#D4F933]"
-                  : "bg-[#2D5204]/10 text-[#2D5204] border-[#2D5204]"
-                : isDarkMode
-                ? "bg-[#181920] hover:bg-white/[0.08] text-gray-300 border-white/[0.12]"
-                : "bg-white hover:bg-gray-100 text-gray-700 border-black/[0.12] shadow-xs"
-            }`}
-          >
-            <i className={`fas ${copied ? "fa-check text-[#D4F933]" : "fa-link"} text-xs`}></i>
-            <span>{copied ? "COPIED TO CLIPBOARD!" : "SHARE LINK"}</span>
-          </button>
         </div>
 
         <div className="mt-10 hairline-divider"></div>
@@ -290,7 +271,17 @@ const DetailProject = () => {
 
       {/* Hero Visual Showcase Banner */}
       {(project.mainImage || project.etalase) && (
-        <div className="mb-14">
+        <div className="relative mb-14 animate-fade-in-up animation-delay-150">
+          {/* Ambient Cyber Glow Aura behind Mockup Frame */}
+          <div
+            aria-hidden="true"
+            className={`pointer-events-none absolute -inset-2 sm:-inset-4 rounded-3xl blur-2xl sm:blur-3xl transition-opacity duration-700 -z-10 ${
+              isDarkMode
+                ? "bg-gradient-to-tr from-[#D4F933]/20 via-[#D4F933]/10 to-emerald-500/15 opacity-70 animate-pulse-slow"
+                : "bg-gradient-to-tr from-emerald-500/10 via-[#2D5204]/10 to-teal-500/10 opacity-60"
+            }`}
+          />
+
           <div
             className={`rounded-2xl border overflow-hidden transition-all duration-300 shadow-xl ${
               isDarkMode
@@ -346,8 +337,11 @@ const DetailProject = () => {
                 className="w-full h-auto object-cover object-top max-h-[580px] transition-transform duration-700 ease-out group-hover/hero:scale-[1.02]"
               />
 
+              {/* Holographic Shine Sweep Effect */}
+              <div className="pointer-events-none absolute inset-0 -translate-x-full group-hover/hero:translate-x-full transition-transform duration-1000 ease-out z-10 bg-gradient-to-r from-transparent via-white/[0.18] to-transparent skew-x-[-20deg]" />
+
               {/* Hover Inspect Hint */}
-              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover/hero:opacity-100 transition-opacity duration-200 flex items-center justify-center pointer-events-none">
+              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover/hero:opacity-100 transition-opacity duration-200 flex items-center justify-center pointer-events-none z-20">
                 <span className="font-mono text-xs text-white bg-black/85 px-4 py-2 rounded-lg border border-white/[0.2] flex items-center gap-2 shadow-2xl backdrop-blur-sm">
                   <i className="fas fa-search-plus text-[#D4F933] text-sm"></i>
                   <span className="tracking-wider uppercase font-semibold">INSPECT FULL PREVIEW</span>
@@ -359,7 +353,7 @@ const DetailProject = () => {
       )}
 
       {/* Section 01: Executive Brief / Introduction */}
-      <div className="mb-14">
+      <div className="mb-14 animate-fade-in-up animation-delay-225">
         <div className="flex items-center gap-3 mb-4">
           <h2
             className={`text-xl sm:text-2xl font-bold tracking-tight flex items-center gap-2.5 ${
@@ -377,10 +371,10 @@ const DetailProject = () => {
         </div>
 
         <div
-          className={`p-6 sm:p-8 rounded-xl border ${
+          className={`p-6 sm:p-8 rounded-xl border transition-all duration-300 ${
             isDarkMode
-              ? "bg-[#121216] border-white/[0.08]"
-              : "bg-white border-black/[0.08] shadow-sm"
+              ? "bg-[#121216] border-white/[0.08] hover:border-white/[0.18]"
+              : "bg-white border-black/[0.08] hover:border-black/[0.18] shadow-sm"
           }`}
         >
           <p
@@ -394,7 +388,7 @@ const DetailProject = () => {
       </div>
 
       {/* Section 02: Architecture & Tech Stack Matrix */}
-      <div className="mb-14">
+      <div className="mb-14 animate-fade-in-up animation-delay-300">
         <div className="flex items-center gap-3 mb-4">
           <h2
             className={`text-xl sm:text-2xl font-bold tracking-tight flex items-center gap-2.5 ${
@@ -415,17 +409,17 @@ const DetailProject = () => {
           {project.techStack.map((stack, index) => (
             <div
               key={index}
-              className={`rounded-xl p-6 border ${
+              className={`group rounded-xl p-6 border transition-all duration-300 hover:-translate-y-1 ${
                 isDarkMode
-                  ? "bg-[#121216] border-white/[0.08]"
-                  : "bg-white border-black/[0.08] shadow-sm"
+                  ? "bg-[#121216] border-white/[0.08] hover:border-[#D4F933]/40 hover:shadow-[0_8px_30px_rgba(0,0,0,0.5),0_0_20px_rgba(212,249,51,0.08)]"
+                  : "bg-white border-black/[0.08] hover:border-black/[0.22] shadow-sm hover:shadow-md"
               }`}
             >
               <h3
-                className={`font-mono text-xs uppercase tracking-wider pb-3 mb-4 border-b font-semibold ${
+                className={`font-mono text-xs uppercase tracking-wider pb-3 mb-4 border-b font-semibold transition-colors ${
                   isDarkMode 
-                    ? "border-white/[0.08] text-[#D4F933]" 
-                    : "border-black/[0.08] text-[#2D5204]"
+                    ? "border-white/[0.08] text-[#D4F933] group-hover:text-white" 
+                    : "border-black/[0.08] text-[#2D5204] group-hover:text-black"
                 }`}
               >
                 {getLoc(stack.category)}
@@ -457,7 +451,7 @@ const DetailProject = () => {
       </div>
 
       {/* Section 03: Key Features & Capabilities */}
-      <div className="mb-14">
+      <div className="mb-14 animate-fade-in-up animation-delay-375">
         <div className="flex items-center gap-3 mb-4">
           <h2
             className={`text-xl sm:text-2xl font-bold tracking-tight flex items-center gap-2.5 ${
@@ -478,14 +472,14 @@ const DetailProject = () => {
           {project.features.map((feature, index) => (
             <div
               key={index}
-              className={`rounded-xl p-6 border transition-all duration-200 ${
+              className={`group rounded-xl p-6 border transition-all duration-300 hover:-translate-y-1 ${
                 isDarkMode
-                  ? "bg-[#121216] border-white/[0.08] hover:border-white/[0.18]"
-                  : "bg-white border-black/[0.08] hover:border-black/[0.18] shadow-sm"
+                  ? "bg-[#121216] border-white/[0.08] hover:border-[#D4F933]/40 hover:shadow-[0_8px_30px_rgba(0,0,0,0.5),0_0_20px_rgba(212,249,51,0.08)]"
+                  : "bg-white border-black/[0.08] hover:border-black/[0.22] shadow-sm hover:shadow-md"
               }`}
             >
               <div className="flex items-start gap-4">
-                <div className={`w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 ${
+                <div className={`w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 transition-transform duration-300 group-hover:scale-105 ${
                   isDarkMode
                     ? "bg-[#D4F933]/10 border border-[#D4F933]/30 text-[#D4F933]"
                     : "bg-[#0A0A0C] border border-black text-[#D4F933] shadow-xs"
@@ -495,8 +489,8 @@ const DetailProject = () => {
 
                 <div className="flex-1">
                   <h3
-                    className={`text-base font-bold mb-1.5 ${
-                      isDarkMode ? "text-white" : "text-gray-900"
+                    className={`text-base font-bold mb-1.5 transition-colors ${
+                      isDarkMode ? "text-white group-hover:text-[#D4F933]" : "text-gray-900"
                     }`}
                   >
                     {getLoc(feature.title)}
@@ -517,7 +511,7 @@ const DetailProject = () => {
 
       {/* Section 04: Visual Interface Gallery */}
       {project.gallery && project.gallery.length > 0 && (
-        <div className="mb-14">
+        <div className="mb-14 animate-fade-in-up animation-delay-450">
           <div className="flex items-center gap-3 mb-4">
             <h2
               className={`text-xl sm:text-2xl font-bold tracking-tight flex items-center gap-2.5 ${
@@ -539,10 +533,10 @@ const DetailProject = () => {
               <div
                 key={index}
                 onClick={() => setActiveImage(index)}
-                className={`group rounded-xl overflow-hidden cursor-pointer border transition-all duration-300 ${
+                className={`group rounded-xl overflow-hidden cursor-pointer border transition-all duration-300 hover:-translate-y-1 ${
                   isDarkMode
-                    ? "bg-[#121216] border-white/[0.08] hover:border-white/[0.2]"
-                    : "bg-white border-black/[0.08] hover:border-black/[0.2] shadow-sm"
+                    ? "bg-[#121216] border-white/[0.08] hover:border-[#D4F933]/40 hover:shadow-[0_12px_32px_rgba(0,0,0,0.6),0_0_24px_rgba(212,249,51,0.1)]"
+                    : "bg-white border-black/[0.08] hover:border-black/[0.22] shadow-sm hover:shadow-md"
                 }`}
               >
                 <div className="relative overflow-hidden aspect-video bg-[#181920]">
@@ -552,9 +546,13 @@ const DetailProject = () => {
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
 
-                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                    <span className="font-mono text-[11px] text-white bg-black/80 px-2.5 py-1 rounded border border-white/[0.2]">
-                      INSPECT
+                  {/* Holographic Shine Sweep Effect on Thumbnail */}
+                  <div className="pointer-events-none absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out z-10 bg-gradient-to-r from-transparent via-white/[0.18] to-transparent skew-x-[-20deg]" />
+
+                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center z-20 pointer-events-none">
+                    <span className="font-mono text-[11px] text-white bg-black/80 px-2.5 py-1 rounded border border-white/[0.2] flex items-center gap-1.5 shadow-lg backdrop-blur-xs">
+                      <i className="fas fa-search-plus text-[#D4F933] text-xs"></i>
+                      <span>INSPECT</span>
                     </span>
                   </div>
                 </div>
@@ -575,16 +573,16 @@ const DetailProject = () => {
       )}
 
       {/* Project Pagination (Next / Prev Navigation) */}
-      <div className={`mt-14 pt-8 border-t ${isDarkMode ? "border-white/[0.08]" : "border-black/[0.08]"}`}>
+      <div className={`mt-14 pt-8 border-t animate-fade-in-up animation-delay-525 ${isDarkMode ? "border-white/[0.08]" : "border-black/[0.08]"}`}>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
           {/* Previous Project Card */}
           {prevProject && (
             <Link
               to={`/projects/${prevProject.id}`}
-              className={`group p-5 rounded-xl border transition-all duration-300 flex flex-col justify-between ${
+              className={`group p-5 rounded-xl border transition-all duration-300 flex flex-col justify-between hover:-translate-y-1 ${
                 isDarkMode
-                  ? "bg-[#121216] hover:bg-[#1A1A22] border-white/[0.08] hover:border-[#D4F933]/40"
-                  : "bg-white hover:bg-slate-50 border-black/[0.08] hover:border-[#2D5204]/40 shadow-sm"
+                  ? "bg-[#121216] hover:bg-[#1A1A22] border-white/[0.08] hover:border-[#D4F933]/40 hover:shadow-[0_8px_24px_rgba(0,0,0,0.4),0_0_16px_rgba(212,249,51,0.06)]"
+                  : "bg-white hover:bg-slate-50 border-black/[0.08] hover:border-[#2D5204]/40 shadow-sm hover:shadow-md"
               }`}
             >
               <div className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-wider mb-2 text-gray-400 group-hover:text-[#D4F933] transition-colors">
@@ -603,10 +601,10 @@ const DetailProject = () => {
           {nextProject && (
             <Link
               to={`/projects/${nextProject.id}`}
-              className={`group p-5 rounded-xl border transition-all duration-300 flex flex-col justify-between text-right ${
+              className={`group p-5 rounded-xl border transition-all duration-300 flex flex-col justify-between text-right hover:-translate-y-1 ${
                 isDarkMode
-                  ? "bg-[#121216] hover:bg-[#1A1A22] border-white/[0.08] hover:border-[#D4F933]/40"
-                  : "bg-white hover:bg-slate-50 border-black/[0.08] hover:border-[#2D5204]/40 shadow-sm"
+                  ? "bg-[#121216] hover:bg-[#1A1A22] border-white/[0.08] hover:border-[#D4F933]/40 hover:shadow-[0_8px_24px_rgba(0,0,0,0.4),0_0_16px_rgba(212,249,51,0.06)]"
+                  : "bg-white hover:bg-slate-50 border-black/[0.08] hover:border-[#2D5204]/40 shadow-sm hover:shadow-md"
               }`}
             >
               <div className="flex items-center justify-end gap-2 font-mono text-[11px] uppercase tracking-wider mb-2 text-gray-400 group-hover:text-[#D4F933] transition-colors">
@@ -626,7 +624,7 @@ const DetailProject = () => {
         <div className="text-center">
           <Link
             to="/projects"
-            className={`inline-flex items-center gap-2 px-6 py-3 rounded-lg font-mono text-xs font-semibold uppercase tracking-wider transition-all border ${
+            className={`inline-flex items-center gap-2 px-6 py-3 rounded-lg font-mono text-xs font-semibold uppercase tracking-wider transition-all border hover:-translate-y-0.5 ${
               isDarkMode
                 ? "bg-[#181920] hover:bg-[#D4F933] hover:text-black text-white border-white/[0.12] hover:border-[#D4F933] hover:shadow-[0_0_24px_rgba(212,249,51,0.25)]"
                 : "bg-gray-900 hover:bg-[#2D5204] text-white border-transparent shadow-md"
@@ -637,6 +635,7 @@ const DetailProject = () => {
           </Link>
         </div>
       </div>
+
 
       {/* Lightbox Modal for Gallery & Hero */}
       {(activeImage !== null || heroZoom) &&

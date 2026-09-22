@@ -222,3 +222,51 @@ body.light-mode ::selection {
 .animate-backdrop-fade {
   animation: backdropFadeIn 200ms ease-out forwards;
 }
+
+/* Staggered Reveal Animations - Ultra Smooth, Silky & Relaxed Cascade */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 16px, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 1150ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  will-change: opacity, transform;
+  backface-visibility: hidden;
+}
+
+.animation-delay-75 {
+  animation-delay: 100ms;
+}
+.animation-delay-150 {
+  animation-delay: 220ms;
+}
+.animation-delay-225 {
+  animation-delay: 340ms;
+}
+.animation-delay-300 {
+  animation-delay: 460ms;
+}
+.animation-delay-375 {
+  animation-delay: 580ms;
+}
+.animation-delay-450 {
+  animation-delay: 700ms;
+}
+.animation-delay-525 {
+  animation-delay: 820ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in-up {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}

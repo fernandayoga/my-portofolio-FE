@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useTheme } from "../context/ThemeContext";
 import { useTranslation } from "react-i18next";
 import { GitHubCalendar } from "react-github-calendar";
@@ -24,6 +24,153 @@ ChartJS.register(
   Legend
 );
 
+// Interactive Spotlight Hover & Card Elevation Component
+const SpotlightCard = ({
+  children,
+  className = "",
+  elevation = true,
+  spotlightColor,
+  size = 380,
+  ...props
+}) => {
+  const { isDarkMode } = useTheme();
+  const cardRef = useRef(null);
+  const [opacity, setOpacity] = useState(0);
+
+  const handleMouseMove = (e) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    cardRef.current.style.setProperty("--spotlight-x", `${x}px`);
+    cardRef.current.style.setProperty("--spotlight-y", `${y}px`);
+  };
+
+  const handleMouseEnter = () => setOpacity(1);
+  const handleMouseLeave = () => setOpacity(0);
+
+  const defaultSpotlight = isDarkMode
+    ? "rgba(212, 249, 51, 0.08)"
+    : "rgba(45, 82, 4, 0.05)";
+
+  const color = spotlightColor || defaultSpotlight;
+
+  return (
+    <div
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      className={`relative overflow-hidden transition-all duration-300 ease-out ${
+        elevation
+          ? isDarkMode
+            ? "hover:-translate-y-1 hover:border-[#D4F933]/40 hover:shadow-[0_16px_36px_-10px_rgba(0,0,0,0.7),0_0_24px_rgba(212,249,51,0.08)]"
+            : "hover:-translate-y-1 hover:border-black/[0.2] hover:shadow-[0_16px_32px_-10px_rgba(0,0,0,0.12),0_0_18px_rgba(0,0,0,0.04)]"
+          : ""
+      } ${className}`}
+      {...props}
+    >
+      {/* Spotlight Radial Light Cone */}
+      <div
+        className="pointer-events-none absolute inset-0 transition-opacity duration-300 ease-out"
+        style={{
+          opacity,
+          background: `radial-gradient(${size}px circle at var(--spotlight-x, 0px) var(--spotlight-y, 0px), ${color}, transparent 80%)`,
+        }}
+      />
+      {children}
+    </div>
+  );
+};
+
+// Wrapper component that reliably triggers animations when scrolled into viewport
+const ScrollAnimatedSection = ({ children, className = "", threshold = 0.15 }) => {
+  const containerRef = useRef(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    if (!("IntersectionObserver" in window)) {
+      setIsVisible(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        } else if (entry.boundingClientRect.top > (window.innerHeight || document.documentElement.clientHeight)) {
+          // Reset if scrolled back to top above the section
+          setIsVisible(false);
+        }
+      },
+      { threshold }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [threshold]);
+
+  return (
+    <div ref={containerRef} className={className}>
+      {typeof children === "function" ? children(isVisible) : children}
+    </div>
+  );
+};
+
+// Pure requestAnimationFrame Animated Number Counter with Cubic Ease-Out
+const AnimatedCounter = ({ target, duration = 1000 }) => {
+  const [count, setCount] = useState(0);
+  const countRef = useRef(0);
+
+  useEffect(() => {
+    const numericTarget = typeof target === "number" ? target : parseInt(target, 10);
+    if (isNaN(numericTarget)) {
+      setCount(target || 0);
+      return;
+    }
+
+    if (numericTarget === 0) {
+      setCount(0);
+      countRef.current = 0;
+      return;
+    }
+
+    const startValue = countRef.current;
+    if (startValue === numericTarget) {
+      setCount(numericTarget);
+      return;
+    }
+
+    const startTime = performance.now();
+    let frameId;
+
+    const step = (currentTime) => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      // easeOutCubic curve perfectly matches CSS ease-out for exact sync with progress bar
+      const easeProgress = 1 - Math.pow(1 - progress, 3);
+      const currentVal = Math.round(startValue + (numericTarget - startValue) * easeProgress);
+
+      setCount(currentVal);
+      countRef.current = currentVal;
+
+      if (progress < 1) {
+        frameId = requestAnimationFrame(step);
+      } else {
+        setCount(numericTarget);
+        countRef.current = numericTarget;
+      }
+    };
+
+    frameId = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(frameId);
+  }, [target, duration]);
+
+  return <span>{count}</span>;
+};
 
 const Dashboard = () => {
   const { isDarkMode } = useTheme();
@@ -33,6 +180,7 @@ const Dashboard = () => {
   const [githubData, setGithubData] = useState(null);
   const [wakatimeData, setWakatimeData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [barsLoaded, setBarsLoaded] = useState(false);
 
   // Fetch GitHub Contributions
   const fetchGitHubData = async () => {
@@ -350,6 +498,7 @@ const Dashboard = () => {
         fetchGithubActivity(),
       ]);
       setLoading(false);
+      setTimeout(() => setBarsLoaded(true), 150);
     };
 
     loadAllData();
@@ -369,7 +518,7 @@ const Dashboard = () => {
                 isDarkMode ? "bg-[#D4F933]" : "bg-[#2D5204]"
               }`}
             ></div>
-            <span>FETCHING TELEMETRY METRICS...</span>
+            <span>LOADING DASHBOARD METRICS...</span>
           </div>
           <p
             className={
@@ -457,27 +606,7 @@ const Dashboard = () => {
   return (
     <div className="min-h-screen py-8 pt-20 xl:pt-8 max-w-6xl">
       {/* Header */}
-      <div className="mb-10">
-        <div className="flex items-center gap-3 mb-4">
-          <div
-            className={`w-2 h-2 rounded-full ${
-              isDarkMode ? "bg-[#D4F933]" : "bg-[#2D5204]"
-            }`}
-          ></div>
-          <span
-            className={`font-mono text-xs font-semibold tracking-widest uppercase ${
-              isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"
-            }`}
-          >
-            // TELEMETRY & SYSTEM METRICS
-          </span>
-          <div
-            className={`flex-1 h-[1px] ${
-              isDarkMode ? "bg-white/[0.08]" : "bg-black/[0.08]"
-            }`}
-          ></div>
-        </div>
-
+      <div className="mb-10 animate-fade-in-up">
         <h1
           className={`text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-2 ${
             isDarkMode ? "text-white" : "text-gray-900"
@@ -494,8 +623,10 @@ const Dashboard = () => {
 
       <div className="grid grid-cols-1 gap-8">
         {/* 1. GitHub Contributions */}
-        <div
-          className={`rounded-2xl p-6 sm:p-8 border ${
+        <SpotlightCard
+          elevation={false}
+          size={700}
+          className={`rounded-2xl p-6 sm:p-8 border transition-all duration-300 animate-fade-in-up animation-delay-75 ${
             isDarkMode
               ? "bg-[#121216] border-white/[0.08]"
               : "bg-white border-black/[0.08] shadow-sm"
@@ -524,17 +655,24 @@ const Dashboard = () => {
           ) : (
             <div className="space-y-6">
               <div className="grid grid-cols-3 gap-3 sm:gap-4 text-center">
-                <div
-                  className={`p-4 sm:p-5 rounded-xl border ${
-                    isDarkMode ? "bg-[#181920] border-white/[0.06]" : "bg-gray-50 border-gray-200"
+                {/* Repositories Stat Card */}
+                <SpotlightCard
+                  elevation={true}
+                  size={260}
+                  className={`group/stat relative p-4 sm:p-5 rounded-xl border text-center ${
+                    isDarkMode 
+                      ? "bg-[#181920] border-white/[0.06]" 
+                      : "bg-gray-50 border-gray-200 shadow-xs"
                   }`}
                 >
+                  <div className="pointer-events-none absolute inset-0 -translate-x-full group-hover/stat:translate-x-full transition-transform duration-700 ease-out z-10 bg-gradient-to-r from-transparent via-white/[0.12] to-transparent skew-x-[-20deg]" />
+
                   <p
-                    className={`text-2xl sm:text-3xl font-mono font-bold ${
+                    className={`text-2xl sm:text-3xl font-mono font-bold transition-transform duration-300 group-hover/stat:scale-105 inline-block ${
                       isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"
                     }`}
                   >
-                    {githubData?.repos || 0}
+                    <AnimatedCounter target={githubData?.repos || 0} />
                   </p>
                   <p
                     className={`font-mono text-[10px] sm:text-xs uppercase tracking-wider mt-1 ${
@@ -543,19 +681,26 @@ const Dashboard = () => {
                   >
                     Repositories
                   </p>
-                </div>
+                </SpotlightCard>
 
-                <div
-                  className={`p-4 sm:p-5 rounded-xl border ${
-                    isDarkMode ? "bg-[#181920] border-white/[0.06]" : "bg-gray-50 border-gray-200"
+                {/* Followers Stat Card */}
+                <SpotlightCard
+                  elevation={true}
+                  size={260}
+                  className={`group/stat relative p-4 sm:p-5 rounded-xl border text-center ${
+                    isDarkMode 
+                      ? "bg-[#181920] border-white/[0.06]" 
+                      : "bg-gray-50 border-gray-200 shadow-xs"
                   }`}
                 >
+                  <div className="pointer-events-none absolute inset-0 -translate-x-full group-hover/stat:translate-x-full transition-transform duration-700 ease-out z-10 bg-gradient-to-r from-transparent via-white/[0.12] to-transparent skew-x-[-20deg]" />
+
                   <p
-                    className={`text-2xl sm:text-3xl font-mono font-bold ${
+                    className={`text-2xl sm:text-3xl font-mono font-bold transition-transform duration-300 group-hover/stat:scale-105 inline-block ${
                       isDarkMode ? "text-white" : "text-gray-900"
                     }`}
                   >
-                    {githubData?.followers || 0}
+                    <AnimatedCounter target={githubData?.followers || 0} />
                   </p>
                   <p
                     className={`font-mono text-[10px] sm:text-xs uppercase tracking-wider mt-1 ${
@@ -564,19 +709,26 @@ const Dashboard = () => {
                   >
                     Followers
                   </p>
-                </div>
+                </SpotlightCard>
 
-                <div
-                  className={`p-4 sm:p-5 rounded-xl border ${
-                    isDarkMode ? "bg-[#181920] border-white/[0.06]" : "bg-gray-50 border-gray-200"
+                {/* Commits Stat Card */}
+                <SpotlightCard
+                  elevation={true}
+                  size={260}
+                  className={`group/stat relative p-4 sm:p-5 rounded-xl border text-center ${
+                    isDarkMode 
+                      ? "bg-[#181920] border-white/[0.06]" 
+                      : "bg-gray-50 border-gray-200 shadow-xs"
                   }`}
                 >
+                  <div className="pointer-events-none absolute inset-0 -translate-x-full group-hover/stat:translate-x-full transition-transform duration-700 ease-out z-10 bg-gradient-to-r from-transparent via-white/[0.12] to-transparent skew-x-[-20deg]" />
+
                   <p
-                    className={`text-2xl sm:text-3xl font-mono font-bold ${
+                    className={`text-2xl sm:text-3xl font-mono font-bold transition-transform duration-300 group-hover/stat:scale-105 inline-block ${
                       isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"
                     }`}
                   >
-                    {githubData?.contributions || 0}
+                    <AnimatedCounter target={githubData?.contributions || 0} />
                   </p>
                   <p
                     className={`font-mono text-[10px] sm:text-xs uppercase tracking-wider mt-1 ${
@@ -585,11 +737,13 @@ const Dashboard = () => {
                   >
                     Commits
                   </p>
-                </div>
+                </SpotlightCard>
               </div>
 
               {/* GitHub Contribution Graph */}
-              <div
+              <SpotlightCard
+                elevation={true}
+                size={450}
                 className={`rounded-xl border overflow-x-auto p-4 ${
                   isDarkMode ? "bg-[#0A0A0C] border-white/[0.08]" : "bg-gray-50 border-gray-200"
                 }`}
@@ -617,79 +771,90 @@ const Dashboard = () => {
                     ],
                   }}
                 />
-              </div>
+              </SpotlightCard>
 
               {/* Top Languages */}
-              <div
-                className={`p-5 rounded-xl border ${
-                  isDarkMode ? "bg-[#181920] border-white/[0.06]" : "bg-gray-50 border-gray-200"
-                }`}
-              >
-                <p
-                  className={`font-mono text-xs uppercase tracking-wider font-semibold mb-4 ${
-                    isDarkMode ? "text-gray-300" : "text-gray-700"
-                  }`}
-                >
-                  Top Technology Used in GitHub
-                </p>
-
-                {topLanguages.length > 0 ? (
-                  <div className="space-y-3.5">
-                    {topLanguages.map((lang) => (
-                      <div key={lang.name}>
-                        <div className="flex items-center justify-between mb-1.5 font-mono text-xs">
-                          <div className="flex items-center gap-2">
-                            <div
-                              className="w-2.5 h-2.5 rounded-full"
-                              style={{
-                                backgroundColor: getLanguageColor(lang.name),
-                              }}
-                            ></div>
-                            <span
-                              className={
-                                isDarkMode ? "text-gray-300" : "text-gray-700"
-                              }
-                            >
-                              {lang.name}
-                            </span>
-                          </div>
-                          <span
-                            className={`font-semibold ${
-                              isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"
-                            }`}
-                          >
-                            {lang.percentage}%
-                          </span>
-                        </div>
-                        <div
-                          className={`w-full h-1.5 rounded-full ${
-                            isDarkMode ? "bg-[#121216]" : "bg-gray-200"
-                          }`}
-                        >
-                          <div
-                            className="h-full rounded-full transition-all"
-                            style={{
-                              width: `${lang.percentage}%`,
-                              backgroundColor: getLanguageColor(lang.name),
-                            }}
-                          ></div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <p
-                    className={`font-mono text-xs ${
-                      isDarkMode ? "text-gray-500" : "text-gray-400"
+              <ScrollAnimatedSection threshold={0.15}>
+                {(isVisible) => (
+                  <SpotlightCard
+                    elevation={true}
+                    size={420}
+                    className={`p-5 rounded-xl border ${
+                      isDarkMode ? "bg-[#181920] border-white/[0.06]" : "bg-gray-50 border-gray-200"
                     }`}
                   >
-                    Loading languages...
-                  </p>
+                    <p
+                      className={`font-mono text-xs uppercase tracking-wider font-semibold mb-4 ${
+                        isDarkMode ? "text-gray-300" : "text-gray-700"
+                      }`}
+                    >
+                      Top Technology Used in GitHub
+                    </p>
+
+                    {topLanguages.length > 0 ? (
+                      <div className="space-y-3.5">
+                        {topLanguages.map((lang) => (
+                          <div key={lang.name}>
+                            <div className="flex items-center justify-between mb-1.5 font-mono text-xs">
+                              <div className="flex items-center gap-2">
+                                <div
+                                  className="w-2.5 h-2.5 rounded-full"
+                                  style={{
+                                    backgroundColor: getLanguageColor(lang.name),
+                                  }}
+                                ></div>
+                                <span
+                                  className={
+                                    isDarkMode ? "text-gray-300" : "text-gray-700"
+                                  }
+                                >
+                                  {lang.name}
+                                </span>
+                              </div>
+                              <span
+                                className={`font-semibold font-mono ${
+                                  isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"
+                                }`}
+                              >
+                                <AnimatedCounter
+                                  target={isVisible ? lang.percentage : 0}
+                                  duration={1000}
+                                />%
+                              </span>
+                            </div>
+                            <div
+                              className={`w-full h-1.5 rounded-full overflow-hidden ${
+                                isDarkMode ? "bg-[#121216]" : "bg-gray-200"
+                              }`}
+                            >
+                              <div
+                                className="h-full rounded-full transition-all duration-1000 ease-out"
+                                style={{
+                                  width: isVisible ? `${lang.percentage}%` : "0%",
+                                  backgroundColor: getLanguageColor(lang.name),
+                                }}
+                              ></div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <p
+                        className={`font-mono text-xs ${
+                          isDarkMode ? "text-gray-500" : "text-gray-400"
+                        }`}
+                      >
+                        Loading languages...
+                      </p>
+                    )}
+                  </SpotlightCard>
                 )}
-              </div>
+              </ScrollAnimatedSection>
 
               {/* GitHub Recent Activity */}
-              <div
+              <SpotlightCard
+                elevation={true}
+                size={450}
                 className={`rounded-2xl p-6 sm:p-7 border ${
                   isDarkMode
                     ? "bg-[#121216] border-white/[0.08]"
@@ -719,14 +884,14 @@ const Dashboard = () => {
                     {githubActivity.map((activity) => (
                       <div
                         key={activity.id}
-                        className={`flex items-start gap-3 p-3 rounded-xl border transition-all ${
+                        className={`group/act flex items-start gap-3 p-3 rounded-xl border transition-all duration-300 hover:translate-x-1.5 ${
                           isDarkMode
-                            ? "bg-[#181920] border-white/[0.06] hover:border-[#D4F933]/40"
-                            : "bg-gray-50 border-gray-200 hover:border-[#D4F933]"
+                            ? "bg-[#181920] border-white/[0.06] hover:border-[#D4F933]/40 hover:shadow-[0_4px_16px_rgba(0,0,0,0.3),0_0_12px_rgba(212,249,51,0.08)]"
+                            : "bg-gray-50 border-gray-200 hover:border-[#D4F933] shadow-xs hover:shadow-sm"
                         }`}
                       >
                         <div
-                          className={`flex-shrink-0 w-7 h-7 rounded-lg flex items-center justify-center ${
+                          className={`flex-shrink-0 w-7 h-7 rounded-lg flex items-center justify-center transition-transform duration-300 group-hover/act:scale-110 ${
                             isDarkMode
                               ? "bg-white/[0.04] text-[#D4F933]"
                               : "bg-black/[0.05] text-[#2D5204]"
@@ -769,14 +934,16 @@ const Dashboard = () => {
                     <p className="font-mono text-xs">No recent activity</p>
                   </div>
                 )}
-              </div>
+              </SpotlightCard>
             </div>
           )}
-        </div>
+        </SpotlightCard>
 
         {/* 2. WakaTime Coding Stats */}
-        <div
-          className={`rounded-2xl p-6 sm:p-8 border ${
+        <SpotlightCard
+          elevation={false}
+          size={700}
+          className={`rounded-2xl p-6 sm:p-8 border transition-all duration-300 animate-fade-in-up animation-delay-300 ${
             isDarkMode
               ? "bg-[#121216] border-white/[0.08]"
               : "bg-white border-black/[0.08] shadow-sm"
@@ -810,13 +977,19 @@ const Dashboard = () => {
             <div className="space-y-6">
               {/* Total Time & Daily Average */}
               <div className="grid grid-cols-2 gap-4 text-center">
-                <div
-                  className={`p-5 rounded-xl border ${
-                    isDarkMode ? "bg-[#181920] border-white/[0.06]" : "bg-gray-50 border-gray-200"
+                <SpotlightCard
+                  elevation={true}
+                  size={280}
+                  className={`group/stat relative p-5 rounded-xl border text-center ${
+                    isDarkMode 
+                      ? "bg-[#181920] border-white/[0.06]" 
+                      : "bg-gray-50 border-gray-200 shadow-xs"
                   }`}
                 >
+                  <div className="pointer-events-none absolute inset-0 -translate-x-full group-hover/stat:translate-x-full transition-transform duration-700 ease-out z-10 bg-gradient-to-r from-transparent via-white/[0.12] to-transparent skew-x-[-20deg]" />
+
                   <p
-                    className={`text-2xl sm:text-3xl font-mono font-bold ${
+                    className={`text-2xl sm:text-3xl font-mono font-bold transition-transform duration-300 group-hover/stat:scale-105 inline-block ${
                       isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"
                     }`}
                   >
@@ -829,15 +1002,21 @@ const Dashboard = () => {
                   >
                     {t("totalCodingTime")}
                   </p>
-                </div>
+                </SpotlightCard>
 
-                <div
-                  className={`p-5 rounded-xl border ${
-                    isDarkMode ? "bg-[#181920] border-white/[0.06]" : "bg-gray-50 border-gray-200"
+                <SpotlightCard
+                  elevation={true}
+                  size={280}
+                  className={`group/stat relative p-5 rounded-xl border text-center ${
+                    isDarkMode 
+                      ? "bg-[#181920] border-white/[0.06]" 
+                      : "bg-gray-50 border-gray-200 shadow-xs"
                   }`}
                 >
+                  <div className="pointer-events-none absolute inset-0 -translate-x-full group-hover/stat:translate-x-full transition-transform duration-700 ease-out z-10 bg-gradient-to-r from-transparent via-white/[0.12] to-transparent skew-x-[-20deg]" />
+
                   <p
-                    className={`text-2xl sm:text-3xl font-mono font-bold ${
+                    className={`text-2xl sm:text-3xl font-mono font-bold transition-transform duration-300 group-hover/stat:scale-105 inline-block ${
                       isDarkMode ? "text-white" : "text-gray-900"
                     }`}
                   >
@@ -850,66 +1029,74 @@ const Dashboard = () => {
                   >
                     {t("dailyAverage")}
                   </p>
-                </div>
+                </SpotlightCard>
               </div>
 
               {/* WakaTime Top Languages */}
-              <div
-                className={`p-5 rounded-xl border ${
-                  isDarkMode ? "bg-[#181920] border-white/[0.06]" : "bg-gray-50 border-gray-200"
-                }`}
-              >
-                <p
-                  className={`font-mono text-xs uppercase tracking-wider font-semibold mb-4 ${
-                    isDarkMode ? "text-gray-300" : "text-gray-700"
-                  }`}
-                >
-                  {t("topTech")}
-                </p>
-                
-                {wakatimeData?.languages && wakatimeData.languages.length > 0 ? (
-                  <div className="space-y-3.5">
-                    {wakatimeData.languages.slice(0, 5).map((lang) => (
-                      <div key={lang.name}>
-                        <div className="flex items-center justify-between mb-1.5 font-mono text-xs">
-                          <span
-                            className={
-                              isDarkMode ? "text-gray-300" : "text-gray-700"
-                            }
-                          >
-                            {lang.name}
-                          </span>
-                          <span
-                            className={`font-semibold ${
-                              isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"
-                            }`}
-                          >
-                            {lang.text} ({Math.round(lang.percent)}%)
-                          </span>
-                        </div>
-                        <div
-                          className={`w-full h-1.5 rounded-full ${
-                            isDarkMode ? "bg-[#121216]" : "bg-gray-200"
-                          }`}
-                        >
-                          <div
-                            className="h-full rounded-full transition-all duration-1000"
-                            style={{
-                              width: `${lang.percent}%`,
-                              backgroundColor: lang.color || getLanguageColor(lang.name),
-                            }}
-                          ></div>
-                        </div>
+              <ScrollAnimatedSection threshold={0.15}>
+                {(isVisible) => (
+                  <SpotlightCard
+                    elevation={true}
+                    size={420}
+                    className={`p-5 rounded-xl border ${
+                      isDarkMode ? "bg-[#181920] border-white/[0.06]" : "bg-gray-50 border-gray-200"
+                    }`}
+                  >
+                    <p
+                      className={`font-mono text-xs uppercase tracking-wider font-semibold mb-4 ${
+                        isDarkMode ? "text-gray-300" : "text-gray-700"
+                      }`}
+                    >
+                      {t("topTech")}
+                    </p>
+                    
+                    {wakatimeData?.languages && wakatimeData.languages.length > 0 ? (
+                      <div className="space-y-3.5">
+                        {wakatimeData.languages.slice(0, 5).map((lang) => (
+                          <div key={lang.name}>
+                            <div className="flex items-center justify-between mb-1.5 font-mono text-xs">
+                              <span
+                                className={
+                                  isDarkMode ? "text-gray-300" : "text-gray-700"
+                                }
+                              >
+                                {lang.name}
+                              </span>
+                              <span
+                                className={`font-semibold font-mono ${
+                                  isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"
+                                }`}
+                              >
+                                {lang.text} (<AnimatedCounter target={isVisible ? Math.round(lang.percent) : 0} duration={1000} />%)
+                              </span>
+                            </div>
+                            <div
+                              className={`w-full h-1.5 rounded-full overflow-hidden ${
+                                isDarkMode ? "bg-[#121216]" : "bg-gray-200"
+                              }`}
+                            >
+                              <div
+                                className="h-full rounded-full transition-all duration-1000 ease-out"
+                                style={{
+                                  width: isVisible ? `${lang.percent}%` : "0%",
+                                  backgroundColor: lang.color || getLanguageColor(lang.name),
+                                }}
+                              ></div>
+                            </div>
+                          </div>
+                        ))}
                       </div>
-                    ))}
-                  </div>
-                ) : (
-                  <p className="font-mono text-xs text-gray-500">{t("noTechData")}</p>
+                    ) : (
+                      <p className="font-mono text-xs text-gray-500">{t("noTechData")}</p>
+                    )}
+                  </SpotlightCard>
                 )}
-              </div>
+              </ScrollAnimatedSection>
               
               {/* Weekdays Chart */}
-              <div
+              <SpotlightCard
+                elevation={true}
+                size={450}
                 className={`p-5 rounded-xl border ${
                   isDarkMode ? "bg-[#181920] border-white/[0.06]" : "bg-gray-50 border-gray-200"
                 }`}
@@ -930,12 +1117,14 @@ const Dashboard = () => {
                     <p className="font-mono text-xs text-gray-500">{t("noDailyStats")}</p>
                   )}
                 </div>
-              </div>
+              </SpotlightCard>
               
               {/* Editors / OS Doughnuts */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-4">
                 {/* Editors */}
-                <div
+                <SpotlightCard
+                  elevation={true}
+                  size={360}
                   className={`p-5 rounded-xl border ${
                     isDarkMode ? "bg-[#181920] border-white/[0.06]" : "bg-gray-50 border-gray-200"
                   }`}
@@ -956,10 +1145,12 @@ const Dashboard = () => {
                       <p className="font-mono text-xs text-gray-500">{t("noEditorStats")}</p>
                     )}
                   </div>
-                </div>
+                </SpotlightCard>
 
                 {/* OS */}
-                <div
+                <SpotlightCard
+                  elevation={true}
+                  size={360}
                   className={`p-5 rounded-xl border ${
                     isDarkMode ? "bg-[#181920] border-white/[0.06]" : "bg-gray-50 border-gray-200"
                   }`}
@@ -980,26 +1171,29 @@ const Dashboard = () => {
                       <p className="font-mono text-xs text-gray-500">{t("noOsStats")}</p>
                     )}
                   </div>
-                </div>
+                </SpotlightCard>
               </div>
 
             </div>
           )}
-        </div>
+        </SpotlightCard>
       </div>
 
       {/* Refresh Button */}
-      <div className="mt-10 flex justify-center">
+      <div className="mt-10 flex justify-center animate-fade-in-up animation-delay-450">
         <button
           onClick={() => window.location.reload()}
-          className={`px-6 py-3 rounded-lg font-mono text-xs font-semibold uppercase tracking-wider transition-all flex items-center gap-2 border ${
+          className={`group/refresh relative overflow-hidden px-6 py-3 rounded-lg font-mono text-xs font-semibold uppercase tracking-wider transition-all duration-300 flex items-center gap-2 border hover:-translate-y-0.5 active:translate-y-0 cursor-pointer select-none ${
             isDarkMode
-              ? "bg-[#181920] hover:bg-[#D4F933] hover:text-black text-white border-white/[0.12] hover:border-[#D4F933] shadow-md"
-              : "bg-gray-900 hover:bg-[#D4F933] hover:text-black text-white border-transparent"
+              ? "bg-[#181920] hover:bg-[#1f212a] text-white hover:text-[#D4F933] border-white/[0.12] hover:border-[#D4F933] hover:shadow-[0_0_24px_rgba(212,249,51,0.25)]"
+              : "bg-gray-900 hover:bg-[#D4F933] hover:text-black text-white border-transparent shadow-md hover:shadow-lg"
           }`}
         >
-          <i className="fas fa-sync-alt text-xs"></i>
-          <span>Refresh Data</span>
+          {/* Holographic Sheen Sweep */}
+          <div className="pointer-events-none absolute inset-0 -translate-x-full group-hover/refresh:translate-x-full transition-transform duration-700 ease-out z-10 bg-gradient-to-r from-transparent via-white/[0.2] to-transparent skew-x-[-20deg]" />
+
+          <i className="fas fa-sync-alt text-xs transition-transform duration-500 ease-out group-hover/refresh:rotate-180 relative z-20"></i>
+          <span className="relative z-20">Refresh Data</span>
         </button>
       </div>
     </div>

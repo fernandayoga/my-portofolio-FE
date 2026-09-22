@@ -212,7 +212,10 @@ const Sidebar = () => {
         {/* Navigation Menu */}
         <nav className="flex-1 px-4 py-4 overflow-y-auto">
           {menuItems.map((item) => {
-            const isActive = location.pathname === item.path;
+            const isActive =
+              item.path === "/"
+                ? location.pathname === "/"
+                : location.pathname === item.path || location.pathname.startsWith(`${item.path}/`);
             return (
               <Link
                 key={item.path}
