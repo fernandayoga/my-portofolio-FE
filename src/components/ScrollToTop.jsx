@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import AOS from "aos";
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -13,6 +14,9 @@ const ScrollToTop = () => {
     });
     document.documentElement.scrollTop = 0;
     document.body.scrollTop = 0;
+
+    // Refresh AOS so animations trigger on SPA route transitions
+    AOS.refresh();
   }, [pathname]);
 
   return null;

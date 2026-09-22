@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useTheme } from "../context/ThemeContext";
 import { projects } from "../data/dataProject";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const Projects = () => {
   const { isDarkMode } = useTheme();
@@ -98,7 +98,7 @@ const Projects = () => {
               {/* Technical Indicator Badge */}
               <div className="absolute top-3 left-3 font-mono text-[10px] px-2.5 py-1 rounded bg-black/70 backdrop-blur-sm border border-white/[0.15] text-white flex items-center gap-1.5 z-10">
                 <span className="text-[#D4F933] font-semibold">[{idx < 9 ? `0${idx + 1}` : idx + 1}]</span>
-                <span>ARTIFACT</span>
+                
               </div>
 
               {/* Hover Zoom Hint - only appears when hovering the image itself */}
@@ -161,13 +161,10 @@ const Projects = () => {
 
               {/* Action Button with Hover Arrow Slide & Glow */}
               <div className={`pt-4 border-t mt-auto ${isDarkMode ? "border-white/[0.06]" : "border-black/[0.06]"}`}>
-                <a
-                  href={project.demo}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  to={`/projects/${project.id}`}
                   onClick={(e) => {
                     e.stopPropagation();
-                    navigate(`/projects/${project.id}`);
                   }}
                   className={`group/btn w-full py-3 rounded-lg font-mono text-xs font-semibold uppercase tracking-wider text-center transition-all duration-200 flex items-center justify-center gap-2.5 border cursor-pointer select-none ${
                     isDarkMode
@@ -177,7 +174,7 @@ const Projects = () => {
                 >
                   <span>{t("detail")}</span>
                   <i className="fas fa-arrow-right text-xs transition-transform duration-300 ease-out group-hover/btn:translate-x-2.5 group-hover/btn:scale-110"></i>
-                </a>
+                </Link>
               </div>
             </div>
           </div>
