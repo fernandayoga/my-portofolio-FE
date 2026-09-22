@@ -128,10 +128,10 @@ const ChatRoom = () => {
   const showCyberAlert = ({ title, text, icon = "info" }) => {
     const isDark = isDarkMode;
     const iconColors = {
-      error: "bg-red-500/10 border-red-500/30 text-red-400 shadow-[0_0_24px_rgba(239,68,68,0.25)]",
-      warning: "bg-yellow-500/10 border-yellow-500/30 text-yellow-400 shadow-[0_0_24px_rgba(234,179,8,0.25)]",
-      info: "bg-[#D4F933]/10 border-[#D4F933]/30 text-[#D4F933] shadow-[0_0_24px_rgba(212,249,51,0.25)]",
-      success: "bg-emerald-500/10 border-emerald-500/30 text-emerald-400 shadow-[0_0_24px_rgba(16,185,129,0.25)]",
+      error: "bg-red-500/10 border-red-500/30 text-red-400",
+      warning: "bg-yellow-500/10 border-yellow-500/30 text-yellow-400",
+      info: "bg-[#D4F933]/10 border-[#D4F933]/30 text-[#D4F933]",
+      success: "bg-emerald-500/10 border-emerald-500/30 text-emerald-400",
     };
     const iconIcons = {
       error: "fas fa-exclamation-triangle",
@@ -208,7 +208,7 @@ const ChatRoom = () => {
       const result = await Swal.fire({
         html: `
           <div class="flex flex-col items-center text-center">
-            <div class="w-14 h-14 rounded-2xl flex items-center justify-center bg-red-500/10 border border-red-500/30 text-red-400 shadow-[0_0_24px_rgba(239,68,68,0.25)] mb-4">
+            <div class="w-14 h-14 rounded-2xl flex items-center justify-center bg-red-500/10 border border-red-500/30 text-red-400 mb-4">
               <i class="fas fa-sign-out-alt text-2xl"></i>
             </div>
             <h3 class="font-mono text-base sm:text-lg font-bold tracking-tight ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-1.5">
@@ -293,7 +293,7 @@ const ChatRoom = () => {
     const result = await Swal.fire({
       html: `
         <div class="flex flex-col items-center text-center">
-          <div class="w-14 h-14 rounded-2xl flex items-center justify-center bg-red-500/10 border border-red-500/30 text-red-400 shadow-[0_0_24px_rgba(239,68,68,0.25)] mb-4">
+          <div class="w-14 h-14 rounded-2xl flex items-center justify-center bg-red-500/10 border border-red-500/30 text-red-400 mb-4">
             <i class="fas fa-trash-alt text-2xl"></i>
           </div>
           <h3 class="font-mono text-base sm:text-lg font-bold tracking-tight ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-1.5">
