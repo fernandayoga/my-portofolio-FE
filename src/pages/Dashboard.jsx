@@ -83,8 +83,12 @@ const SpotlightCard = ({
   );
 };
 
-// Wrapper component that reliably triggers animations when scrolled into viewport
-const ScrollAnimatedSection = ({ children, className = "", threshold = 0.15 }) => {
+// Wrapper component that reliably triggers animations when scrolled into viewport with hysteresis
+const ScrollAnimatedSection = ({
+  children,
+  className = "",
+  threshold = 0.12,
+}) => {
   const containerRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -99,14 +103,14 @@ const ScrollAnimatedSection = ({ children, className = "", threshold = 0.15 }) =
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
+        if (entry.isIntersecting && entry.intersectionRatio >= threshold) {
           setIsVisible(true);
-        } else if (entry.boundingClientRect.top > (window.innerHeight || document.documentElement.clientHeight)) {
-          // Reset if scrolled back to top above the section
+        } else if (!entry.isIntersecting || entry.intersectionRatio === 0) {
+          // Reset silently only when completely off-screen so user never sees mid-reading flicker
           setIsVisible(false);
         }
       },
-      { threshold }
+      { threshold: [0, threshold] }
     );
 
     observer.observe(el);
@@ -120,8 +124,8 @@ const ScrollAnimatedSection = ({ children, className = "", threshold = 0.15 }) =
   );
 };
 
-// Pure requestAnimationFrame Animated Number Counter with Cubic Ease-Out
-const AnimatedCounter = ({ target, duration = 1000 }) => {
+// Pure requestAnimationFrame Animated Number Counter with Silky Deceleration & Render Throttling
+const AnimatedCounter = ({ target, duration = 1150, delay = 0 }) => {
   const [count, setCount] = useState(0);
   const countRef = useRef(0);
 
@@ -138,36 +142,47 @@ const AnimatedCounter = ({ target, duration = 1000 }) => {
       return;
     }
 
-    const startValue = countRef.current;
-    if (startValue === numericTarget) {
-      setCount(numericTarget);
-      return;
-    }
-
-    const startTime = performance.now();
     let frameId;
+    let timeoutId;
 
-    const step = (currentTime) => {
-      const elapsed = currentTime - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      // easeOutCubic curve perfectly matches CSS ease-out for exact sync with progress bar
-      const easeProgress = 1 - Math.pow(1 - progress, 3);
-      const currentVal = Math.round(startValue + (numericTarget - startValue) * easeProgress);
-
-      setCount(currentVal);
-      countRef.current = currentVal;
-
-      if (progress < 1) {
-        frameId = requestAnimationFrame(step);
-      } else {
+    timeoutId = setTimeout(() => {
+      const startValue = countRef.current;
+      if (startValue === numericTarget) {
         setCount(numericTarget);
-        countRef.current = numericTarget;
+        return;
       }
-    };
 
-    frameId = requestAnimationFrame(step);
-    return () => cancelAnimationFrame(frameId);
-  }, [target, duration]);
+      const startTime = performance.now();
+
+      const step = (currentTime) => {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        // Silky cubic deceleration curve matching cubic-bezier(0.16, 1, 0.3, 1)
+        const easeProgress = 1 - Math.pow(1 - progress, 3.5);
+        const currentVal = Math.round(startValue + (numericTarget - startValue) * easeProgress);
+
+        // State update throttling: only update when the integer actually changes
+        if (currentVal !== countRef.current) {
+          setCount(currentVal);
+          countRef.current = currentVal;
+        }
+
+        if (progress < 1) {
+          frameId = requestAnimationFrame(step);
+        } else {
+          setCount(numericTarget);
+          countRef.current = numericTarget;
+        }
+      };
+
+      frameId = requestAnimationFrame(step);
+    }, delay);
+
+    return () => {
+      clearTimeout(timeoutId);
+      if (frameId) cancelAnimationFrame(frameId);
+    };
+  }, [target, duration, delay]);
 
   return <span>{count}</span>;
 };
@@ -788,19 +803,22 @@ const Dashboard = () => {
                         isDarkMode ? "text-gray-300" : "text-gray-700"
                       }`}
                     >
-                      Top Technology Used in GitHub
+                      {t("githubTopTech")}
                     </p>
 
                     {topLanguages.length > 0 ? (
-                      <div className="space-y-3.5">
-                        {topLanguages.map((lang) => (
+                      <div className="space-y-4">
+                        {topLanguages.map((lang, index) => (
                           <div key={lang.name}>
                             <div className="flex items-center justify-between mb-1.5 font-mono text-xs">
                               <div className="flex items-center gap-2">
                                 <div
-                                  className="w-2.5 h-2.5 rounded-full"
+                                  className="w-2 h-2 rounded-none flex-shrink-0"
                                   style={{
                                     backgroundColor: getLanguageColor(lang.name),
+                                    boxShadow: isDarkMode
+                                      ? `0 0 6px ${getLanguageColor(lang.name)}60`
+                                      : "none",
                                   }}
                                 ></div>
                                 <span
@@ -818,20 +836,32 @@ const Dashboard = () => {
                               >
                                 <AnimatedCounter
                                   target={isVisible ? lang.percentage : 0}
-                                  duration={1000}
+                                  duration={1150}
+                                  delay={isVisible ? index * 60 : 0}
                                 />%
                               </span>
                             </div>
                             <div
-                              className={`w-full h-1.5 rounded-full overflow-hidden ${
-                                isDarkMode ? "bg-[#121216]" : "bg-gray-200"
+                              className={`w-full h-2.5 overflow-hidden transition-colors ${
+                                isDarkMode
+                                  ? "bg-[#0c0d12] border border-white/[0.08]"
+                                  : "bg-gray-100 border border-black/[0.08]"
                               }`}
                             >
                               <div
-                                className="h-full rounded-full transition-all duration-1000 ease-out"
+                                className="h-full"
                                 style={{
-                                  width: isVisible ? `${lang.percentage}%` : "0%",
+                                  width: `${lang.percentage}%`,
+                                  transform: isVisible ? "scaleX(1)" : "scaleX(0)",
+                                  transformOrigin: "left",
+                                  transition: isVisible
+                                    ? `transform 1150ms cubic-bezier(0.16, 1, 0.3, 1) ${index * 60}ms`
+                                    : "transform 250ms ease-out",
+                                  willChange: "transform",
                                   backgroundColor: getLanguageColor(lang.name),
+                                  boxShadow: isDarkMode
+                                    ? `0 0 12px ${getLanguageColor(lang.name)}60`
+                                    : "none",
                                 }}
                               ></div>
                             </div>
@@ -844,7 +874,7 @@ const Dashboard = () => {
                           isDarkMode ? "text-gray-500" : "text-gray-400"
                         }`}
                       >
-                        Loading languages...
+                        {t("loadingLanguages")}
                       </p>
                     )}
                   </SpotlightCard>
@@ -1051,8 +1081,8 @@ const Dashboard = () => {
                     </p>
                     
                     {wakatimeData?.languages && wakatimeData.languages.length > 0 ? (
-                      <div className="space-y-3.5">
-                        {wakatimeData.languages.slice(0, 5).map((lang) => (
+                      <div className="space-y-4">
+                        {wakatimeData.languages.slice(0, 5).map((lang, index) => (
                           <div key={lang.name}>
                             <div className="flex items-center justify-between mb-1.5 font-mono text-xs">
                               <span
@@ -1067,19 +1097,30 @@ const Dashboard = () => {
                                   isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"
                                 }`}
                               >
-                                {lang.text} (<AnimatedCounter target={isVisible ? Math.round(lang.percent) : 0} duration={1000} />%)
+                                {lang.text} (<AnimatedCounter target={isVisible ? Math.round(lang.percent) : 0} duration={1150} delay={isVisible ? index * 60 : 0} />%)
                               </span>
                             </div>
                             <div
-                              className={`w-full h-1.5 rounded-full overflow-hidden ${
-                                isDarkMode ? "bg-[#121216]" : "bg-gray-200"
+                              className={`w-full h-2.5 overflow-hidden transition-colors ${
+                                isDarkMode
+                                  ? "bg-[#0c0d12] border border-white/[0.08]"
+                                  : "bg-gray-100 border border-black/[0.08]"
                               }`}
                             >
                               <div
-                                className="h-full rounded-full transition-all duration-1000 ease-out"
+                                className="h-full"
                                 style={{
-                                  width: isVisible ? `${lang.percent}%` : "0%",
+                                  width: `${lang.percent}%`,
+                                  transform: isVisible ? "scaleX(1)" : "scaleX(0)",
+                                  transformOrigin: "left",
+                                  transition: isVisible
+                                    ? `transform 1150ms cubic-bezier(0.16, 1, 0.3, 1) ${index * 60}ms`
+                                    : "transform 250ms ease-out",
+                                  willChange: "transform",
                                   backgroundColor: lang.color || getLanguageColor(lang.name),
+                                  boxShadow: isDarkMode
+                                    ? `0 0 12px ${(lang.color || getLanguageColor(lang.name))}60`
+                                    : "none",
                                 }}
                               ></div>
                             </div>

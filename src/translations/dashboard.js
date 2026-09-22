@@ -6,6 +6,8 @@ export const dashboardTranslations = {
     dashboardSubtitle: "Developer Activity Overview & Real-time Stats",
     githubActivity: "GitHub Activity",
     githubContributions: "Contributions & Stats",
+    githubTopTech: "Top Technology Used in GitHub",
+    loadingLanguages: "Loading languages...",
     githubActivityLatest: "Latest Activity",
     RecentActivity: "Latest GitHub Events",
     umamiTitle: "Umami Analytics",
@@ -32,7 +34,8 @@ export const dashboardTranslations = {
     dashboardSubtitle: "Ikhtisar Aktivitas Developer & Statistik Real-time",
     githubActivity: "Aktivitas GitHub",
     githubContributions: "Kontribusi & Statistik",
-    
+    githubTopTech: "Teknologi Teratas di GitHub",
+    loadingLanguages: "Memuat teknologi...",
     githubActivityLatest: "Aktivitas Terbaru",
     RecentActivity: "Event GitHub Terbaru",
     umamiTitle: "Umami Analytics",
