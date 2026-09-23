@@ -223,20 +223,38 @@ const About = () => {
                     isDarkMode ? "text-white group-hover:text-[#D4F933]" : "text-gray-900 group-hover:text-[#2D5204]"
                   }`}
                 >
-                  {t("aboutEduMajor")}
-                </h3>
-                <p className="text-sm text-gray-400 mt-0.5">
                   {t("aboutEduUniversity")}
-                </p>
+                </h3>
+
+                <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1 mt-1 text-xs sm:text-sm">
+                  <span className={`inline-flex items-center gap-1.5 font-medium ${
+                    isDarkMode ? "text-gray-300" : "text-gray-700"
+                  }`}>
+                    <i className={`fas fa-graduation-cap text-xs ${
+                      isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"
+                    }`} />
+                    {t("aboutEduMajor")}
+                  </span>
+
+                  <span className={`text-xs ${isDarkMode ? "text-white/20" : "text-black/20"}`}>•</span>
+
+                  <span className={`inline-flex items-center gap-1.5 font-mono text-xs ${
+                    isDarkMode ? "text-gray-400" : "text-gray-500"
+                  }`}>
+                    <i className="far fa-calendar-alt text-xs opacity-75" />
+                    {t("aboutEduPeriod")}
+                  </span>
+                </div>
               </div>
             </div>
 
-            <div className={`relative z-10 font-mono text-xs px-3 py-1.5 rounded self-start sm:self-center font-semibold tracking-wider ${
+            <div className={`relative z-10 font-mono text-xs px-3 py-1.5 rounded self-start sm:self-center font-semibold tracking-wider flex items-center gap-2 ${
               isDarkMode 
                 ? "bg-[#D4F933]/10 border border-[#D4F933]/30 text-[#D4F933]" 
                 : "bg-[#0A0A0C] border border-black text-[#D4F933] shadow-xs"
             }`}>
-              UNDERGRADUATE
+              <span className="w-1.5 h-1.5 rounded-full bg-[#D4F933] animate-pulse" />
+              {t("aboutEduStatus") || "UNDERGRADUATE"}
             </div>
           </div>
         </div>
