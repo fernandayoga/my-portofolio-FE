@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useTheme } from "../context/ThemeContext";
 import { requestToGroq } from "../utils/groq";
 import ReactMarkdown from "react-markdown";
@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 const AskBot = () => {
   const { isDarkMode } = useTheme();
   const [input, setInput] = useState("");
+  const messagesEndRef = useRef(null);
   const [messages, setMessages] = useState(() => {
     const savedMessages = localStorage.getItem("smartTalkMessages");
     const savedTime = localStorage.getItem("smartTalkTimestamp");
@@ -36,6 +37,11 @@ const AskBot = () => {
       localStorage.removeItem("smartTalkTimestamp");
     }
   }, [messages]);
+
+  // Smooth auto-scroll to the bottom whenever messages change or loading state triggers
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, isLoading]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -117,7 +123,7 @@ const AskBot = () => {
                 key={message.id}
                 className={`flex ${
                   message.type === "user" ? "justify-end" : "justify-start"
-                }`}
+                } animate-message-pop`}
               >
                 <div
                   className={`max-w-[85%] sm:max-w-3xl px-4 sm:px-6 py-3.5 sm:py-4 rounded-xl text-sm leading-relaxed border ${
@@ -191,7 +197,7 @@ const AskBot = () => {
             ))}
 
             {isLoading && (
-              <div className="flex justify-start">
+              <div className="flex justify-start animate-message-pop">
                 <div
                   className={`px-5 py-3 rounded-xl border ${
                     isDarkMode ? "bg-[#121216] border-white/[0.08]" : "bg-white border-gray-200"
@@ -222,14 +228,16 @@ const AskBot = () => {
                 </div>
               </div>
             )}
+            {/* Smooth auto-scroll anchor */}
+            <div ref={messagesEndRef} />
           </div>
         </div>
       ) : (
         /* Empty State */
-        <div className="flex-1 flex flex-col items-center justify-center w-full px-2 sm:px-4 my-auto py-12 pt-20 xl:pt-12">
+        <div className="flex-1 flex flex-col items-center justify-center w-full px-2 sm:px-4 my-auto py-12 pt-20 xl:pt-12 animate-fade-in-up">
           <div className="flex flex-col items-center text-center max-w-xl">
             <div
-              className={`w-16 h-16 rounded-xl flex items-center justify-center mb-6 shadow-lg ${
+              className={`w-16 h-16 rounded-xl flex items-center justify-center mb-6 shadow-lg transition-transform duration-300 hover:scale-105 hover:-rotate-3 ${
                 isDarkMode
                   ? "bg-[#D4F933]/10 border border-[#D4F933]/30 text-[#D4F933]"
                   : "bg-[#0A0A0C] border border-black text-[#D4F933]"
@@ -250,7 +258,7 @@ const AskBot = () => {
                 isDarkMode ? "text-gray-400" : "text-gray-600"
               }`}
             >
-              Ask about Fernanda's technical stack, experience, repositories, and architectural methodologies.
+              {t("smartTalkSubtitle")}
             </p>
           </div>
         </div>
@@ -265,10 +273,11 @@ const AskBot = () => {
                 key={index}
                 type="button"
                 onClick={() => setInput(question)}
-                className={`px-3.5 py-2 rounded-lg font-mono text-xs transition-all border ${
+                style={{ animationDelay: `${index * 70 + 80}ms` }}
+                className={`px-3.5 py-2 rounded-lg font-mono text-xs transition-all duration-200 border cursor-pointer hover:-translate-y-0.5 active:translate-y-0 animate-fade-in-up ${
                   isDarkMode
                     ? "bg-[#121216] border-white/[0.08] text-gray-300 hover:border-[#D4F933]/50 hover:text-white"
-                    : "bg-gray-100 border-black/[0.08] text-gray-700 hover:border-[#2D5204] hover:bg-gray-200"
+                    : "bg-gray-100 border-black/[0.08] text-gray-700 hover:border-[#2D5204] hover:bg-gray-200 shadow-2xs"
                 }`}
               >
                 {question}
@@ -289,7 +298,7 @@ const AskBot = () => {
             }`}
           >
             <span
-              className={`font-mono text-xs mr-3 select-none font-bold ${
+              className={`font-mono text-xs mr-3 select-none font-bold animate-terminal-blink ${
                 isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"
               }`}
             >
@@ -311,17 +320,23 @@ const AskBot = () => {
             <button
               type="submit"
               disabled={!input.trim()}
-              className={`flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center transition-all ${
+              className={`group flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center transition-all duration-200 ${
                 input.trim()
                   ? isDarkMode
-                    ? "bg-[#D4F933] hover:bg-[#bce615] text-black font-bold shadow-xs"
-                    : "bg-[#0A0A0C] hover:bg-black text-[#D4F933] font-bold shadow-xs"
+                    ? "bg-[#D4F933] hover:bg-[#bce615] text-black font-bold shadow-xs hover:scale-105 active:scale-95 active:-translate-y-0.5 cursor-pointer"
+                    : "bg-[#0A0A0C] hover:bg-black text-[#D4F933] font-bold shadow-xs hover:scale-105 active:scale-95 active:-translate-y-0.5 cursor-pointer"
                   : isDarkMode
-                  ? "bg-[#181920] text-gray-600 cursor-not-allowed"
-                  : "bg-gray-200 text-gray-400 cursor-not-allowed"
+                  ? "bg-[#181920] text-gray-600 cursor-not-allowed scale-95"
+                  : "bg-gray-200 text-gray-400 cursor-not-allowed scale-95"
               }`}
             >
-              <i className="fas fa-arrow-up text-xs"></i>
+              <i
+                className={`fas fa-arrow-up text-xs transition-transform duration-200 ${
+                  input.trim()
+                    ? "group-hover:-translate-y-0.5 group-active:-translate-y-1"
+                    : ""
+                }`}
+              ></i>
             </button>
           </div>
         </form>

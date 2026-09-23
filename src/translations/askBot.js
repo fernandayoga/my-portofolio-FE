@@ -1,6 +1,7 @@
 export const askBotTranslations = {
   en: {
     smartTalkGreeting: "What do you want to ask?",
+    smartTalkSubtitle: "Ask about Fernanda's technical stack, experience, repositories, and architectural methodologies.",
     askAnything: "Ask me anything",
     suggestedQuestions1: "Tell me about Fernanda's background and experience",
     suggestedQuestions2: "What are Fernanda's main technical skills?",
@@ -13,6 +14,7 @@ export const askBotTranslations = {
   },
   id: {
     smartTalkGreeting: "Apa yang ingin Kamu tanyakan?",
+    smartTalkSubtitle: "Tanyakan tentang keahlian teknis, pengalaman, proyek, dan metodologi arsitektur Fernanda.",
     askAnything: "Tanyakan apa saja",
     suggestedQuestions1: "Ceritakan tentang latar belakang dan pengalaman Fernanda",
     suggestedQuestions2: "Apa saja keahlian teknis utama Fernanda?",

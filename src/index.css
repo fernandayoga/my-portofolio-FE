@@ -333,3 +333,18 @@ body.light-mode ::selection {
   animation: floatReaction 850ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
   pointer-events: none;
 }
+
+/* Terminal Cursor Subtle Blink */
+@keyframes terminalBlink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.25;
+  }
+}
+
+.animate-terminal-blink {
+  animation: terminalBlink 1.2s ease-in-out infinite;
+}
+
