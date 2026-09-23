@@ -287,14 +287,14 @@ const Contact = () => {
             <button
               type="submit"
               disabled={isLoading || isTransmitting}
-              className={`w-full py-3.5 rounded-lg font-mono text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-2 border overflow-hidden relative cursor-pointer active:scale-[0.99] ${
+              className={`w-full py-3.5 rounded-lg font-mono text-xs font-bold uppercase tracking-wider transition-all duration-200 flex items-center justify-center gap-2.5 border relative overflow-hidden group cursor-pointer active:scale-[0.98] ${
                 isLoading || isTransmitting
                   ? isDarkMode
                     ? "bg-[#D4F933]/40 border-transparent text-black cursor-not-allowed"
                     : "bg-black/50 border-transparent text-[#D4F933]/70 cursor-not-allowed"
                   : isDarkMode
-                  ? "bg-[#D4F933] hover:bg-[#bce615] text-black border-[#D4F933] shadow-md hover:shadow-[0_0_20px_rgba(212,249,51,0.3)]"
-                  : "bg-[#0A0A0C] hover:bg-black text-[#D4F933] border-black shadow-md hover:shadow-lg"
+                  ? "bg-[#D4F933] hover:bg-[#cbf028] text-black border-[#D4F933] hover:border-[#cbf028] hover:-translate-y-0.5"
+                  : "bg-[#0A0A0C] hover:bg-black text-[#D4F933] border-black hover:-translate-y-0.5"
               }`}
             >
               {isLoading ? (
@@ -308,10 +308,12 @@ const Contact = () => {
                     className={`fas fa-paper-plane text-xs transition-all duration-300 ease-out ${
                       isTransmitting
                         ? "translate-x-8 -translate-y-8 rotate-45 opacity-0 scale-75"
-                        : "translate-x-0 translate-y-0 rotate-0 opacity-100"
+                        : "group-hover:translate-x-1.5 group-hover:-translate-y-0.5 group-hover:rotate-12 transition-transform duration-200"
                     }`}
                   ></i>
-                  <span>{isTransmitting ? t("sending") : t("sendMessage")}</span>
+                  <span className="transition-all duration-200 group-hover:tracking-widest">
+                    {isTransmitting ? t("sending") : t("sendMessage")}
+                  </span>
                 </>
               )}
             </button>
@@ -391,65 +393,7 @@ const Contact = () => {
             ))}
           </div>
 
-          {/* Availability Telemetry Card (Option 4) */}
-          <div
-            className="animate-slide-in-left pt-1"
-            style={{ animationDelay: `${socialLinks.length * 130 + 100}ms` }}
-          >
-            <div
-              className={`p-5 rounded-xl border transition-all duration-300 ${
-                isDarkMode
-                  ? "bg-[#121216] border-white/[0.08] hover:border-white/[0.15]"
-                  : "bg-white border-black/[0.08] shadow-sm"
-              }`}
-            >
-              <div className="flex items-center justify-between mb-3 pb-3 border-b border-inherit">
-                <div className="flex items-center gap-2">
-                  <span className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#D4F933] opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-[#D4F933]"></span>
-                  </span>
-                  <span
-                    className={`font-mono text-[11px] font-bold tracking-wider uppercase ${
-                      isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"
-                    }`}
-                  >
-                    {t("availability")}
-                  </span>
-                </div>
-                <span className="font-mono text-[10px] text-gray-500 uppercase tracking-wider">
-                  STATUS // ACTIVE
-                </span>
-              </div>
 
-              <div className="space-y-2 font-mono text-xs">
-                <div className="flex items-center gap-2">
-                  <i
-                    className={`fas fa-check-circle text-[11px] ${
-                      isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"
-                    }`}
-                  ></i>
-                  <span className={isDarkMode ? "text-gray-300" : "text-gray-700"}>
-                    {t("availableFreelance")}
-                  </span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <i
-                    className={`fas fa-briefcase text-[11px] ${
-                      isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"
-                    }`}
-                  ></i>
-                  <span className={isDarkMode ? "text-gray-300" : "text-gray-700"}>
-                    {t("openFulltime")}
-                  </span>
-                </div>
-                <div className="flex items-center gap-2 pt-1 text-[11px] text-gray-500">
-                  <i className="far fa-clock text-[11px]"></i>
-                  <span>{t("responseTime")}</span>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
