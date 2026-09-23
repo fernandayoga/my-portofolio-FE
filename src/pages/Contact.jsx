@@ -107,26 +107,6 @@ const Contact = () => {
     >
       {/* Header Section */}
       <div className="mb-12">
-        <div className="flex items-center gap-3 mb-4">
-          <div
-            className={`w-2 h-2 rounded-full ${
-              isDarkMode ? "bg-[#D4F933]" : "bg-[#2D5204]"
-            }`}
-          ></div>
-          <span
-            className={`font-mono text-xs font-semibold tracking-widest uppercase ${
-              isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"
-            }`}
-          >
-            // COMMUNICATIONS DISPATCH
-          </span>
-          <div
-            className={`flex-1 h-[1px] ${
-              isDarkMode ? "bg-white/[0.08]" : "bg-black/[0.08]"
-            }`}
-          ></div>
-        </div>
-
         <h1
           className={`text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-3 ${
             isDarkMode ? "text-white" : "text-gray-900"
@@ -268,7 +248,7 @@ const Contact = () => {
 
         {/* Right Column: Social Channels */}
         <div className="lg:col-span-5 space-y-4">
-          <div className="flex items-center justify-between mb-2">
+          <div className="mb-2">
             <h2
               className={`text-lg sm:text-xl font-bold ${
                 isDarkMode ? "text-white" : "text-gray-900"
@@ -276,13 +256,6 @@ const Contact = () => {
             >
               {t("connectWithMe")}
             </h2>
-            <span
-              className={`font-mono text-[10px] uppercase tracking-widest font-semibold ${
-                isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"
-              }`}
-            >
-              // CHANNELS
-            </span>
           </div>
 
           <div className="space-y-3">
