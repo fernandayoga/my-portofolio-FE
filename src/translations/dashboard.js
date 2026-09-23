@@ -28,6 +28,9 @@ export const dashboardTranslations = {
     noOsStats: "No OS stats available.",
     topTech: "Top Technology Used (Last 7 Days)",
     noTechData: "No language data available.",
+    intensityLow: "Low",
+    intensityMedium: "Medium",
+    intensityHigh: "High",
 },
   id: {
     loadingDashboard : "Memuat analitik...",
@@ -56,5 +59,8 @@ export const dashboardTranslations = {
     noOsStats: "Statistik OS tidak tersedia.",
     topTech: "Teknologi Teratas (7 Hari Terakhir)",
     noTechData: "Data teknologi tidak tersedia.",
+    intensityLow: "Rendah",
+    intensityMedium: "Sedang",
+    intensityHigh: "Tinggi",
 }   
 };  

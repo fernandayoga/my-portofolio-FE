@@ -562,7 +562,29 @@ const Dashboard = () => {
     );
   }
 
-  // WakaTime Chart Configs
+  // WakaTime Chart Configs: Dynamic Weekdays Coding Hours by Intensity
+  const dailyHours =
+    wakatimeData?.summaries?.map(
+      (day) => (day.grand_total?.total_seconds || 0) / 3600
+    ) || [];
+
+  const maxDailyHours = Math.max(...dailyHours, 0.1);
+
+  // Dynamic color grading based on coding intensity (Rendah, Sedang, Tinggi)
+  const getWeekdayBarColor = (hours) => {
+    const ratio = hours / maxDailyHours;
+    if (ratio < 0.35 || hours < 1.8) {
+      // Rendah (Low) - Sky Blue
+      return isDarkMode ? "#38BDF8" : "#0284C7";
+    } else if (ratio < 0.70 || hours < 4.5) {
+      // Sedang (Medium) - Amber Orange
+      return isDarkMode ? "#FB923C" : "#D97706";
+    } else {
+      // Tinggi (High / Peak) - Signature Neon Lime
+      return isDarkMode ? "#D4F933" : "#16A34A";
+    }
+  };
+
   const weekdaysData = {
     labels:
       wakatimeData?.summaries?.map((day) =>
@@ -571,11 +593,8 @@ const Dashboard = () => {
     datasets: [
       {
         label: "Coding Hours",
-        data:
-          wakatimeData?.summaries?.map(
-            (day) => day.grand_total.total_seconds / 3600
-          ) || [],
-        backgroundColor: isDarkMode ? "#D4F933" : "#2D5204",
+        data: dailyHours,
+        backgroundColor: dailyHours.map(getWeekdayBarColor),
         borderRadius: 4,
       },
     ],
@@ -592,7 +611,14 @@ const Dashboard = () => {
   };
 
   const chartColors = [
-    '#D4F933', '#D0EEFF', '#bce615', '#94a3b8', '#64748b', '#38bdf8', '#10b981'
+    '#D4F933', // Neon Lime (e.g. Antigravity IDE)
+    '#38BDF8', // Sky Blue (e.g. Antigravity Desktop)
+    '#F43F5E', // Coral Rose (e.g. VS Code)
+    '#A855F7', // Electric Violet
+    '#FB923C', // Amber Orange
+    '#34D399', // Mint Emerald
+    '#FACC15', // Sunflower Gold
+    '#818CF8', // Indigo
   ];
 
   const editorsData = {
@@ -601,7 +627,8 @@ const Dashboard = () => {
       {
         data: wakatimeData?.editors?.map(e => e.total_seconds) || [],
         backgroundColor: chartColors,
-        borderWidth: 0,
+        borderColor: isDarkMode ? '#181920' : '#ffffff',
+        borderWidth: 2,
       }
     ]
   };
@@ -612,7 +639,8 @@ const Dashboard = () => {
       {
         data: wakatimeData?.operatingSystems?.map(o => o.total_seconds) || [],
         backgroundColor: chartColors,
-        borderWidth: 0,
+        borderColor: isDarkMode ? '#181920' : '#ffffff',
+        borderWidth: 2,
       }
     ]
   };
@@ -1000,26 +1028,47 @@ const Dashboard = () => {
               : "bg-white border-black/[0.08] shadow-md"
           }`}
         >
-          <div className="flex items-center gap-3 mb-6 pb-4 border-b border-inherit">
-            <div
-              className={`w-10 h-10 rounded-lg flex items-center justify-center transition-transform group-hover:scale-105 ${
-                isDarkMode
-                  ? "bg-white/[0.04] border border-white/[0.08] text-white"
-                  : "bg-white border border-black/[0.12] text-black shadow-sm"
-              }`}
-            >
-              <WakatimeIcon className="w-5 h-5" />
-            </div>
-            <div>
-              <h2
-                className={`text-lg sm:text-xl font-bold ${
-                  isDarkMode ? "text-white" : "text-gray-900"
+          <div className="flex flex-wrap sm:flex-nowrap items-center justify-between gap-3 mb-6 pb-4 border-b border-inherit">
+            <div className="flex items-center gap-3">
+              <div
+                className={`w-10 h-10 rounded-lg flex items-center justify-center transition-transform group-hover:scale-105 ${
+                  isDarkMode
+                    ? "bg-white/[0.04] border border-white/[0.08] text-white"
+                    : "bg-white border border-black/[0.12] text-black shadow-sm"
                 }`}
               >
-                {t("wakatimeTitle")}
-              </h2>
-              <p className="font-mono text-xs text-gray-400">{t("wakatimeSub")}</p>
+                <WakatimeIcon className="w-5 h-5" />
+              </div>
+              <div>
+                <h2
+                  className={`text-lg sm:text-xl font-bold ${
+                    isDarkMode ? "text-white" : "text-gray-900"
+                  }`}
+                >
+                  {t("wakatimeTitle")}
+                </h2>
+                <p className="font-mono text-xs text-gray-400">{t("wakatimeSub")}</p>
+              </div>
             </div>
+
+            <a
+              href="https://wakatime.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`group/waka inline-flex items-center gap-2 px-3 py-1.5 rounded-full font-mono text-[11px] font-semibold border transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer ${
+                isDarkMode
+                  ? "bg-[#181920] border-white/[0.1] text-gray-300 hover:text-white hover:border-[#D4F933]/50 hover:shadow-[0_0_14px_rgba(212,249,51,0.2)]"
+                  : "bg-gray-50 border-black/[0.08] text-gray-700 hover:text-black hover:border-black/30 shadow-xs hover:shadow-sm"
+              }`}
+              title="Powered by WakaTime"
+            >
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#D4F933] opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#D4F933]"></span>
+              </span>
+              <span>Powered by WakaTime</span>
+              <i className="fas fa-external-link-alt text-[9px] text-gray-400 group-hover/waka:text-[#D4F933] transition-colors"></i>
+            </a>
           </div>
 
           {wakatimeData?.error ? (
@@ -1163,13 +1212,31 @@ const Dashboard = () => {
                   isDarkMode ? "bg-[#181920] border-white/[0.06]" : "bg-white border-black/[0.08] shadow-sm hover:shadow-md"
                 }`}
               >
-                <p
-                  className={`font-mono text-xs uppercase tracking-wider font-semibold mb-4 ${
-                    isDarkMode ? "text-gray-300" : "text-gray-700"
-                  }`}
-                >
-                  {t("weekdays")}
-                </p>
+                <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
+                  <p
+                    className={`font-mono text-xs uppercase tracking-wider font-semibold ${
+                      isDarkMode ? "text-gray-300" : "text-gray-700"
+                    }`}
+                  >
+                    {t("weekdays")}
+                  </p>
+
+                  {/* Intensity Legend: Low / Medium / High */}
+                  <div className="flex items-center gap-3 font-mono text-[10px] select-none">
+                    <div className="flex items-center gap-1.5" title="< 1.8 hrs">
+                      <span className="w-2 h-2 rounded-full bg-[#38BDF8]"></span>
+                      <span className={isDarkMode ? "text-gray-400" : "text-gray-600"}>{t("intensityLow")}</span>
+                    </div>
+                    <div className="flex items-center gap-1.5" title="1.8 - 4.5 hrs">
+                      <span className="w-2 h-2 rounded-full bg-[#FB923C]"></span>
+                      <span className={isDarkMode ? "text-gray-400" : "text-gray-600"}>{t("intensityMedium")}</span>
+                    </div>
+                    <div className="flex items-center gap-1.5" title="> 4.5 hrs">
+                      <span className="w-2 h-2 rounded-full bg-[#D4F933]"></span>
+                      <span className={isDarkMode ? "text-gray-300 font-semibold" : "text-gray-800 font-semibold"}>{t("intensityHigh")}</span>
+                    </div>
+                  </div>
+                </div>
                 <div>
                   {wakatimeData?.summaries && wakatimeData.summaries.length > 0 ? (
                     <div className="h-48">
