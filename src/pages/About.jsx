@@ -133,7 +133,7 @@ const About = () => {
             className={`relative p-6 sm:p-8 rounded-xl border border-l-4 transition-all duration-300 group overflow-hidden hover:-translate-y-1 ${
               isDarkMode
                 ? "bg-[#121216] border-white/[0.08] border-l-[#D4F933] hover:border-[#D4F933]/50 hover:border-l-[#D4F933] hover:shadow-[0_12px_32px_-8px_rgba(212,249,51,0.12)]"
-                : "bg-white border-black/[0.08] border-l-[#2D5204] hover:border-[#2D5204]/60 hover:border-l-[#2D5204] hover:shadow-lg"
+                : "bg-white border-black/[0.08] border-l-[#2D5204] shadow-md hover:border-[#2D5204]/60 hover:border-l-[#2D5204] hover:shadow-xl"
             }`}
           >
             {/* Interactive Spotlight Radial Light */}
@@ -193,7 +193,7 @@ const About = () => {
             className={`relative p-6 rounded-xl border transition-all duration-300 flex flex-col sm:flex-row sm:items-center justify-between gap-6 group overflow-hidden ${
               isDarkMode
                 ? "bg-[#121216] border-white/[0.08] hover:border-[#D4F933]/50 hover:shadow-[0_12px_32px_-8px_rgba(212,249,51,0.14)]"
-                : "bg-white border-black/[0.08] hover:border-[#2D5204]/60 hover:shadow-lg"
+                : "bg-white border-black/[0.08] shadow-md hover:border-[#2D5204]/60 hover:shadow-xl"
             } hover:-translate-y-1`}
           >
             {/* Interactive Spotlight Radial Light */}
@@ -283,7 +283,7 @@ const About = () => {
                 className={`relative rounded-xl border transition-all duration-300 overflow-hidden group ${
                   isDarkMode
                     ? "bg-[#121216] border-white/[0.08] hover:border-[#D4F933]/50 hover:shadow-[0_12px_32px_-8px_rgba(212,249,51,0.12)]"
-                    : "bg-white border-black/[0.08] hover:border-[#2D5204]/60 hover:shadow-lg"
+                    : "bg-white border-black/[0.08] shadow-md hover:border-[#2D5204]/60 hover:shadow-xl"
                 } hover:-translate-y-1`}
               >
                 {/* Interactive Spotlight Radial Light */}
@@ -300,7 +300,7 @@ const About = () => {
                   <div className="flex flex-col sm:flex-row gap-5 items-start">
                     {/* Company Logo */}
                     <div className={`w-14 h-14 rounded-lg overflow-hidden border p-1 flex-shrink-0 transition-transform duration-200 group-hover:scale-105 ${
-                      isDarkMode ? "border-white/[0.1] bg-[#181920]" : "border-black/[0.1] bg-gray-50"
+                      isDarkMode ? "border-white/[0.1] bg-[#181920]" : "border-black/[0.1] bg-gray-50 shadow-2xs"
                     }`}>
                       <img
                         src={exp.image}
@@ -374,7 +374,7 @@ const About = () => {
                         className={`mt-4 px-3.5 py-2 rounded-lg font-mono text-xs font-semibold tracking-wider uppercase flex items-center gap-2 border transition-all duration-200 ${
                           isDarkMode
                             ? "bg-[#181920] border-white/[0.1] text-gray-300 hover:text-white hover:border-[#D4F933]/50 hover:bg-[#1f2129]"
-                            : "bg-gray-100 border-black/[0.1] text-gray-700 hover:text-black hover:border-[#2D5204] hover:bg-gray-200"
+                            : "bg-gray-100 border-black/[0.1] text-gray-700 hover:text-black hover:border-[#2D5204] hover:bg-gray-200 shadow-2xs"
                         }`}
                       >
                         <span>

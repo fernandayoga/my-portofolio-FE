@@ -150,7 +150,7 @@ const DetailProject = () => {
           className={`grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 p-4 sm:p-5 rounded-xl border mb-6 ${
             isDarkMode
               ? "bg-white/[0.02] border-white/[0.08]"
-              : "bg-black/[0.02] border-black/[0.08] shadow-xs"
+              : "bg-white border-black/[0.08] shadow-md"
           }`}
         >
           <div>
@@ -374,7 +374,7 @@ const DetailProject = () => {
           className={`p-6 sm:p-8 rounded-xl border transition-all duration-300 ${
             isDarkMode
               ? "bg-[#121216] border-white/[0.08] hover:border-white/[0.18]"
-              : "bg-white border-black/[0.08] hover:border-black/[0.18] shadow-sm"
+              : "bg-white border-black/[0.08] hover:border-black/[0.18] shadow-md"
           }`}
         >
           <p
@@ -412,7 +412,7 @@ const DetailProject = () => {
               className={`group rounded-xl p-6 border transition-all duration-300 hover:-translate-y-1 ${
                 isDarkMode
                   ? "bg-[#121216] border-white/[0.08] hover:border-[#D4F933]/40 hover:shadow-[0_8px_30px_rgba(0,0,0,0.5),0_0_20px_rgba(212,249,51,0.08)]"
-                  : "bg-white border-black/[0.08] hover:border-black/[0.22] shadow-sm hover:shadow-md"
+                  : "bg-white border-black/[0.08] hover:border-black/[0.22] shadow-md hover:shadow-xl"
               }`}
             >
               <h3
@@ -475,7 +475,7 @@ const DetailProject = () => {
               className={`group rounded-xl p-6 border transition-all duration-300 hover:-translate-y-1 ${
                 isDarkMode
                   ? "bg-[#121216] border-white/[0.08] hover:border-[#D4F933]/40 hover:shadow-[0_8px_30px_rgba(0,0,0,0.5),0_0_20px_rgba(212,249,51,0.08)]"
-                  : "bg-white border-black/[0.08] hover:border-black/[0.22] shadow-sm hover:shadow-md"
+                  : "bg-white border-black/[0.08] hover:border-black/[0.22] shadow-md hover:shadow-xl"
               }`}
             >
               <div className="flex items-start gap-4">
@@ -536,7 +536,7 @@ const DetailProject = () => {
                 className={`group rounded-xl overflow-hidden cursor-pointer border transition-all duration-300 hover:-translate-y-1 ${
                   isDarkMode
                     ? "bg-[#121216] border-white/[0.08] hover:border-[#D4F933]/40 hover:shadow-[0_12px_32px_rgba(0,0,0,0.6),0_0_24px_rgba(212,249,51,0.1)]"
-                    : "bg-white border-black/[0.08] hover:border-black/[0.22] shadow-sm hover:shadow-md"
+                    : "bg-white border-black/[0.08] hover:border-black/[0.22] shadow-md hover:shadow-xl"
                 }`}
               >
                 <div className="relative overflow-hidden aspect-video bg-[#181920]">
@@ -582,7 +582,7 @@ const DetailProject = () => {
               className={`group p-5 rounded-xl border transition-all duration-300 flex flex-col justify-between hover:-translate-y-1 ${
                 isDarkMode
                   ? "bg-[#121216] hover:bg-[#1A1A22] border-white/[0.08] hover:border-[#D4F933]/40 hover:shadow-[0_8px_24px_rgba(0,0,0,0.4),0_0_16px_rgba(212,249,51,0.06)]"
-                  : "bg-white hover:bg-slate-50 border-black/[0.08] hover:border-[#2D5204]/40 shadow-sm hover:shadow-md"
+                  : "bg-white hover:bg-slate-50 border-black/[0.08] hover:border-[#2D5204]/40 shadow-md hover:shadow-xl"
               }`}
             >
               <div className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-wider mb-2 text-gray-400 group-hover:text-[#D4F933] transition-colors">
@@ -604,7 +604,7 @@ const DetailProject = () => {
               className={`group p-5 rounded-xl border transition-all duration-300 flex flex-col justify-between text-right hover:-translate-y-1 ${
                 isDarkMode
                   ? "bg-[#121216] hover:bg-[#1A1A22] border-white/[0.08] hover:border-[#D4F933]/40 hover:shadow-[0_8px_24px_rgba(0,0,0,0.4),0_0_16px_rgba(212,249,51,0.06)]"
-                  : "bg-white hover:bg-slate-50 border-black/[0.08] hover:border-[#2D5204]/40 shadow-sm hover:shadow-md"
+                  : "bg-white hover:bg-slate-50 border-black/[0.08] hover:border-[#2D5204]/40 shadow-md hover:shadow-xl"
               }`}
             >
               <div className="flex items-center justify-end gap-2 font-mono text-[11px] uppercase tracking-wider mb-2 text-gray-400 group-hover:text-[#D4F933] transition-colors">

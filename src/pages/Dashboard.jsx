@@ -24,6 +24,19 @@ ChartJS.register(
   Legend
 );
 
+// WakaTime SVG Icon Component
+const WakatimeIcon = ({ className = "w-5 h-5" }) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    className={className}
+    role="img"
+    aria-label="WakaTime"
+  >
+    <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 2.824a9.176 9.176 0 1 1 0 18.352 9.176 9.176 0 0 1 0-18.352zm5.097 5.058c-.327 0-.61.19-.764.45-1.025 1.463-2.21 3.162-3.288 4.706l-.387-.636a.897.897 0 0 0-.759-.439.901.901 0 0 0-.788.492l-.357.581-1.992-2.943a.897.897 0 0 0-.761-.446c-.514 0-.903.452-.903.96a1 1 0 0 0 .207.61l2.719 3.96c.152.272.44.47.776.47a.91.91 0 0 0 .787-.483c.046-.071.23-.368.314-.504l.324.52c-.035-.047.076.113.087.13.024.031.054.059.078.085.019.019.04.036.058.052.036.033.08.056.115.08.025.016.052.028.076.04.029.015.06.024.088.035.058.025.122.027.18.04.031.004.064.003.092.005.29 0 .546-.149.707-.36 1.4-2 2.842-4.055 4.099-5.849A.995.995 0 0 0 18 8.842c0-.508-.389-.96-.903-.96" />
+  </svg>
+);
+
 // Interactive Spotlight Hover & Card Elevation Component
 const SpotlightCard = ({
   children,
@@ -644,11 +657,15 @@ const Dashboard = () => {
           className={`rounded-2xl p-6 sm:p-8 border transition-all duration-300 animate-fade-in-up animation-delay-75 ${
             isDarkMode
               ? "bg-[#121216] border-white/[0.08]"
-              : "bg-white border-black/[0.08] shadow-sm"
+              : "bg-white border-black/[0.08] shadow-md"
           }`}
         >
           <div className="flex items-center gap-3 mb-6 pb-4 border-b border-inherit">
-            <div className="w-10 h-10 bg-white/[0.04] border border-white/[0.08] rounded-lg flex items-center justify-center text-gray-200">
+            <div className={`w-10 h-10 rounded-lg flex items-center justify-center transition-transform group-hover:scale-105 ${
+              isDarkMode
+                ? "bg-white/[0.04] border border-white/[0.08] text-gray-200"
+                : "bg-[#0A0A0C] border border-black text-white shadow-xs"
+            }`}>
               <i className="fab fa-github text-lg"></i>
             </div>
             <div>
@@ -677,7 +694,7 @@ const Dashboard = () => {
                   className={`group/stat relative p-4 sm:p-5 rounded-xl border text-center ${
                     isDarkMode 
                       ? "bg-[#181920] border-white/[0.06]" 
-                      : "bg-gray-50 border-gray-200 shadow-xs"
+                      : "bg-white border-black/[0.08] shadow-sm hover:shadow-md"
                   }`}
                 >
                   <div className="pointer-events-none absolute inset-0 -translate-x-full group-hover/stat:translate-x-full transition-transform duration-700 ease-out z-10 bg-gradient-to-r from-transparent via-white/[0.12] to-transparent skew-x-[-20deg]" />
@@ -705,7 +722,7 @@ const Dashboard = () => {
                   className={`group/stat relative p-4 sm:p-5 rounded-xl border text-center ${
                     isDarkMode 
                       ? "bg-[#181920] border-white/[0.06]" 
-                      : "bg-gray-50 border-gray-200 shadow-xs"
+                      : "bg-white border-black/[0.08] shadow-sm hover:shadow-md"
                   }`}
                 >
                   <div className="pointer-events-none absolute inset-0 -translate-x-full group-hover/stat:translate-x-full transition-transform duration-700 ease-out z-10 bg-gradient-to-r from-transparent via-white/[0.12] to-transparent skew-x-[-20deg]" />
@@ -733,7 +750,7 @@ const Dashboard = () => {
                   className={`group/stat relative p-4 sm:p-5 rounded-xl border text-center ${
                     isDarkMode 
                       ? "bg-[#181920] border-white/[0.06]" 
-                      : "bg-gray-50 border-gray-200 shadow-xs"
+                      : "bg-white border-black/[0.08] shadow-sm hover:shadow-md"
                   }`}
                 >
                   <div className="pointer-events-none absolute inset-0 -translate-x-full group-hover/stat:translate-x-full transition-transform duration-700 ease-out z-10 bg-gradient-to-r from-transparent via-white/[0.12] to-transparent skew-x-[-20deg]" />
@@ -760,7 +777,7 @@ const Dashboard = () => {
                 elevation={true}
                 size={450}
                 className={`rounded-xl border overflow-x-auto p-4 ${
-                  isDarkMode ? "bg-[#0A0A0C] border-white/[0.08]" : "bg-gray-50 border-gray-200"
+                  isDarkMode ? "bg-[#0A0A0C] border-white/[0.08]" : "bg-white border-black/[0.08] shadow-sm hover:shadow-md"
                 }`}
               >
                 <GitHubCalendar
@@ -795,7 +812,7 @@ const Dashboard = () => {
                     elevation={true}
                     size={420}
                     className={`p-5 rounded-xl border ${
-                      isDarkMode ? "bg-[#181920] border-white/[0.06]" : "bg-gray-50 border-gray-200"
+                      isDarkMode ? "bg-[#181920] border-white/[0.06]" : "bg-white border-black/[0.08] shadow-sm hover:shadow-md"
                     }`}
                   >
                     <p
@@ -888,11 +905,15 @@ const Dashboard = () => {
                 className={`rounded-2xl p-6 sm:p-7 border ${
                   isDarkMode
                     ? "bg-[#121216] border-white/[0.08]"
-                    : "bg-white border-black/[0.08]"
+                    : "bg-white border-black/[0.08] shadow-sm hover:shadow-md"
                 }`}
               >
                 <div className="flex items-center gap-3 mb-6 pb-3 border-b border-inherit">
-                  <div className="w-9 h-9 bg-white/[0.04] border border-white/[0.08] rounded-lg flex items-center justify-center text-gray-200">
+                  <div className={`w-9 h-9 rounded-lg flex items-center justify-center ${
+                    isDarkMode
+                      ? "bg-white/[0.04] border border-white/[0.08] text-gray-200"
+                      : "bg-[#0A0A0C] border border-black text-white shadow-xs"
+                  }`}>
                     <i className="fab fa-github text-base"></i>
                   </div>
                   <div>
@@ -976,18 +997,18 @@ const Dashboard = () => {
           className={`rounded-2xl p-6 sm:p-8 border transition-all duration-300 animate-fade-in-up animation-delay-300 ${
             isDarkMode
               ? "bg-[#121216] border-white/[0.08]"
-              : "bg-white border-black/[0.08] shadow-sm"
+              : "bg-white border-black/[0.08] shadow-md"
           }`}
         >
           <div className="flex items-center gap-3 mb-6 pb-4 border-b border-inherit">
             <div
-              className={`w-10 h-10 rounded-lg flex items-center justify-center ${
+              className={`w-10 h-10 rounded-lg flex items-center justify-center transition-transform group-hover:scale-105 ${
                 isDarkMode
-                  ? "bg-[#D4F933]/10 border border-[#D4F933]/30 text-[#D4F933]"
-                  : "bg-[#0A0A0C] border border-black text-[#D4F933] shadow-xs"
+                  ? "bg-white/[0.04] border border-white/[0.08] text-white"
+                  : "bg-white border border-black/[0.12] text-black shadow-sm"
               }`}
             >
-              <i className="fas fa-code text-base"></i>
+              <WakatimeIcon className="w-5 h-5" />
             </div>
             <div>
               <h2
@@ -1013,7 +1034,7 @@ const Dashboard = () => {
                   className={`group/stat relative p-5 rounded-xl border text-center ${
                     isDarkMode 
                       ? "bg-[#181920] border-white/[0.06]" 
-                      : "bg-gray-50 border-gray-200 shadow-xs"
+                      : "bg-white border-black/[0.08] shadow-sm hover:shadow-md"
                   }`}
                 >
                   <div className="pointer-events-none absolute inset-0 -translate-x-full group-hover/stat:translate-x-full transition-transform duration-700 ease-out z-10 bg-gradient-to-r from-transparent via-white/[0.12] to-transparent skew-x-[-20deg]" />
@@ -1040,7 +1061,7 @@ const Dashboard = () => {
                   className={`group/stat relative p-5 rounded-xl border text-center ${
                     isDarkMode 
                       ? "bg-[#181920] border-white/[0.06]" 
-                      : "bg-gray-50 border-gray-200 shadow-xs"
+                      : "bg-white border-black/[0.08] shadow-sm hover:shadow-md"
                   }`}
                 >
                   <div className="pointer-events-none absolute inset-0 -translate-x-full group-hover/stat:translate-x-full transition-transform duration-700 ease-out z-10 bg-gradient-to-r from-transparent via-white/[0.12] to-transparent skew-x-[-20deg]" />
@@ -1069,7 +1090,7 @@ const Dashboard = () => {
                     elevation={true}
                     size={420}
                     className={`p-5 rounded-xl border ${
-                      isDarkMode ? "bg-[#181920] border-white/[0.06]" : "bg-gray-50 border-gray-200"
+                      isDarkMode ? "bg-[#181920] border-white/[0.06]" : "bg-white border-black/[0.08] shadow-sm hover:shadow-md"
                     }`}
                   >
                     <p
@@ -1139,7 +1160,7 @@ const Dashboard = () => {
                 elevation={true}
                 size={450}
                 className={`p-5 rounded-xl border ${
-                  isDarkMode ? "bg-[#181920] border-white/[0.06]" : "bg-gray-50 border-gray-200"
+                  isDarkMode ? "bg-[#181920] border-white/[0.06]" : "bg-white border-black/[0.08] shadow-sm hover:shadow-md"
                 }`}
               >
                 <p
@@ -1167,7 +1188,7 @@ const Dashboard = () => {
                   elevation={true}
                   size={360}
                   className={`p-5 rounded-xl border ${
-                    isDarkMode ? "bg-[#181920] border-white/[0.06]" : "bg-gray-50 border-gray-200"
+                    isDarkMode ? "bg-[#181920] border-white/[0.06]" : "bg-white border-black/[0.08] shadow-sm hover:shadow-md"
                   }`}
                 >
                   <p
@@ -1193,7 +1214,7 @@ const Dashboard = () => {
                   elevation={true}
                   size={360}
                   className={`p-5 rounded-xl border ${
-                    isDarkMode ? "bg-[#181920] border-white/[0.06]" : "bg-gray-50 border-gray-200"
+                    isDarkMode ? "bg-[#181920] border-white/[0.06]" : "bg-white border-black/[0.08] shadow-sm hover:shadow-md"
                   }`}
                 >
                   <p

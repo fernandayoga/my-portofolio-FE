@@ -441,7 +441,7 @@ const Home = () => {
               className={`relative p-6 rounded-xl border transition-all duration-300 flex flex-col justify-between group overflow-hidden ${
                 isDarkMode
                   ? "bg-[#121216] border-white/[0.08] hover:border-[#D4F933]/50 hover:shadow-[0_12px_32px_-8px_rgba(212,249,51,0.14)]"
-                  : "bg-white border-black/[0.08] hover:border-[#2D5204]/60 hover:shadow-lg"
+                  : "bg-white border-black/[0.08] shadow-md hover:border-[#2D5204]/60 hover:shadow-xl"
               } hover:-translate-y-1`}
             >
               {/* Interactive Spotlight Radial Light */}

@@ -95,8 +95,8 @@ const Sidebar = () => {
           className={`w-11 h-11 ${
             isDarkMode
               ? "bg-[#121216] border-white/[0.12] text-gray-200 hover:border-[#D4F933]/60 hover:text-[#D4F933]"
-              : "bg-white border-black/[0.12] text-gray-800 hover:border-[#D4F933]"
-          } border rounded-lg flex items-center justify-center transition-all shadow-sm pointer-events-auto`}
+              : "bg-white border-black/[0.12] text-gray-800 hover:border-[#D4F933] shadow-xs hover:shadow-sm"
+          } border rounded-lg flex items-center justify-center transition-all pointer-events-auto`}
         >
           <i className="fas fa-bars text-lg"></i>
         </button>
@@ -135,7 +135,7 @@ const Sidebar = () => {
         className={`fixed top-0 h-screen w-72 ${
           isDarkMode
             ? "bg-[#0A0A0C] border-white/[0.08] text-gray-300"
-            : "bg-white border-black/[0.08] text-gray-800"
+            : "bg-white border-black/[0.08] text-gray-800 shadow-[4px_0_24px_rgba(0,0,0,0.08)]"
         } border-r flex flex-col z-40 transition-transform duration-300 ${
           isOpen ? "translate-x-0" : "-translate-x-full xl:translate-x-0"
         }`}
@@ -148,7 +148,7 @@ const Sidebar = () => {
             className={`flex-1 flex items-center justify-center gap-2 py-1.5 px-3 rounded-md border text-xs font-mono transition-all duration-200 active:scale-95 active:-translate-y-0.5 cursor-pointer ${
               isDarkMode
                 ? "bg-[#121216] border-white/[0.1] text-gray-300 hover:border-[#D4F933]/40 hover:text-white"
-                : "bg-white border-black/[0.1] text-gray-800 hover:border-black hover:text-black shadow-2xs"
+                : "bg-white border-black/[0.1] text-gray-800 hover:border-black hover:text-black shadow-sm hover:shadow-md"
             }`}
             title={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
           >
@@ -181,7 +181,7 @@ const Sidebar = () => {
             className={`group flex-1 flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-md border text-xs font-mono transition-all duration-200 active:scale-95 active:-translate-y-0.5 cursor-pointer overflow-hidden ${
               isDarkMode
                 ? "bg-[#121216] border-white/[0.1] text-gray-300 hover:border-[#D4F933]/40 hover:text-white"
-                : "bg-white border-black/[0.1] text-gray-800 hover:border-black hover:text-black shadow-2xs"
+                : "bg-white border-black/[0.1] text-gray-800 hover:border-black hover:text-black shadow-sm hover:shadow-md"
             }`}
             title={currentLang === "EN" ? "Switch to Indonesian" : "Switch to English"}
           >
@@ -236,7 +236,7 @@ const Sidebar = () => {
                       : "bg-[#0A0A0C] text-white shadow-md translate-x-1.5 border border-black/[0.08]"
                     : isDarkMode
                     ? "text-gray-400 hover:text-white hover:bg-white/[0.04] hover:translate-x-1 border border-transparent"
-                    : "text-gray-600 hover:text-gray-900 hover:bg-gray-100 hover:translate-x-1 border border-transparent"
+                    : "text-gray-600 hover:text-gray-900 hover:bg-gray-100/90 hover:shadow-2xs hover:translate-x-1 border border-transparent"
                 }`}
               >
                 {/* Left Indicator Accent Bar */}
@@ -283,7 +283,7 @@ const Sidebar = () => {
                     : "bg-[#0A0A0C] border-black text-[#D4F933] shadow-md translate-x-1"
                   : isDarkMode
                   ? "bg-[#121216] border-white/[0.08] text-gray-300 hover:border-[#D4F933]/50 hover:text-[#D4F933] hover:translate-x-0.5"
-                  : "bg-white border-black/[0.08] text-gray-800 hover:border-black hover:text-black shadow-2xs hover:translate-x-0.5"
+                  : "bg-white border-black/[0.08] text-gray-800 hover:border-black hover:text-black shadow-sm hover:shadow-md hover:translate-x-0.5"
               }`}
             >
               {/* Left Indicator Accent Bar for AskBot */}
@@ -306,7 +306,7 @@ const Sidebar = () => {
                       ? "bg-[#D4F933]/10 border border-[#D4F933]/20 text-[#D4F933]"
                       : location.pathname === "/ask-bot"
                       ? "bg-[#D4F933]/20 text-[#D4F933]"
-                      : "bg-black/[0.05] border border-black/[0.1] text-gray-800"
+                      : "bg-black/[0.04] border border-black/[0.08] text-gray-800 shadow-2xs"
                   }`}
                 >
                   <i className="fas fa-terminal text-[11px]"></i>
@@ -317,7 +317,7 @@ const Sidebar = () => {
                 className={`text-[10px] px-2 py-0.5 rounded font-mono font-semibold transition-all duration-300 ${
                   isDarkMode || location.pathname === "/ask-bot"
                     ? "bg-[#D4F933]/15 text-[#D4F933] border border-[#D4F933]/30 scale-105"
-                    : "bg-gray-100 text-gray-700 border border-gray-200"
+                    : "bg-gray-100 text-gray-700 border border-gray-200/80 shadow-2xs"
                 }`}
               >
                 AI

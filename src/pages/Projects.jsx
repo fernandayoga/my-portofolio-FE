@@ -73,10 +73,10 @@ const Projects = () => {
         {filteredProjects.map((project, idx) => (
           <div
             key={project.id}
-            className={`group relative rounded-2xl border transition-colors duration-300 flex flex-col overflow-hidden [content-visibility:auto] [contain-intrinsic-size:500px] ${
+            className={`group relative rounded-2xl border transition-all duration-300 flex flex-col overflow-hidden [content-visibility:auto] [contain-intrinsic-size:500px] hover:-translate-y-1 ${
               isDarkMode
                 ? "bg-[#121216] hover:bg-[#1A1A22] border-white/[0.08] hover:border-white/[0.18]"
-                : "bg-white hover:bg-slate-50 border-black/[0.08] hover:border-black/[0.16] shadow-sm"
+                : "bg-white hover:bg-slate-50 border-black/[0.08] hover:border-black/[0.16] shadow-md hover:shadow-xl"
             }`}
           >
             {/* Visual Preview Framing */}

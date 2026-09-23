@@ -532,7 +532,7 @@ const ChatRoom = () => {
             className={`flex items-center gap-3 self-start sm:self-center px-3 py-2 rounded-xl border transition-all ${
               isDarkMode
                 ? "border-white/[0.08] bg-[#121216]/90 backdrop-blur-md shadow-lg"
-                : "border-black/[0.08] bg-white/90 backdrop-blur-md shadow-xs"
+                : "border-black/[0.08] bg-white/90 backdrop-blur-md shadow-md"
             }`}
           >
             <div className="relative">
@@ -708,14 +708,14 @@ const ChatRoom = () => {
                             isOwnMessage
                               ? isDarkMode
                                 ? "bg-[#181920] border-[#D4F933]/30 text-white rounded-tr-xs"
-                                : "bg-gray-900 border-gray-800 text-white rounded-tr-xs"
+                                : "bg-gray-900 border-gray-800 text-white rounded-tr-xs shadow-md"
                               : isOwner
                               ? isDarkMode
                                 ? "bg-[#121216] border-[#D4F933]/40 text-gray-100 rounded-tl-xs shadow-[0_0_12px_rgba(212,249,51,0.12)]"
-                                : "bg-white border-[#D4F933] text-gray-900 rounded-tl-xs shadow-sm"
+                                : "bg-white border-[#D4F933] text-gray-900 rounded-tl-xs shadow-md"
                               : isDarkMode
                               ? "bg-[#121216] border-white/[0.08] text-gray-200 rounded-tl-xs"
-                              : "bg-white border-black/[0.08] text-gray-900 rounded-tl-xs shadow-xs"
+                              : "bg-white border-black/[0.08] text-gray-900 rounded-tl-xs shadow-md"
                           }`}
                         >
                           <p className="whitespace-pre-wrap">{message.text}</p>
@@ -805,10 +805,10 @@ const ChatRoom = () => {
                                   userReacted
                                     ? isDarkMode
                                       ? "bg-[#D4F933]/15 border-[#D4F933]/50 text-[#D4F933] shadow-[0_0_8px_rgba(212,249,51,0.2)]"
-                                      : "bg-[#2D5204]/10 border-[#2D5204] text-[#2D5204]"
+                                      : "bg-[#2D5204]/10 border-[#2D5204] text-[#2D5204] shadow-xs"
                                     : isDarkMode
                                     ? "bg-white/[0.04] border-white/[0.08] text-gray-400 hover:border-white/[0.2]"
-                                    : "bg-gray-100 border-black/[0.08] text-gray-600 hover:border-black/[0.2]"
+                                    : "bg-gray-100 border-black/[0.08] text-gray-600 hover:border-black/[0.2] shadow-xs hover:shadow-sm"
                                 }`}
                                 title={`${count} reaction(s)`}
                               >
@@ -862,7 +862,7 @@ const ChatRoom = () => {
                         : "bg-gray-200 border-gray-400 text-black"
                       : isDarkMode
                       ? "bg-[#181920] border-white/[0.1] text-gray-400 hover:text-white hover:border-white/[0.25]"
-                      : "bg-gray-100 border-gray-300 text-gray-600 hover:text-black"
+                      : "bg-gray-100 border-gray-300 text-gray-600 hover:text-black shadow-xs hover:shadow-sm"
                   }`}
                   title="Emoji Picker"
                 >
@@ -922,8 +922,8 @@ const ChatRoom = () => {
                         ? "bg-[#181920] border border-[#D4F933] text-white placeholder-gray-500 shadow-[0_0_20px_rgba(212,249,51,0.22)] ring-1 ring-[#D4F933]/50"
                         : "bg-[#181920] border border-white/[0.1] text-white placeholder-gray-500 hover:border-white/[0.2]"
                       : isInputFocused
-                      ? "bg-white border border-[#2D5204] text-gray-900 placeholder-gray-400 shadow-[0_0_15px_rgba(0,0,0,0.08)] ring-1 ring-[#2D5204]/40"
-                      : "bg-gray-50 border border-gray-300 text-gray-900 placeholder-gray-400 hover:border-gray-400"
+                      ? "bg-white border border-[#2D5204] text-gray-900 placeholder-gray-400 shadow-md ring-1 ring-[#2D5204]/40"
+                      : "bg-gray-50 border border-gray-300 text-gray-900 placeholder-gray-400 hover:border-gray-400 shadow-xs hover:shadow-sm"
                   }`}
                 />
 
@@ -941,7 +941,7 @@ const ChatRoom = () => {
                     ? "bg-white/[0.05] text-gray-600 border border-white/[0.05] cursor-not-allowed"
                     : isDarkMode
                     ? "bg-[#D4F933] hover:bg-[#bce615] text-black border border-[#D4F933] hover:shadow-[0_0_24px_rgba(212,249,51,0.45)] hover:-translate-y-0.5 active:translate-y-0 active:scale-95 cursor-pointer"
-                    : "bg-[#0A0A0C] hover:bg-black text-[#D4F933] border border-black hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 active:scale-95 cursor-pointer"
+                    : "bg-[#0A0A0C] hover:bg-black text-[#D4F933] border border-black shadow-md hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 active:scale-95 cursor-pointer"
                 }`}
               >
                 {/* Holographic Sheen Sweep on Hover */}
@@ -996,7 +996,7 @@ const ChatRoom = () => {
                 className={`flex items-center gap-2 px-4 py-2.5 rounded-lg font-mono text-xs font-semibold transition-all border ${
                   isDarkMode
                     ? "bg-[#181920] border-white/[0.1] hover:border-[#D4F933] text-white"
-                    : "bg-white border-black/[0.1] hover:border-[#2D5204] text-gray-900"
+                    : "bg-white border-black/[0.1] hover:border-[#2D5204] text-gray-900 shadow-sm hover:shadow-md hover:-translate-y-0.5"
                 }`}
               >
                 <svg className="w-3.5 h-3.5" viewBox="0 0 24 24">
@@ -1014,7 +1014,7 @@ const ChatRoom = () => {
                 className={`flex items-center gap-2 px-4 py-2.5 rounded-lg font-mono text-xs font-semibold transition-all border ${
                   isDarkMode
                     ? "bg-[#181920] border-white/[0.1] hover:border-[#D4F933] text-gray-300 hover:text-white"
-                    : "bg-gray-100 border-black/[0.1] hover:border-[#2D5204] text-gray-800"
+                    : "bg-gray-100 border-black/[0.1] hover:border-[#2D5204] text-gray-800 shadow-sm hover:shadow-md hover:-translate-y-0.5"
                 } ${isAnonLoggingIn ? "opacity-75 cursor-not-allowed" : ""}`}
               >
                 {isAnonLoggingIn ? (

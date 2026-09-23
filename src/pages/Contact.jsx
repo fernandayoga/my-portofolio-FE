@@ -255,7 +255,7 @@ const Contact = () => {
           className={`lg:col-span-7 rounded-2xl p-6 sm:p-8 border ${
             isDarkMode
               ? "bg-[#121216] border-white/[0.08]"
-              : "bg-white border-black/[0.08] shadow-sm"
+              : "bg-white border-black/[0.08] shadow-md"
           }`}
         >
           <div className="flex items-center justify-between mb-6 pb-4 border-b border-inherit">
@@ -294,7 +294,7 @@ const Contact = () => {
                 className={`w-full px-4 py-3 rounded-lg font-mono text-xs focus:outline-none transition-all ${
                   isDarkMode
                     ? "bg-[#181920] text-white border border-white/[0.1] focus:border-[#D4F933]"
-                    : "bg-gray-50 text-gray-900 border border-gray-300 focus:border-[#2D5204]"
+                    : "bg-gray-50 text-gray-900 border border-gray-300 focus:border-[#2D5204] shadow-xs focus:shadow-sm"
                 }`}
                 placeholder="e.g. Alex Smith"
               />
@@ -317,7 +317,7 @@ const Contact = () => {
                 className={`w-full px-4 py-3 rounded-lg font-mono text-xs focus:outline-none transition-all ${
                   isDarkMode
                     ? "bg-[#181920] text-white border border-white/[0.1] focus:border-[#D4F933]"
-                    : "bg-gray-50 text-gray-900 border border-gray-300 focus:border-[#2D5204]"
+                    : "bg-gray-50 text-gray-900 border border-gray-300 focus:border-[#2D5204] shadow-xs focus:shadow-sm"
                 }`}
                 placeholder="e.g. alex@domain.com"
               />
@@ -340,7 +340,7 @@ const Contact = () => {
                 className={`w-full px-4 py-3 rounded-lg font-mono text-xs focus:outline-none transition-all resize-none ${
                   isDarkMode
                     ? "bg-[#181920] text-white border border-white/[0.1] focus:border-[#D4F933]"
-                    : "bg-gray-50 text-gray-900 border border-gray-300 focus:border-[#2D5204]"
+                    : "bg-gray-50 text-gray-900 border border-gray-300 focus:border-[#2D5204] shadow-xs focus:shadow-sm"
                 }`}
                 placeholder="Write your transmission..."
               ></textarea>
@@ -356,7 +356,7 @@ const Contact = () => {
                     : "bg-black/50 border-transparent text-[#D4F933]/70 cursor-not-allowed"
                   : isDarkMode
                   ? "bg-[#D4F933] hover:bg-[#cbf028] text-black border-[#D4F933] hover:border-[#cbf028] hover:-translate-y-0.5"
-                  : "bg-[#0A0A0C] hover:bg-black text-[#D4F933] border-black hover:-translate-y-0.5"
+                  : "bg-[#0A0A0C] hover:bg-black text-[#D4F933] border-black hover:-translate-y-0.5 shadow-md hover:shadow-xl"
               }`}
             >
               {isLoading ? (
@@ -405,10 +405,10 @@ const Contact = () => {
                   href={social.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`p-5 rounded-xl border transition-all duration-300 block group hover:-translate-y-0.5 ${
+                  className={`p-5 rounded-xl border transition-all duration-300 block group hover:-translate-y-1 ${
                     isDarkMode
                       ? "bg-[#121216] border-white/[0.08] hover:border-[#D4F933]/50 hover:bg-[#181920] hover:shadow-[0_0_20px_rgba(212,249,51,0.08)]"
-                      : "bg-white border-black/[0.08] hover:border-[#2D5204] hover:bg-gray-50 shadow-sm hover:shadow-md"
+                      : "bg-white border-black/[0.08] hover:border-[#2D5204] hover:bg-gray-50 shadow-md hover:shadow-xl"
                   }`}
                 >
                   <div className="flex items-center justify-between">

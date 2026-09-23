@@ -98,7 +98,7 @@ const AskBot = () => {
   return (
     <div
       className={`min-h-[100dvh] flex flex-col items-center justify-between px-3 sm:px-4 ${
-        isDarkMode ? "bg-[#0A0A0C]" : "bg-white"
+        isDarkMode ? "bg-[#0A0A0C]" : ""
       }`}
     >
       {/* Messages Area */}
@@ -111,7 +111,11 @@ const AskBot = () => {
           >
             <button
               onClick={handleClearChat}
-              className="font-mono text-xs px-3 py-1.5 rounded-md border border-red-500/30 text-red-400 hover:bg-red-500/10 transition-all flex items-center gap-1.5 cursor-pointer"
+              className={`font-mono text-xs px-3 py-1.5 rounded-md border transition-all flex items-center gap-1.5 cursor-pointer ${
+                isDarkMode
+                  ? "border-red-500/30 text-red-400 hover:bg-red-500/10"
+                  : "border-red-200 bg-white text-red-600 hover:bg-red-50 shadow-xs hover:shadow-sm"
+              }`}
             >
               <i className="fas fa-trash-alt text-[10px]"></i>
               <span>{t("clearHistory")}</span>
@@ -130,16 +134,22 @@ const AskBot = () => {
                     message.type === "user"
                       ? isDarkMode
                         ? "bg-[#181920] border-[#D4F933]/30 text-white"
-                        : "bg-gray-900 border-gray-800 text-white"
+                        : "bg-gray-900 border-gray-800 text-white shadow-md"
                       : isDarkMode
                       ? "bg-[#121216] border-white/[0.08] text-gray-200"
-                      : "bg-gray-50 border-gray-200 text-gray-900"
+                      : "bg-white border-black/[0.08] text-gray-900 shadow-md"
                   }`}
                 >
-                  <div className="flex items-center gap-2 mb-2 pb-1.5 border-b border-inherit font-mono text-[10px] text-gray-400">
+                  <div className="flex items-center gap-2 mb-2 pb-1.5 border-b border-inherit font-mono text-[10px]">
                     <span
                       className={`font-semibold tracking-wider ${
-                        isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"
+                        message.type === "user"
+                          ? isDarkMode
+                            ? "text-[#D4F933]"
+                            : "text-gray-200"
+                          : isDarkMode
+                          ? "text-[#D4F933]"
+                          : "text-gray-600 font-bold"
                       }`}
                     >
                       {message.type === "user" ? t("userQuery") : t("assistantResponse")}
@@ -152,7 +162,11 @@ const AskBot = () => {
                         pre: ({ node, ...props }) => (
                           <pre
                             {...props}
-                            className="whitespace-pre-wrap break-words overflow-x-auto max-w-full font-mono text-xs bg-black/50 p-3 rounded-lg border border-white/[0.08] my-3"
+                            className={`whitespace-pre-wrap break-words overflow-x-auto max-w-full font-mono text-xs p-3 rounded-lg border my-3 ${
+                              isDarkMode
+                                ? "bg-black/50 border-white/[0.08]"
+                                : "bg-gray-100 border-black/[0.08] shadow-xs"
+                            }`}
                           />
                         ),
                         code: ({ node, inline, ...props }) =>
@@ -162,7 +176,7 @@ const AskBot = () => {
                               className={`font-mono px-1.5 py-0.5 rounded text-xs ${
                                 isDarkMode
                                   ? "bg-white/[0.08] text-[#D4F933]"
-                                  : "bg-black/[0.08] text-[#2D5204]"
+                                  : "bg-black/[0.06] text-gray-800"
                               }`}
                             />
                           ) : (
@@ -200,30 +214,32 @@ const AskBot = () => {
               <div className="flex justify-start animate-message-pop">
                 <div
                   className={`px-5 py-3 rounded-xl border ${
-                    isDarkMode ? "bg-[#121216] border-white/[0.08]" : "bg-white border-gray-200"
+                    isDarkMode
+                      ? "bg-[#121216] border-white/[0.08]"
+                      : "bg-white border-black/[0.08] shadow-md"
                   }`}
                 >
                   <div
                     className={`flex items-center gap-2 font-mono text-xs ${
-                      isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"
+                      isDarkMode ? "text-[#D4F933]" : "text-gray-700"
                     }`}
                   >
                     <span
                       className={`w-1.5 h-1.5 rounded-full animate-bounce ${
-                        isDarkMode ? "bg-[#D4F933]" : "bg-[#2D5204]"
+                        isDarkMode ? "bg-[#D4F933]" : "bg-gray-800"
                       }`}
                     ></span>
                     <span
                       className={`w-1.5 h-1.5 rounded-full animate-bounce [animation-delay:0.2s] ${
-                        isDarkMode ? "bg-[#D4F933]" : "bg-[#2D5204]"
+                        isDarkMode ? "bg-[#D4F933]" : "bg-gray-800"
                       }`}
                     ></span>
                     <span
                       className={`w-1.5 h-1.5 rounded-full animate-bounce [animation-delay:0.4s] ${
-                        isDarkMode ? "bg-[#D4F933]" : "bg-[#2D5204]"
+                        isDarkMode ? "bg-[#D4F933]" : "bg-gray-800"
                       }`}
                     ></span>
-                    <span className="ml-1 text-[11px] text-gray-400">PROCESSING TRANSMISSION...</span>
+                    <span className="ml-1 text-[11px] text-gray-500">PROCESSING TRANSMISSION...</span>
                   </div>
                 </div>
               </div>
@@ -237,7 +253,7 @@ const AskBot = () => {
         <div className="flex-1 flex flex-col items-center justify-center w-full px-2 sm:px-4 my-auto py-12 pt-20 xl:pt-12 animate-fade-in-up">
           <div className="flex flex-col items-center text-center max-w-xl">
             <div
-              className={`w-16 h-16 rounded-xl flex items-center justify-center mb-6 shadow-lg transition-transform duration-300 hover:scale-105 hover:-rotate-3 ${
+              className={`w-16 h-16 rounded-xl flex items-center justify-center mb-6 shadow-md hover:shadow-xl transition-transform duration-300 hover:scale-105 hover:-rotate-3 ${
                 isDarkMode
                   ? "bg-[#D4F933]/10 border border-[#D4F933]/30 text-[#D4F933]"
                   : "bg-[#0A0A0C] border border-black text-[#D4F933]"
@@ -274,10 +290,10 @@ const AskBot = () => {
                 type="button"
                 onClick={() => setInput(question)}
                 style={{ animationDelay: `${index * 70 + 80}ms` }}
-                className={`px-3.5 py-2 rounded-lg font-mono text-xs transition-all duration-200 border cursor-pointer hover:-translate-y-0.5 active:translate-y-0 animate-fade-in-up ${
+                className={`px-3.5 py-2 rounded-lg font-mono text-xs transition-all duration-200 border cursor-pointer hover:-translate-y-1 active:translate-y-0 animate-fade-in-up ${
                   isDarkMode
                     ? "bg-[#121216] border-white/[0.08] text-gray-300 hover:border-[#D4F933]/50 hover:text-white"
-                    : "bg-gray-100 border-black/[0.08] text-gray-700 hover:border-[#2D5204] hover:bg-gray-200 shadow-2xs"
+                    : "bg-white border-black/[0.08] text-gray-800 hover:border-black/30 hover:bg-gray-50 shadow-sm hover:shadow-md"
                 }`}
               >
                 {question}
@@ -294,12 +310,12 @@ const AskBot = () => {
             className={`flex items-center px-4 py-3 rounded-xl border transition-all ${
               isDarkMode
                 ? "bg-[#121216] border-white/[0.12] focus-within:border-[#D4F933]"
-                : "bg-white border-black/[0.12] focus-within:border-[#2D5204] shadow-sm"
+                : "bg-white border-black/[0.12] focus-within:border-black/40 shadow-md focus-within:shadow-lg"
             }`}
           >
             <span
               className={`font-mono text-xs mr-3 select-none font-bold animate-terminal-blink ${
-                isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"
+                isDarkMode ? "text-[#D4F933]" : "text-gray-800"
               }`}
             >
               &gt;
@@ -324,7 +340,7 @@ const AskBot = () => {
                 input.trim()
                   ? isDarkMode
                     ? "bg-[#D4F933] hover:bg-[#bce615] text-black font-bold shadow-xs hover:scale-105 active:scale-95 active:-translate-y-0.5 cursor-pointer"
-                    : "bg-[#0A0A0C] hover:bg-black text-[#D4F933] font-bold shadow-xs hover:scale-105 active:scale-95 active:-translate-y-0.5 cursor-pointer"
+                    : "bg-[#0A0A0C] hover:bg-black text-[#D4F933] font-bold shadow-md hover:shadow-lg hover:scale-105 active:scale-95 active:-translate-y-0.5 cursor-pointer"
                   : isDarkMode
                   ? "bg-[#181920] text-gray-600 cursor-not-allowed scale-95"
                   : "bg-gray-200 text-gray-400 cursor-not-allowed scale-95"

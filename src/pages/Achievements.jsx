@@ -97,7 +97,7 @@ const Achievements = () => {
             className={`w-full px-4 py-2.5 pl-10 pr-9 rounded-lg border font-mono text-xs outline-none focus:outline-none focus-visible:outline-none ring-0 focus:ring-0 transition-colors duration-200 ${
               isDarkMode
                 ? "bg-[#121216] border-white/[0.1] text-white placeholder-gray-500 focus:border-[#D4F933] caret-[#D4F933]"
-                : "bg-white border-black/[0.1] text-gray-900 placeholder-gray-400 focus:border-[#2D5204] caret-[#2D5204] shadow-xs"
+                : "bg-white border-black/[0.1] text-gray-900 placeholder-gray-400 focus:border-[#2D5204] caret-[#2D5204] shadow-sm hover:shadow-md focus:shadow-md"
             }`}
           />
           <i
@@ -129,7 +129,7 @@ const Achievements = () => {
           className={`font-mono text-xs px-3 py-1.5 rounded self-start sm:self-center font-semibold ${
             isDarkMode
               ? "text-[#D4F933] bg-[#D4F933]/10 border border-[#D4F933]/30"
-              : "bg-[#0A0A0C] border border-black text-[#D4F933] shadow-xs"
+              : "bg-[#0A0A0C] border border-black text-[#D4F933] shadow-sm"
           }`}
         >
           TOTAL: {filteredAchievements.length}{filteredAchievements.length !== achievements.length ? ` / ${achievements.length}` : ""}
@@ -181,7 +181,7 @@ const Achievements = () => {
             className={`group relative rounded-xl overflow-hidden border transition-all duration-300 cursor-pointer flex flex-col hover:-translate-y-1.5 [content-visibility:auto] [contain-intrinsic-size:380px] ${
               isDarkMode
                 ? "bg-[#121216] border-white/[0.08] hover:border-[#D4F933]/50 hover:shadow-[0_12px_32px_-8px_rgba(212,249,51,0.12)]"
-                : "bg-white border-black/[0.08] hover:border-[#2D5204]/60 hover:shadow-xl"
+                : "bg-white border-black/[0.08] shadow-md hover:border-[#2D5204]/60 hover:shadow-xl"
             }`}
           >
             {/* Interactive Spotlight Radial Light */}
