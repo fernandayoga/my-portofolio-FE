@@ -137,6 +137,9 @@ const Contact = () => {
       title: "Instagram",
       description: t("deskIg"),
       buttonText: t("buttonIg"),
+      hoverColor: "group-hover:text-[#E1306C]",
+      hoverBorder: "group-hover:border-[#E1306C]/40",
+      hoverBg: "group-hover:bg-[#E1306C]/10",
     },
     {
       icon: "fab fa-linkedin-in",
@@ -145,6 +148,9 @@ const Contact = () => {
       title: "LinkedIn",
       description: t("deskLinkedin"),
       buttonText: t("buttonLinkedin"),
+      hoverColor: "group-hover:text-[#0A66C2]",
+      hoverBorder: "group-hover:border-[#0A66C2]/40",
+      hoverBg: "group-hover:bg-[#0A66C2]/10",
     },
     {
       icon: "fab fa-tiktok",
@@ -153,6 +159,10 @@ const Contact = () => {
       title: "TikTok",
       description: t("deskTt"),
       buttonText: t("buttonTt"),
+      hoverColor: "group-hover:text-[#FE2C55]",
+      hoverBorder: "group-hover:border-[#FE2C55]/40",
+      hoverBg: "group-hover:bg-[#FE2C55]/10",
+      extraIcon: "group-hover:drop-shadow-[1.5px_0_0_#25F4EE]",
     },
     {
       icon: "fab fa-github",
@@ -161,6 +171,9 @@ const Contact = () => {
       title: "GitHub",
       description: t("deskGithub"),
       buttonText: t("buttonGithub"),
+      hoverColor: isDarkMode ? "group-hover:text-white" : "group-hover:text-[#24292F]",
+      hoverBorder: isDarkMode ? "group-hover:border-white/40" : "group-hover:border-black/30",
+      hoverBg: isDarkMode ? "group-hover:bg-white/[0.08]" : "group-hover:bg-black/[0.05]",
     },
   ];
 
@@ -381,11 +394,15 @@ const Contact = () => {
                     <div
                       className={`w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0 transition-all duration-300 group-hover:scale-110 group-hover:rotate-3 ${
                         isDarkMode
-                          ? "bg-white/[0.03] border border-white/[0.08] text-gray-300 group-hover:text-[#D4F933] group-hover:border-[#D4F933]/40 group-hover:shadow-[0_0_12px_rgba(212,249,51,0.25)]"
-                          : "bg-black/[0.03] border border-black/[0.08] text-gray-700 group-hover:text-[#2D5204] group-hover:border-[#2D5204]/40 group-hover:shadow-sm"
-                      }`}
+                          ? "bg-white/[0.03] border border-white/[0.08] text-gray-300"
+                          : "bg-black/[0.03] border border-black/[0.08] text-gray-700"
+                      } ${social.hoverBorder} ${social.hoverBg}`}
                     >
-                      <i className={`${social.icon} text-xl transition-colors duration-200`}></i>
+                      <i
+                        className={`${social.icon} text-xl transition-all duration-300 ${social.hoverColor} ${
+                          social.extraIcon || ""
+                        }`}
+                      ></i>
                     </div>
                   </div>
                 </a>
