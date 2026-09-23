@@ -132,11 +132,11 @@ const AskBot = () => {
                 >
                   <div className="flex items-center gap-2 mb-2 pb-1.5 border-b border-inherit font-mono text-[10px] text-gray-400">
                     <span
-                      className={`font-semibold ${
+                      className={`font-semibold tracking-wider ${
                         isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"
                       }`}
                     >
-                      {message.type === "user" ? "// USER QUERY" : "// ASSISTANT RESPONSE"}
+                      {message.type === "user" ? t("userQuery") : t("assistantResponse")}
                     </span>
                   </div>
 

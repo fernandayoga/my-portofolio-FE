@@ -8,6 +8,8 @@ export const askBotTranslations = {
     suggestedQuestions4: "What technologies were used in this portfolio web?",
     suggestedQuestions5: "How can I contact or connect with Fernanda?",
     clearHistory: "Clear History",
+    userQuery: "USER QUERY",
+    assistantResponse: "ASSISTANT RESPONSE",
   },
   id: {
     smartTalkGreeting: "Apa yang ingin Kamu tanyakan?",
@@ -18,5 +20,7 @@ export const askBotTranslations = {
     suggestedQuestions4: "Teknologi apa saja yang digunakan dalam web portofolio ini?",
     suggestedQuestions5: "Bagaimana cara menghubungi atau terhubung dengan Fernanda?",
     clearHistory: "Hapus Riwayat",
+    userQuery: "PERTANYAAN PENGGUNA",
+    assistantResponse: "JAWABAN ASISTEN",
   },
 };
