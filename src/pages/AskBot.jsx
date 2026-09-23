@@ -98,7 +98,11 @@ const AskBot = () => {
       {/* Messages Area */}
       {messages.length > 0 ? (
         <div className="w-full max-w-4xl flex-1 flex flex-col pt-16 xl:pt-6 pb-4 overflow-hidden">
-          <div className="flex justify-end pb-3 px-1">
+          <div
+            className={`flex items-center justify-end pb-3 mb-4 px-1 border-b ${
+              isDarkMode ? "border-white/[0.08]" : "border-black/[0.08]"
+            }`}
+          >
             <button
               onClick={handleClearChat}
               className="font-mono text-xs px-3 py-1.5 rounded-md border border-red-500/30 text-red-400 hover:bg-red-500/10 transition-all flex items-center gap-1.5 cursor-pointer"
