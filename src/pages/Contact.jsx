@@ -137,9 +137,23 @@ const Contact = () => {
       title: "Instagram",
       description: t("deskIg"),
       buttonText: t("buttonIg"),
-      hoverColor: "group-hover:text-[#E1306C]",
       hoverBorder: "group-hover:border-[#E1306C]/40",
-      hoverBg: "group-hover:bg-[#E1306C]/10",
+      officialLogo: (
+        <svg viewBox="0 0 24 24" className="w-7 h-7 rounded-lg overflow-hidden shadow-sm">
+          <defs>
+            <radialGradient id="ig-grad-contact" cx="0.2" cy="1" r="1.3">
+              <stop offset="0%" stopColor="#FFDD55" />
+              <stop offset="25%" stopColor="#FF543E" />
+              <stop offset="50%" stopColor="#C837AB" />
+              <stop offset="100%" stopColor="#3771C8" />
+            </radialGradient>
+          </defs>
+          <rect width="24" height="24" rx="6" fill="url(#ig-grad-contact)" />
+          <rect x="5" y="5" width="14" height="14" rx="4" fill="none" stroke="#FFFFFF" strokeWidth="1.8" />
+          <circle cx="12" cy="12" r="3.3" fill="none" stroke="#FFFFFF" strokeWidth="1.8" />
+          <circle cx="16" cy="8" r="0.9" fill="#FFFFFF" />
+        </svg>
+      ),
     },
     {
       icon: "fab fa-linkedin-in",
@@ -148,9 +162,16 @@ const Contact = () => {
       title: "LinkedIn",
       description: t("deskLinkedin"),
       buttonText: t("buttonLinkedin"),
-      hoverColor: "group-hover:text-[#0A66C2]",
       hoverBorder: "group-hover:border-[#0A66C2]/40",
-      hoverBg: "group-hover:bg-[#0A66C2]/10",
+      officialLogo: (
+        <svg viewBox="0 0 24 24" className="w-7 h-7 rounded-md overflow-hidden shadow-sm">
+          <rect width="24" height="24" rx="4" fill="#0A66C2" />
+          <path
+            fill="#FFFFFF"
+            d="M7.1 8.5H4.2V19h2.9V8.5zM5.65 4.8c-.95 0-1.65.75-1.65 1.65s.7 1.65 1.65 1.65 1.65-.75 1.65-1.65-.7-1.65-1.65-1.65zM19.8 13.3c0-3-1.6-4.4-3.75-4.4-1.75 0-2.5.95-2.95 1.65V8.5h-2.9c.04.8 0 10.5 0 10.5h2.9v-5.85c0-.3.02-.65.12-.9.25-.65.85-1.3 1.85-1.3 1.3 0 1.83 1 1.83 2.45V19h2.9v-5.7z"
+          />
+        </svg>
+      ),
     },
     {
       icon: "fab fa-tiktok",
@@ -159,10 +180,23 @@ const Contact = () => {
       title: "TikTok",
       description: t("deskTt"),
       buttonText: t("buttonTt"),
-      hoverColor: "group-hover:text-[#FE2C55]",
       hoverBorder: "group-hover:border-[#FE2C55]/40",
-      hoverBg: "group-hover:bg-[#FE2C55]/10",
-      extraIcon: "group-hover:drop-shadow-[1.5px_0_0_#25F4EE]",
+      officialLogo: (
+        <svg viewBox="0 0 24 24" className="w-7 h-7 rounded-md overflow-hidden bg-black shadow-sm">
+          <path
+            fill="#25F4EE"
+            d="M17.5 7.1c-1.3-.1-2.4-.7-3.2-1.6v6.6c0 2.6-2.1 4.7-4.7 4.7s-4.7-2.1-4.7-4.7 2.1-4.7 4.7-4.7c.3 0 .7.1 1 .2V5.1c-.3-.1-.7-.1-1-.1-3.9 0-7.1 3.2-7.1 7.1s3.2 7.1 7.1 7.1 7.1-3.2 7.1-7.1V7.7c1.2.9 2.6 1.4 4.1 1.4V7.1h-3.2z"
+          />
+          <path
+            fill="#FE2C55"
+            d="M18.3 7.8c-1.3-.1-2.4-.7-3.2-1.6v6.6c0 2.6-2.1 4.7-4.7 4.7s-4.7-2.1-4.7-4.7 2.1-4.7 4.7-4.7c.3 0 .7.1 1 .2V5.8c-.3-.1-.7-.1-1-.1-3.9 0-7.1 3.2-7.1 7.1s3.2 7.1 7.1 7.1 7.1-3.2 7.1-7.1V8.4c1.2.9 2.6 1.4 4.1 1.4V7.8h-3.2z"
+          />
+          <path
+            fill="#FFFFFF"
+            d="M17.9 7.4c-1.3-.1-2.4-.7-3.2-1.6v6.6c0 2.6-2.1 4.7-4.7 4.7s-4.7-2.1-4.7-4.7 2.1-4.7 4.7-4.7c.3 0 .7.1 1 .2V5.4c-.3-.1-.7-.1-1-.1-3.9 0-7.1 3.2-7.1 7.1s3.2 7.1 7.1 7.1 7.1-3.2 7.1-7.1V8c1.2.9 2.6 1.4 4.1 1.4V7.4h-3.2z"
+          />
+        </svg>
+      ),
     },
     {
       icon: "fab fa-github",
@@ -171,9 +205,22 @@ const Contact = () => {
       title: "GitHub",
       description: t("deskGithub"),
       buttonText: t("buttonGithub"),
-      hoverColor: isDarkMode ? "group-hover:text-white" : "group-hover:text-[#24292F]",
       hoverBorder: isDarkMode ? "group-hover:border-white/40" : "group-hover:border-black/30",
-      hoverBg: isDarkMode ? "group-hover:bg-white/[0.08]" : "group-hover:bg-black/[0.05]",
+      officialLogo: (
+        <svg
+          viewBox="0 0 24 24"
+          className={`w-7 h-7 rounded-full overflow-hidden p-0.5 shadow-sm ${
+            isDarkMode ? "bg-white text-black" : "bg-black text-white"
+          }`}
+        >
+          <path
+            fill="currentColor"
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
+          />
+        </svg>
+      ),
     },
   ];
 
@@ -392,17 +439,23 @@ const Contact = () => {
                     </div>
 
                     <div
-                      className={`w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0 transition-all duration-300 group-hover:scale-110 group-hover:rotate-3 ${
+                      className={`relative w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0 transition-all duration-300 group-hover:scale-110 group-hover:rotate-3 overflow-hidden ${
                         isDarkMode
-                          ? "bg-white/[0.03] border border-white/[0.08] text-gray-300"
-                          : "bg-black/[0.03] border border-black/[0.08] text-gray-700"
-                      } ${social.hoverBorder} ${social.hoverBg}`}
+                          ? "bg-white/[0.03] border border-white/[0.08]"
+                          : "bg-black/[0.03] border border-black/[0.08]"
+                      } ${social.hoverBorder}`}
                     >
+                      {/* Monochrome Icon (Default Unhovered State) */}
                       <i
-                        className={`${social.icon} text-xl transition-all duration-300 ${social.hoverColor} ${
-                          social.extraIcon || ""
-                        }`}
+                        className={`${social.icon} text-xl transition-all duration-300 absolute ${
+                          isDarkMode ? "text-gray-400" : "text-gray-600"
+                        } group-hover:opacity-0 group-hover:scale-50`}
                       ></i>
+
+                      {/* Authentic Official Brand Logo (Hover State) */}
+                      <div className="absolute transition-all duration-300 opacity-0 scale-50 group-hover:opacity-100 group-hover:scale-100 flex items-center justify-center pointer-events-none">
+                        {social.officialLogo}
+                      </div>
                     </div>
                   </div>
                 </a>
