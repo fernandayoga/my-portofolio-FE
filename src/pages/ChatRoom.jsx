@@ -665,7 +665,7 @@ const ChatRoom = () => {
                     <div className="flex items-center gap-1.5 mb-1 px-1">
                       {/* Special Creator / Developer Badge (Option 6) */}
                       {isOwner && (
-                        <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[9px] font-mono font-bold tracking-wider uppercase bg-[#D4F933]/15 text-[#D4F933] border border-[#D4F933]/40 shadow-[0_0_8px_rgba(212,249,51,0.25)] mr-0.5">
+                        <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[9px] font-mono font-bold tracking-wider uppercase bg-[#D4F933]/15 text-[#D4F933] border border-[#D4F933]/40 mr-0.5">
                           <i className="fas fa-crown text-[8px] text-[#D4F933]"></i>
                           <span>{t("creatorBadge")}</span>
                         </span>
