@@ -67,7 +67,6 @@ const Contact = () => {
       title: "Instagram",
       description: t("deskIg"),
       buttonText: t("buttonIg"),
-      code: "IG // 01",
     },
     {
       icon: "fab fa-linkedin-in",
@@ -76,7 +75,6 @@ const Contact = () => {
       title: "LinkedIn",
       description: t("deskLinkedin"),
       buttonText: t("buttonLinkedin"),
-      code: "IN // 02",
     },
     {
       icon: "fab fa-tiktok",
@@ -85,7 +83,6 @@ const Contact = () => {
       title: "TikTok",
       description: t("deskTt"),
       buttonText: t("buttonTt"),
-      code: "TT // 03",
     },
     {
       icon: "fab fa-github",
@@ -94,7 +91,6 @@ const Contact = () => {
       title: "GitHub",
       description: t("deskGithub"),
       buttonText: t("buttonGithub"),
-      code: "GH // 04",
     },
   ];
 
@@ -273,16 +269,6 @@ const Contact = () => {
               >
                 <div className="flex items-center justify-between">
                   <div className="flex-1 pr-4">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span
-                        className={`font-mono text-[10px] font-semibold ${
-                          isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"
-                        }`}
-                      >
-                        {social.code}
-                      </span>
-                    </div>
-
                     <h3
                       className={`text-base font-bold transition-colors ${
                         isDarkMode
