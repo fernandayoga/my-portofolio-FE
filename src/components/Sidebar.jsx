@@ -221,35 +221,42 @@ const Sidebar = () => {
                 key={item.path}
                 to={item.path}
                 onClick={closeSidebar}
-                className={`group flex items-center gap-3.5 px-4 py-3.5 rounded-xl mb-2.5 text-base font-medium transition-all ${
+                className={`relative group flex items-center gap-3.5 px-4 py-3.5 rounded-xl mb-2.5 text-base font-medium transition-all duration-300 overflow-hidden active:scale-[0.98] ${
                   isActive
                     ? isDarkMode
-                      ? "bg-[#181920] text-white shadow-sm"
-                      : "bg-[#0A0A0C] text-white shadow-md"
+                      ? "bg-[#181920] text-white shadow-sm translate-x-1.5 border border-white/[0.08]"
+                      : "bg-[#0A0A0C] text-white shadow-md translate-x-1.5 border border-black/[0.08]"
                     : isDarkMode
-                    ? "text-gray-400 hover:text-white hover:bg-white/[0.04]"
-                    : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+                    ? "text-gray-400 hover:text-white hover:bg-white/[0.04] hover:translate-x-1 border border-transparent"
+                    : "text-gray-600 hover:text-gray-900 hover:bg-gray-100 hover:translate-x-1 border border-transparent"
                 }`}
               >
-                <i
-                  className={`fas ${item.icon} w-5 text-center text-base transition-colors ${
+                {/* Left Indicator Accent Bar */}
+                <span
+                  className={`absolute left-0 top-1/2 -translate-y-1/2 w-1 rounded-r-full transition-all duration-300 ease-out ${
                     isActive
-                      ? "text-[#D4F933]"
+                      ? "h-6 bg-[#D4F933] opacity-100 scale-y-100"
+                      : "h-0 bg-transparent opacity-0 scale-y-0 group-hover:h-3 group-hover:bg-[#D4F933]/50 group-hover:opacity-100 group-hover:scale-y-100"
+                  }`}
+                />
+
+                <i
+                  className={`fas ${item.icon} w-5 text-center text-base transition-all duration-300 ${
+                    isActive
+                      ? "text-[#D4F933] scale-110 -rotate-2"
                       : isDarkMode
-                      ? "text-gray-400 group-hover:text-gray-200"
-                      : "text-gray-500 group-hover:text-gray-800"
+                      ? "text-gray-400 group-hover:text-gray-200 group-hover:scale-105"
+                      : "text-gray-500 group-hover:text-gray-800 group-hover:scale-105"
                   }`}
                 ></i>
-                <span className="flex-1">{item.label}</span>
+                <span className="flex-1 transition-colors duration-300">{item.label}</span>
                 <i
-                  className={`fas fa-chevron-right ml-auto text-xs transition-all ${
+                  className={`fas fa-chevron-right ml-auto text-xs transition-all duration-300 ${
                     isActive
-                      ? isDarkMode
-                        ? "text-[#D4F933] translate-x-0.5"
-                        : "text-white translate-x-0.5"
+                      ? "text-[#D4F933] translate-x-1 opacity-100 scale-110"
                       : isDarkMode
-                      ? "text-gray-600 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5"
-                      : "text-gray-400 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5"
+                      ? "text-gray-600 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0"
+                      : "text-gray-400 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0"
                   }`}
                 ></i>
               </Link>
@@ -261,19 +268,32 @@ const Sidebar = () => {
             <Link
               to="/ask-bot"
               onClick={closeSidebar}
-              className={`group w-[85%] px-3.5 py-2 rounded-lg font-medium text-sm transition-all flex items-center justify-between border ${
+              className={`group relative w-[85%] px-3.5 py-2.5 rounded-lg font-medium text-sm transition-all duration-300 flex items-center justify-between border overflow-hidden active:scale-[0.98] ${
                 location.pathname === "/ask-bot"
                   ? isDarkMode
-                    ? "bg-[#181920] border-[#D4F933] text-[#D4F933] shadow-md"
-                    : "bg-[#0A0A0C] border-black text-[#D4F933] shadow-md"
+                    ? "bg-[#181920] border-[#D4F933]/40 text-[#D4F933] shadow-md translate-x-1"
+                    : "bg-[#0A0A0C] border-black text-[#D4F933] shadow-md translate-x-1"
                   : isDarkMode
-                  ? "bg-[#121216] border-white/[0.08] text-gray-300 hover:border-[#D4F933]/50 hover:text-[#D4F933]"
-                  : "bg-white border-black/[0.08] text-gray-800 hover:border-black hover:text-black shadow-2xs"
+                  ? "bg-[#121216] border-white/[0.08] text-gray-300 hover:border-[#D4F933]/50 hover:text-[#D4F933] hover:translate-x-0.5"
+                  : "bg-white border-black/[0.08] text-gray-800 hover:border-black hover:text-black shadow-2xs hover:translate-x-0.5"
               }`}
             >
+              {/* Left Indicator Accent Bar for AskBot */}
+              <span
+                className={`absolute left-0 top-1/2 -translate-y-1/2 w-1 rounded-r-full transition-all duration-300 ease-out ${
+                  location.pathname === "/ask-bot"
+                    ? "h-5 bg-[#D4F933] opacity-100 scale-y-100"
+                    : "h-0 bg-transparent opacity-0 scale-y-0 group-hover:h-2.5 group-hover:bg-[#D4F933]/50 group-hover:opacity-100 group-hover:scale-y-100"
+                }`}
+              />
+
               <div className="flex items-center gap-2.5">
                 <div
-                  className={`w-6 h-6 rounded flex items-center justify-center transition-all ${
+                  className={`w-6 h-6 rounded flex items-center justify-center transition-all duration-300 ${
+                    location.pathname === "/ask-bot"
+                      ? "scale-110 -rotate-3"
+                      : "group-hover:scale-105"
+                  } ${
                     isDarkMode
                       ? "bg-[#D4F933]/10 border border-[#D4F933]/20 text-[#D4F933]"
                       : location.pathname === "/ask-bot"
@@ -283,12 +303,12 @@ const Sidebar = () => {
                 >
                   <i className="fas fa-terminal text-[11px]"></i>
                 </div>
-                <span className="font-semibold text-sm">{t("AskBot")}</span>
+                <span className="font-semibold text-sm transition-colors duration-300">{t("AskBot")}</span>
               </div>
               <span
-                className={`text-[10px] px-2 py-0.5 rounded font-mono font-semibold ${
+                className={`text-[10px] px-2 py-0.5 rounded font-mono font-semibold transition-all duration-300 ${
                   isDarkMode || location.pathname === "/ask-bot"
-                    ? "bg-[#D4F933]/15 text-[#D4F933] border border-[#D4F933]/30"
+                    ? "bg-[#D4F933]/15 text-[#D4F933] border border-[#D4F933]/30 scale-105"
                     : "bg-gray-100 text-gray-700 border border-gray-200"
                 }`}
               >
