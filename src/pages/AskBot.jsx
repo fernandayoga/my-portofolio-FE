@@ -95,39 +95,18 @@ const AskBot = () => {
         isDarkMode ? "bg-[#0A0A0C]" : "bg-white"
       }`}
     >
-      {/* Top Header Eyebrow */}
-      <div
-        className={`w-full max-w-4xl pt-20 xl:pt-8 pb-4 flex items-center justify-between border-b ${
-          isDarkMode ? "border-white/[0.08]" : "border-black/[0.08]"
-        }`}
-      >
-        <div
-          className={`flex items-center gap-2 font-mono text-xs ${
-            isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"
-          }`}
-        >
-          <span
-            className={`w-2 h-2 rounded-full animate-pulse ${
-              isDarkMode ? "bg-[#D4F933]" : "bg-[#2D5204]"
-            }`}
-          ></span>
-          <span>AI COMMAND TERMINAL // V2</span>
-        </div>
-
-        {messages.length > 0 && (
-          <button
-            onClick={handleClearChat}
-            className="font-mono text-xs px-3 py-1.5 rounded-md border border-red-500/30 text-red-400 hover:bg-red-500/10 transition-all flex items-center gap-1.5"
-          >
-            <i className="fas fa-trash-alt text-[10px]"></i>
-            <span>{t("clearHistory")}</span>
-          </button>
-        )}
-      </div>
-
       {/* Messages Area */}
       {messages.length > 0 ? (
-        <div className="w-full max-w-4xl flex-1 flex flex-col py-4 overflow-hidden">
+        <div className="w-full max-w-4xl flex-1 flex flex-col pt-16 xl:pt-6 pb-4 overflow-hidden">
+          <div className="flex justify-end pb-3 px-1">
+            <button
+              onClick={handleClearChat}
+              className="font-mono text-xs px-3 py-1.5 rounded-md border border-red-500/30 text-red-400 hover:bg-red-500/10 transition-all flex items-center gap-1.5 cursor-pointer"
+            >
+              <i className="fas fa-trash-alt text-[10px]"></i>
+              <span>{t("clearHistory")}</span>
+            </button>
+          </div>
           <div className="flex-1 overflow-y-auto space-y-4 pb-12 px-1">
             {messages.map((message) => (
               <div
@@ -243,7 +222,7 @@ const AskBot = () => {
         </div>
       ) : (
         /* Empty State */
-        <div className="flex-1 flex flex-col items-center justify-center w-full px-2 sm:px-4 my-auto py-12">
+        <div className="flex-1 flex flex-col items-center justify-center w-full px-2 sm:px-4 my-auto py-12 pt-20 xl:pt-12">
           <div className="flex flex-col items-center text-center max-w-xl">
             <div
               className={`w-16 h-16 rounded-xl flex items-center justify-center mb-6 shadow-lg ${
