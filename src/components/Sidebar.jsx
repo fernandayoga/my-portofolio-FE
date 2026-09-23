@@ -54,7 +54,10 @@ const Sidebar = () => {
     setIsOpen(false);
   };
 
+  const [langRotate, setLangRotate] = useState(0);
+
   const toggleLanguage = () => {
+    setLangRotate((prev) => prev + 360);
     const newLang = i18n.language === "en" ? "id" : "en";
     i18n.changeLanguage(newLang);
   };
@@ -142,7 +145,7 @@ const Sidebar = () => {
           {/* Theme Toggle Button */}
           <button
             onClick={toggleTheme}
-            className={`flex-1 flex items-center justify-center gap-2 py-1.5 px-3 rounded-md border text-xs font-mono transition-all ${
+            className={`flex-1 flex items-center justify-center gap-2 py-1.5 px-3 rounded-md border text-xs font-mono transition-all duration-200 active:scale-95 active:-translate-y-0.5 cursor-pointer ${
               isDarkMode
                 ? "bg-[#121216] border-white/[0.1] text-gray-300 hover:border-[#D4F933]/40 hover:text-white"
                 : "bg-white border-black/[0.1] text-gray-800 hover:border-black hover:text-black shadow-2xs"
@@ -151,14 +154,14 @@ const Sidebar = () => {
           >
             {isDarkMode ? (
               <>
-                <svg className="w-3.5 h-3.5 text-[#D4F933]" viewBox="0 0 24 24" fill="currentColor">
+                <svg className="w-3.5 h-3.5 text-[#D4F933] transition-transform duration-300 hover:rotate-12" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
                 </svg>
                 <span>DARK</span>
               </>
             ) : (
               <>
-                <svg className="w-3.5 h-3.5 text-amber-500" viewBox="0 0 24 24" fill="currentColor">
+                <svg className="w-3.5 h-3.5 text-amber-500 transition-transform duration-300 hover:rotate-45" viewBox="0 0 24 24" fill="currentColor">
                   <circle cx="12" cy="12" r="5" />
                   <line x1="12" y1="1" x2="12" y2="3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
                   <line x1="12" y1="21" x2="12" y2="23" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
@@ -175,33 +178,38 @@ const Sidebar = () => {
           {/* Language Toggle Button */}
           <button
             onClick={toggleLanguage}
-            className={`flex-1 flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-md border text-xs font-mono transition-all ${
+            className={`group flex-1 flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-md border text-xs font-mono transition-all duration-200 active:scale-95 active:-translate-y-0.5 cursor-pointer overflow-hidden ${
               isDarkMode
                 ? "bg-[#121216] border-white/[0.1] text-gray-300 hover:border-[#D4F933]/40 hover:text-white"
                 : "bg-white border-black/[0.1] text-gray-800 hover:border-black hover:text-black shadow-2xs"
             }`}
             title={currentLang === "EN" ? "Switch to Indonesian" : "Switch to English"}
           >
-            <i className={`fas fa-globe text-[11px] ${isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"}`}></i>
+            <i
+              style={{ transform: `rotate(${langRotate}deg)` }}
+              className={`fas fa-globe text-[11px] transition-transform duration-700 ease-out group-hover:scale-110 ${
+                isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"
+              }`}
+            ></i>
             <span
-              className={`transition-colors ${
+              className={`inline-block transition-all duration-300 transform ${
                 currentLang === "EN"
                   ? isDarkMode
-                    ? "text-[#D4F933] font-bold"
-                    : "text-[#2D5204] font-bold"
-                  : "text-gray-500 font-normal"
+                    ? "text-[#D4F933] font-bold scale-110 -translate-y-0.25"
+                    : "text-[#2D5204] font-bold scale-110 -translate-y-0.25"
+                  : "text-gray-500 font-normal scale-90 opacity-50"
               }`}
             >
               EN
             </span>
-            <span className="text-gray-500 text-[10px]">/</span>
+            <span className="text-gray-500 text-[10px] opacity-40 select-none">/</span>
             <span
-              className={`transition-colors ${
+              className={`inline-block transition-all duration-300 transform ${
                 currentLang === "ID"
                   ? isDarkMode
-                    ? "text-[#D4F933] font-bold"
-                    : "text-[#2D5204] font-bold"
-                  : "text-gray-500 font-normal"
+                    ? "text-[#D4F933] font-bold scale-110 -translate-y-0.25"
+                    : "text-[#2D5204] font-bold scale-110 -translate-y-0.25"
+                  : "text-gray-500 font-normal scale-90 opacity-50"
               }`}
             >
               ID
