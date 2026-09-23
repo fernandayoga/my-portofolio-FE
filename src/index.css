@@ -263,7 +263,25 @@ body.light-mode ::selection {
   animation-delay: 820ms;
 }
 
+/* Staggered Slide In from Left (e.g. Contact Cards) */
+@keyframes slideInLeft {
+  0% {
+    opacity: 0;
+    transform: translate3d(-36px, 0, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.animate-slide-in-left {
+  animation: slideInLeft 650ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  will-change: opacity, transform;
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .animate-slide-in-left,
   .animate-fade-in-up,
   .animate-message-pop,
   .animate-float-reaction {

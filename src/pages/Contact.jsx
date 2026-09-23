@@ -256,57 +256,62 @@ const Contact = () => {
 
           <div className="space-y-3">
             {socialLinks.map((social, index) => (
-              <a
+              <div
                 key={index}
-                href={social.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`p-5 rounded-xl border transition-all duration-200 block group ${
-                  isDarkMode
-                    ? "bg-[#121216] border-white/[0.08] hover:border-[#D4F933]/50 hover:bg-[#181920]"
-                    : "bg-white border-black/[0.08] hover:border-[#2D5204] hover:bg-gray-50 shadow-sm"
-                }`}
+                className="animate-slide-in-left"
+                style={{ animationDelay: `${index * 130 + 100}ms` }}
               >
-                <div className="flex items-center justify-between">
-                  <div className="flex-1 pr-4">
-                    <h3
-                      className={`text-base font-bold transition-colors ${
-                        isDarkMode
-                          ? "text-white group-hover:text-[#D4F933]"
-                          : "text-gray-900 group-hover:text-[#2D5204]"
-                      }`}
-                    >
-                      {social.title}
-                    </h3>
-                    <p
-                      className={`text-xs mt-1 line-clamp-2 leading-relaxed ${
-                        isDarkMode ? "text-gray-400" : "text-gray-600"
-                      }`}
-                    >
-                      {social.description}
-                    </p>
+                <a
+                  href={social.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`p-5 rounded-xl border transition-all duration-200 block group ${
+                    isDarkMode
+                      ? "bg-[#121216] border-white/[0.08] hover:border-[#D4F933]/50 hover:bg-[#181920]"
+                      : "bg-white border-black/[0.08] hover:border-[#2D5204] hover:bg-gray-50 shadow-sm"
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex-1 pr-4">
+                      <h3
+                        className={`text-base font-bold transition-colors ${
+                          isDarkMode
+                            ? "text-white group-hover:text-[#D4F933]"
+                            : "text-gray-900 group-hover:text-[#2D5204]"
+                        }`}
+                      >
+                        {social.title}
+                      </h3>
+                      <p
+                        className={`text-xs mt-1 line-clamp-2 leading-relaxed ${
+                          isDarkMode ? "text-gray-400" : "text-gray-600"
+                        }`}
+                      >
+                        {social.description}
+                      </p>
+
+                      <div
+                        className={`mt-3 inline-flex items-center gap-1.5 font-mono text-[11px] font-semibold uppercase tracking-wider group-hover:translate-x-0.5 transition-transform ${
+                          isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"
+                        }`}
+                      >
+                        <span>{social.buttonText}</span>
+                        <i className="fas fa-arrow-right text-[9px]"></i>
+                      </div>
+                    </div>
 
                     <div
-                      className={`mt-3 inline-flex items-center gap-1.5 font-mono text-[11px] font-semibold uppercase tracking-wider group-hover:translate-x-0.5 transition-transform ${
-                        isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"
+                      className={`w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0 transition-all ${
+                        isDarkMode
+                          ? "bg-white/[0.03] border border-white/[0.08] text-gray-300 group-hover:text-[#D4F933] group-hover:border-[#D4F933]/40"
+                          : "bg-black/[0.03] border border-black/[0.08] text-gray-700 group-hover:text-[#2D5204] group-hover:border-[#2D5204]/40"
                       }`}
                     >
-                      <span>{social.buttonText}</span>
-                      <i className="fas fa-arrow-right text-[9px]"></i>
+                      <i className={`${social.icon} text-xl`}></i>
                     </div>
                   </div>
-
-                  <div
-                    className={`w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0 transition-all ${
-                      isDarkMode
-                        ? "bg-white/[0.03] border border-white/[0.08] text-gray-300 group-hover:text-[#D4F933] group-hover:border-[#D4F933]/40"
-                        : "bg-black/[0.03] border border-black/[0.08] text-gray-700 group-hover:text-[#2D5204] group-hover:border-[#2D5204]/40"
-                    }`}
-                  >
-                    <i className={`${social.icon} text-xl`}></i>
-                  </div>
-                </div>
-              </a>
+                </a>
+              </div>
             ))}
           </div>
         </div>
