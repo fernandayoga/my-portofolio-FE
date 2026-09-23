@@ -137,9 +137,8 @@ const Contact = () => {
       title: "Instagram",
       description: t("deskIg"),
       buttonText: t("buttonIg"),
-      hoverBorder: "group-hover:border-[#E1306C]/40",
       officialLogo: (
-        <svg viewBox="0 0 24 24" className="w-7 h-7 rounded-lg overflow-hidden shadow-sm">
+        <svg viewBox="0 0 24 24" className="w-8 h-8 rounded-xl shadow-sm">
           <defs>
             <radialGradient id="ig-grad-contact" cx="0.2" cy="1" r="1.3">
               <stop offset="0%" stopColor="#FFDD55" />
@@ -162,9 +161,8 @@ const Contact = () => {
       title: "LinkedIn",
       description: t("deskLinkedin"),
       buttonText: t("buttonLinkedin"),
-      hoverBorder: "group-hover:border-[#0A66C2]/40",
       officialLogo: (
-        <svg viewBox="0 0 24 24" className="w-7 h-7 rounded-md overflow-hidden shadow-sm">
+        <svg viewBox="0 0 24 24" className="w-8 h-8 rounded-lg shadow-sm">
           <rect width="24" height="24" rx="4" fill="#0A66C2" />
           <path
             fill="#FFFFFF"
@@ -180,9 +178,8 @@ const Contact = () => {
       title: "TikTok",
       description: t("deskTt"),
       buttonText: t("buttonTt"),
-      hoverBorder: "group-hover:border-[#FE2C55]/40",
       officialLogo: (
-        <svg viewBox="0 0 24 24" className="w-7 h-7 rounded-md overflow-hidden bg-black shadow-sm">
+        <svg viewBox="0 0 24 24" className="w-8 h-8 rounded-lg overflow-hidden bg-black shadow-sm">
           <path
             fill="#25F4EE"
             d="M17.5 7.1c-1.3-.1-2.4-.7-3.2-1.6v6.6c0 2.6-2.1 4.7-4.7 4.7s-4.7-2.1-4.7-4.7 2.1-4.7 4.7-4.7c.3 0 .7.1 1 .2V5.1c-.3-.1-.7-.1-1-.1-3.9 0-7.1 3.2-7.1 7.1s3.2 7.1 7.1 7.1 7.1-3.2 7.1-7.1V7.7c1.2.9 2.6 1.4 4.1 1.4V7.1h-3.2z"
@@ -205,11 +202,10 @@ const Contact = () => {
       title: "GitHub",
       description: t("deskGithub"),
       buttonText: t("buttonGithub"),
-      hoverBorder: isDarkMode ? "group-hover:border-white/40" : "group-hover:border-black/30",
       officialLogo: (
         <svg
           viewBox="0 0 24 24"
-          className={`w-7 h-7 rounded-full overflow-hidden p-0.5 shadow-sm ${
+          className={`w-8 h-8 rounded-full overflow-hidden p-0.5 shadow-sm ${
             isDarkMode ? "bg-white text-black" : "bg-black text-white"
           }`}
         >
@@ -438,16 +434,10 @@ const Contact = () => {
                       </div>
                     </div>
 
-                    <div
-                      className={`relative w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0 transition-all duration-300 group-hover:scale-110 group-hover:rotate-3 overflow-hidden ${
-                        isDarkMode
-                          ? "bg-white/[0.03] border border-white/[0.08]"
-                          : "bg-black/[0.03] border border-black/[0.08]"
-                      } ${social.hoverBorder}`}
-                    >
+                    <div className="relative w-10 h-10 flex items-center justify-center flex-shrink-0 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3">
                       {/* Monochrome Icon (Default Unhovered State) */}
                       <i
-                        className={`${social.icon} text-xl transition-all duration-300 absolute ${
+                        className={`${social.icon} text-2xl transition-all duration-300 absolute ${
                           isDarkMode ? "text-gray-400" : "text-gray-600"
                         } group-hover:opacity-0 group-hover:scale-50`}
                       ></i>
