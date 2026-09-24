@@ -269,6 +269,36 @@ const Dashboard = () => {
       }
     } catch (error) {
       console.error("❌ WakaTime fetch error:", error);
+      if (import.meta.env.DEV) {
+        setWakatimeData({
+          totalTimeText: "18 hrs 39 mins",
+          dailyAverageText: "2 hrs 25 mins",
+          languages: [
+            { name: "JavaScript", percent: 45.2, text: "8 hrs 26 mins" },
+            { name: "React", percent: 28.4, text: "5 hrs 18 mins" },
+            { name: "CSS", percent: 14.1, text: "2 hrs 38 mins" },
+            { name: "HTML", percent: 8.3, text: "1 hr 33 mins" },
+            { name: "Python", percent: 4.0, text: "45 mins" },
+          ],
+          operatingSystems: [
+            { name: "Windows", percent: 100, total_seconds: 67140 }
+          ],
+          editors: [
+            { name: "VS Code", percent: 80, total_seconds: 53712 },
+            { name: "Antigravity", percent: 20, total_seconds: 13428 }
+          ],
+          summaries: [
+            { range: { text: "Mon" }, grand_total: { digital: "2:15", hours: 2, minutes: 15, total_seconds: 8100 } },
+            { range: { text: "Tue" }, grand_total: { digital: "3:40", hours: 3, minutes: 40, total_seconds: 13200 } },
+            { range: { text: "Wed" }, grand_total: { digital: "1:20", hours: 1, minutes: 20, total_seconds: 4800 } },
+            { range: { text: "Thu" }, grand_total: { digital: "4:05", hours: 4, minutes: 5, total_seconds: 14700 } },
+            { range: { text: "Fri" }, grand_total: { digital: "2:50", hours: 2, minutes: 50, total_seconds: 10200 } },
+            { range: { text: "Sat" }, grand_total: { digital: "0:45", hours: 0, minutes: 45, total_seconds: 2700 } },
+            { range: { text: "Sun" }, grand_total: { digital: "3:44", hours: 3, minutes: 44, total_seconds: 13440 } },
+          ],
+        });
+        return;
+      }
       setWakatimeData({
         error: error.message,
       });
@@ -1076,11 +1106,11 @@ const Dashboard = () => {
           ) : (
             <div className="space-y-6">
               {/* Total Time & Daily Average */}
-              <div className="grid grid-cols-2 gap-4 text-center">
+              <div className="grid grid-cols-2 gap-2.5 sm:gap-4 text-center">
                 <SpotlightCard
                   elevation={true}
                   size={280}
-                  className={`group/stat relative p-5 rounded-xl border text-center ${
+                  className={`group/stat relative py-3 px-2.5 sm:p-5 rounded-xl border text-center flex flex-col items-center justify-center ${
                     isDarkMode 
                       ? "bg-[#181920] border-white/[0.06]" 
                       : "bg-white border-black/[0.08] shadow-sm hover:shadow-md"
@@ -1089,14 +1119,14 @@ const Dashboard = () => {
                   <div className="pointer-events-none absolute inset-0 -translate-x-full group-hover/stat:translate-x-full transition-transform duration-700 ease-out z-10 bg-gradient-to-r from-transparent via-white/[0.12] to-transparent skew-x-[-20deg]" />
 
                   <p
-                    className={`text-2xl sm:text-3xl font-mono font-bold transition-transform duration-300 group-hover/stat:scale-105 inline-block ${
+                    className={`text-base sm:text-2xl md:text-3xl font-mono font-bold leading-snug transition-transform duration-300 group-hover/stat:scale-105 inline-block ${
                       isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"
                     }`}
                   >
                     {wakatimeData?.totalTimeText || "0 hrs"}
                   </p>
                   <p
-                    className={`font-mono text-[10px] sm:text-xs uppercase tracking-wider mt-1 ${
+                    className={`font-mono text-[9px] sm:text-xs uppercase tracking-wider mt-0.5 sm:mt-1 ${
                       isDarkMode ? "text-gray-400" : "text-gray-600"
                     }`}
                   >
@@ -1107,7 +1137,7 @@ const Dashboard = () => {
                 <SpotlightCard
                   elevation={true}
                   size={280}
-                  className={`group/stat relative p-5 rounded-xl border text-center ${
+                  className={`group/stat relative py-3 px-2.5 sm:p-5 rounded-xl border text-center flex flex-col items-center justify-center ${
                     isDarkMode 
                       ? "bg-[#181920] border-white/[0.06]" 
                       : "bg-white border-black/[0.08] shadow-sm hover:shadow-md"
@@ -1116,14 +1146,14 @@ const Dashboard = () => {
                   <div className="pointer-events-none absolute inset-0 -translate-x-full group-hover/stat:translate-x-full transition-transform duration-700 ease-out z-10 bg-gradient-to-r from-transparent via-white/[0.12] to-transparent skew-x-[-20deg]" />
 
                   <p
-                    className={`text-2xl sm:text-3xl font-mono font-bold transition-transform duration-300 group-hover/stat:scale-105 inline-block ${
+                    className={`text-base sm:text-2xl md:text-3xl font-mono font-bold leading-snug transition-transform duration-300 group-hover/stat:scale-105 inline-block ${
                       isDarkMode ? "text-white" : "text-gray-900"
                     }`}
                   >
                     {wakatimeData?.dailyAverageText || "0 hrs"}
                   </p>
                   <p
-                    className={`font-mono text-[10px] sm:text-xs uppercase tracking-wider mt-1 ${
+                    className={`font-mono text-[9px] sm:text-xs uppercase tracking-wider mt-0.5 sm:mt-1 ${
                       isDarkMode ? "text-gray-400" : "text-gray-600"
                     }`}
                   >
