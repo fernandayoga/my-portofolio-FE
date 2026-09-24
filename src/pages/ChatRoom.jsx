@@ -655,8 +655,18 @@ const ChatRoom = () => {
                     <div className="flex items-center gap-1.5 mb-1 px-1">
                       {/* Special Creator / Developer Badge (Option 6) */}
                       {isOwner && (
-                        <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[9px] font-mono font-bold tracking-wider uppercase bg-[#D4F933]/15 text-[#D4F933] border border-[#D4F933]/40 mr-0.5">
-                          <i className="fas fa-crown text-[8px] text-[#D4F933]"></i>
+                        <span
+                          className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[9px] font-mono font-bold tracking-wider uppercase mr-0.5 border ${
+                            isDarkMode
+                              ? "bg-[#D4F933]/15 text-[#D4F933] border-[#D4F933]/40 shadow-[0_0_10px_rgba(212,249,51,0.15)]"
+                              : "bg-[#2D5204]/10 text-[#2D5204] border-[#2D5204]/30 shadow-2xs font-extrabold"
+                          }`}
+                        >
+                          <i
+                            className={`fas fa-crown text-[8px] ${
+                              isDarkMode ? "text-[#D4F933]" : "text-[#2D5204]"
+                            }`}
+                          ></i>
                           <span>{t("creatorBadge")}</span>
                         </span>
                       )}
@@ -702,7 +712,7 @@ const ChatRoom = () => {
                               : isOwner
                               ? isDarkMode
                                 ? "bg-[#121216] border-[#D4F933]/40 text-gray-100 rounded-tl-xs shadow-[0_0_12px_rgba(212,249,51,0.12)]"
-                                : "bg-white border-[#D4F933] text-gray-900 rounded-tl-xs shadow-md"
+                                : "bg-white border-[#2D5204]/40 text-gray-900 rounded-tl-xs shadow-md"
                               : isDarkMode
                               ? "bg-[#121216] border-white/[0.08] text-gray-200 rounded-tl-xs"
                               : "bg-white border-black/[0.08] text-gray-900 rounded-tl-xs shadow-md"
