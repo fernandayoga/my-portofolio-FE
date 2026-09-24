@@ -218,7 +218,7 @@ const Home = () => {
         <div className="flex items-start justify-between">
           <div className="w-full">
             <h1
-              className={`text-3xl md:text-4xl lg:text-5xl font-bold mb-2 ${
+              className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-2 break-words ${
                 isDarkMode ? "text-white" : "text-gray-900"
               }`}
             >
