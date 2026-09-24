@@ -537,7 +537,7 @@ const ChatRoom = () => {
         {/* User Status / Logout */}
         {user && (
           <div
-            className={`flex items-center gap-2 sm:gap-3 px-2.5 sm:px-3 py-1.5 rounded-xl border transition-all flex-shrink-0 ${
+            className={`flex items-center gap-1.5 sm:gap-3 px-2 sm:px-3 py-1 sm:py-1.5 rounded-xl border transition-all flex-shrink-0 ${
               isDarkMode
                 ? "border-white/[0.08] bg-[#121216]/90 backdrop-blur-md shadow-lg"
                 : "border-black/[0.08] bg-white/90 backdrop-blur-md shadow-md"
@@ -559,7 +559,7 @@ const ChatRoom = () => {
               }`}></span>
             </div>
 
-            <div className="pr-1 max-w-[100px] sm:max-w-[140px] truncate">
+            <div className="hidden sm:block pr-1 max-w-[100px] sm:max-w-[140px] truncate">
               <p className={`font-mono text-xs font-semibold tracking-wide truncate ${isDarkMode ? "text-white" : "text-gray-900"}`}>
                 {user.displayName || "Anonymous"}
               </p>
