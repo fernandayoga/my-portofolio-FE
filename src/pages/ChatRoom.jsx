@@ -604,7 +604,7 @@ const ChatRoom = () => {
               {t("publicChannel")}
             </span>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="hidden sm:flex items-center gap-2">
             <span
               className={`font-semibold text-[11px] flex items-center gap-2 ${
                 isDarkMode ? "text-[#D4F933]/90" : "text-[#2D5204]"
