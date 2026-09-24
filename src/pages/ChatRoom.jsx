@@ -52,6 +52,15 @@ const ChatRoom = () => {
   const chatContainerRef = useRef(null);
   const emojiPickerRef = useRef(null);
 
+  // Lock body scroll on chat room to guarantee single viewport app experience (prevent double scroll)
+  useEffect(() => {
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = originalOverflow;
+    };
+  }, []);
+
   // Monitor auth state
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -505,20 +514,19 @@ const ChatRoom = () => {
   }
 
   return (
-    <div className="min-h-screen py-8 pt-20 xl:pt-8 max-w-5xl">
+    <div className="h-[calc(100dvh-2rem)] max-w-5xl w-full mx-auto flex flex-col pt-14 sm:pt-16 xl:pt-1 pb-1 overflow-hidden">
       {/* Header Section */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+      <div className="flex-shrink-0 flex items-center justify-between gap-3 mb-2.5 sm:mb-4">
         <div>
-          
           <h1
-            className={`text-3xl sm:text-4xl font-extrabold tracking-tight mb-1 ${
+            className={`text-xl sm:text-2xl lg:text-3xl font-extrabold tracking-tight ${
               isDarkMode ? "text-white" : "text-gray-900"
             }`}
           >
             {t("chatRoom")}
           </h1>
           <p
-            className={`font-mono text-xs sm:text-sm ${
+            className={`font-mono text-[11px] sm:text-xs line-clamp-1 ${
               isDarkMode ? "text-gray-400" : "text-gray-600"
             }`}
           >
@@ -529,7 +537,7 @@ const ChatRoom = () => {
         {/* User Status / Logout */}
         {user && (
           <div
-            className={`flex items-center gap-3 self-start sm:self-center px-3 py-2 rounded-xl border transition-all ${
+            className={`flex items-center gap-2 sm:gap-3 px-2.5 sm:px-3 py-1.5 rounded-xl border transition-all flex-shrink-0 ${
               isDarkMode
                 ? "border-white/[0.08] bg-[#121216]/90 backdrop-blur-md shadow-lg"
                 : "border-black/[0.08] bg-white/90 backdrop-blur-md shadow-md"
@@ -539,27 +547,27 @@ const ChatRoom = () => {
               <img
                 src={getAvatarUrl(user.photoURL, user.displayName || "Anonymous")}
                 alt={user.displayName || "Anonymous"}
-                className="w-9 h-9 rounded-lg border border-[#D4F933]/50 object-cover"
+                className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg border border-[#D4F933]/50 object-cover"
                 referrerPolicy="no-referrer"
                 onError={(e) => {
                   e.target.onerror = null;
                   e.target.src = getAvatarUrl(null, user.displayName || "Anonymous");
                 }}
               />
-              <span className={`absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-500 border-2 ${
+              <span className={`absolute -bottom-0.5 -right-0.5 w-2 h-2 rounded-full bg-emerald-500 border-2 ${
                 isDarkMode ? "border-[#121216]" : "border-white"
               }`}></span>
             </div>
 
-            <div className="pr-1">
-              <p className={`font-mono text-xs font-semibold tracking-wide ${isDarkMode ? "text-white" : "text-gray-900"}`}>
+            <div className="pr-1 max-w-[100px] sm:max-w-[140px] truncate">
+              <p className={`font-mono text-xs font-semibold tracking-wide truncate ${isDarkMode ? "text-white" : "text-gray-900"}`}>
                 {user.displayName || "Anonymous"}
               </p>
             </div>
 
             <button
               onClick={handleLogout}
-              className={`group/logout relative flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-mono text-[10px] font-bold uppercase tracking-wider transition-all duration-300 border overflow-hidden cursor-pointer select-none active:scale-95 ${
+              className={`group/logout relative flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg font-mono text-[10px] font-bold uppercase tracking-wider transition-all duration-300 border overflow-hidden cursor-pointer select-none active:scale-95 ${
                 isDarkMode
                   ? "bg-red-500/10 hover:bg-red-500/20 text-red-400 hover:text-red-300 border-red-500/30 hover:border-red-500/50 hover:shadow-[0_0_16px_rgba(239,68,68,0.3)]"
                   : "bg-red-50 hover:bg-red-100 text-red-600 hover:text-red-700 border-red-200 hover:border-red-300 shadow-xs"
@@ -580,14 +588,14 @@ const ChatRoom = () => {
 
       {/* Chat Container */}
       <div
-        className={`relative rounded-2xl border overflow-hidden shadow-2xl ${
+        className={`relative flex-1 min-h-0 flex flex-col rounded-2xl border overflow-hidden shadow-2xl ${
           isDarkMode
             ? "bg-[#121216] border-white/[0.08]"
             : "bg-white border-black/[0.08]"
         }`}
       >
         {/* Terminal Header Bar */}
-        <div className="px-5 py-3 border-b border-inherit bg-white/[0.01] flex items-center justify-between font-mono text-xs text-gray-500">
+        <div className="flex-shrink-0 px-4 sm:px-5 py-2.5 sm:py-3 border-b border-inherit bg-white/[0.01] flex items-center justify-between font-mono text-xs text-gray-500">
           <div className="flex items-center gap-2">
             <span className="w-2.5 h-2.5 rounded-full bg-red-500/80"></span>
             <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/80"></span>
@@ -615,7 +623,7 @@ const ChatRoom = () => {
         <div
           ref={chatContainerRef}
           onScroll={handleChatScroll}
-          className={`h-[520px] overflow-y-auto p-5 sm:p-6 space-y-4 ${
+          className={`flex-1 min-h-0 overflow-y-auto overscroll-contain p-4 sm:p-6 space-y-4 ${
             isDarkMode ? "bg-[#0A0A0C]" : "bg-gray-50/50"
           }`}
         >
@@ -827,12 +835,14 @@ const ChatRoom = () => {
           <div ref={messagesEndRef} />
         </div>
 
-        {/* Floating Scroll to Bottom Button (Option 4) */}
+        {/* Floating Scroll to Bottom Button */}
         {showScrollBottom && (
           <button
             type="button"
             onClick={scrollToBottom}
-            className={`absolute bottom-28 sm:bottom-32 left-1/2 -translate-x-1/2 z-20 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 shadow-2xl border animate-bounce cursor-pointer select-none backdrop-blur-md ${
+            className={`absolute ${
+              user ? "bottom-28 sm:bottom-32" : "bottom-36 sm:bottom-40"
+            } left-1/2 -translate-x-1/2 z-20 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 shadow-2xl border animate-bounce cursor-pointer select-none backdrop-blur-md ${
               isDarkMode
                 ? "bg-[#181920]/95 text-[#D4F933] border-[#D4F933]/50 hover:bg-[#22242e] hover:border-[#D4F933] hover:scale-110 active:scale-95 shadow-[0_0_24px_rgba(212,249,51,0.35)]"
                 : "bg-white/95 text-gray-900 border-gray-300 hover:bg-gray-50 hover:scale-110 active:scale-95 shadow-xl"
@@ -847,7 +857,7 @@ const ChatRoom = () => {
         {user ? (
           <form
             onSubmit={handleSendMessage}
-            className="p-4 border-t border-inherit bg-inherit"
+            className="flex-shrink-0 p-3 sm:p-4 border-t border-inherit bg-inherit"
           >
             <div className="flex items-center gap-2 sm:gap-3">
               {/* Quick Emoji Picker Button & Popover (Option 1) */}
@@ -986,7 +996,7 @@ const ChatRoom = () => {
             </div>
           </form>
         ) : (
-          <div className="p-6 border-t border-inherit text-center bg-inherit">
+          <div className="flex-shrink-0 p-4 sm:p-6 border-t border-inherit text-center bg-inherit">
             <p className={`font-mono text-xs mb-4 ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}>
               {t("signInToChat")}
             </p>
