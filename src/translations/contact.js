@@ -30,6 +30,9 @@ export const contactTranslations = {
     titleGithub: "Explore My GitHub",
     deskGithub: "Explore My Open-Source Work on GitHub",
     buttonGithub: "Go To GitHub",
+    templateActiveNotice: "Opportunity inquiry template applied",
+    resetTemplate: "Reset Form",
+    templateMessageDefault: "Hi Yoga, I am interested in discussing a job/project opportunity with you...",
   },
   id: {
     contactTitle: "Hubungi Saya",
@@ -62,5 +65,8 @@ export const contactTranslations = {
     titleGithub: "Eksplore GitHub Saya",
     deskGithub: "Eksplore Karya Saya Open-Source di GitHub",
     buttonGithub: "Pergi ke GitHub",
+    templateActiveNotice: "Template pesan peluang kerja / proyek aktif",
+    resetTemplate: "Reset Form",
+    templateMessageDefault: "Halo Yoga, saya tertarik untuk mendiskusikan peluang kerja/proyek...",
   },
 };

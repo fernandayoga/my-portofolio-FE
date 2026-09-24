@@ -31,6 +31,9 @@ export const homeTranslations = {
     featSmartTitle: "AskBot",
     featSmartDesc:
       "AI-powered assistant to answer your questions about my portfolio, technology, and other questions.",
+    openForWork: "Available for Opportunities",
+    openStatus: "Status: Open",
+    discussOpportunity: "Discuss Opportunity",
   },
   id: {
     greeting: "Hai, Saya Fernanda Yoga Kurniawan",
@@ -63,5 +66,8 @@ export const homeTranslations = {
     featSmartTitle: "AskBot",
     featSmartDesc:
       "Asisten bertenaga AI untuk menjawab pertanyaan Anda tentang portfolio, teknologi, dan pertanyaan lain.",
+    openForWork: "Siap untuk Peluang Kerja",
+    openStatus: "Status: Terbuka",
+    discussOpportunity: "Diskusikan Peluang",
   },
 };

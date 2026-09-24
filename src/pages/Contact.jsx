@@ -324,13 +324,27 @@ const Contact = () => {
             </div>
 
             <div>
-              <label
-                className={`block font-mono text-[11px] uppercase tracking-wider mb-2 font-medium ${
-                  isDarkMode ? "text-gray-400" : "text-gray-600"
-                }`}
-              >
-                {t("message")}
-              </label>
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-2 gap-2 sm:gap-0">
+                <label
+                  className={`block font-mono text-[11px] uppercase tracking-wider font-medium ${
+                    isDarkMode ? "text-gray-400" : "text-gray-600"
+                  }`}
+                >
+                  {t("message")}
+                </label>
+                <button
+                  type="button"
+                  onClick={() => setFormData({ ...formData, message: t("templateMessageDefault") })}
+                  className={`font-mono text-[10px] uppercase tracking-wider font-bold transition-colors flex items-center ${
+                    isDarkMode
+                      ? "text-[#D4F933] hover:text-[#bce615]"
+                      : "text-[#2D5204] hover:text-[#1a3002]"
+                  }`}
+                >
+                  <i className="fas fa-magic mr-1.5"></i>
+                  {t("useTemplate", "Quick Template")}
+                </button>
+              </div>
               <textarea
                 name="message"
                 value={formData.message}
