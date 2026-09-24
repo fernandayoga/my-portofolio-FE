@@ -42,7 +42,6 @@ const ChatRoom = () => {
 
   // Advanced UX & Animation States
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
-  const [showScrollBottom, setShowScrollBottom] = useState(false);
   const [activeReactionMenuId, setActiveReactionMenuId] = useState(null);
   const [bursts, setBursts] = useState([]);
   const [isLaunching, setIsLaunching] = useState(false);
@@ -112,26 +111,10 @@ const ChatRoom = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Detect scroll position for Floating Scroll-To-Bottom button
-  const handleChatScroll = () => {
-    const el = chatContainerRef.current;
-    if (!el) return;
-    const isUp = el.scrollHeight - el.scrollTop - el.clientHeight > 120;
-    setShowScrollBottom(isUp);
-  };
-
-  // Scroll to bottom smoothly
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-    setShowScrollBottom(false);
-  };
-
-  // Auto scroll to bottom only when user isn't scrolled far up
+  // Auto scroll to bottom when messages update
   useEffect(() => {
-    if (!showScrollBottom) {
-      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-    }
-  }, [messages, showScrollBottom]);
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   // Custom Cyber Alert Helper
   const showCyberAlert = ({ title, text, icon = "info" }) => {
@@ -622,7 +605,6 @@ const ChatRoom = () => {
         {/* Messages Stream Area */}
         <div
           ref={chatContainerRef}
-          onScroll={handleChatScroll}
           className={`flex-1 min-h-0 overflow-y-auto overscroll-contain p-4 sm:p-6 space-y-4 ${
             isDarkMode ? "bg-[#0A0A0C]" : "bg-gray-50/50"
           }`}
@@ -834,24 +816,6 @@ const ChatRoom = () => {
           )}
           <div ref={messagesEndRef} />
         </div>
-
-        {/* Floating Scroll to Bottom Button */}
-        {showScrollBottom && (
-          <button
-            type="button"
-            onClick={scrollToBottom}
-            className={`absolute ${
-              user ? "bottom-28 sm:bottom-32" : "bottom-36 sm:bottom-40"
-            } left-1/2 -translate-x-1/2 z-20 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 shadow-2xl border animate-bounce cursor-pointer select-none backdrop-blur-md ${
-              isDarkMode
-                ? "bg-[#181920]/95 text-[#D4F933] border-[#D4F933]/50 hover:bg-[#22242e] hover:border-[#D4F933] hover:scale-110 active:scale-95 shadow-[0_0_24px_rgba(212,249,51,0.35)]"
-                : "bg-white/95 text-gray-900 border-gray-300 hover:bg-gray-50 hover:scale-110 active:scale-95 shadow-xl"
-            }`}
-            title={t("scrollToBottom")}
-          >
-            <i className="fas fa-arrow-down text-sm"></i>
-          </button>
-        )}
 
         {/* Input / Authentication Form */}
         {user ? (
